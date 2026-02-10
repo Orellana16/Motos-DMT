@@ -17,8 +17,8 @@ class TransactionFactory extends Factory
     public function definition(): array
     {
         return [
-            'user_id' => \App\Models\User::all()->random()->id, // Elige un usuario al azar
-            'moto_id' => \App\Models\Moto::all()->random()->id, // Elige una moto al azar
+            'user_id' => \App\Models\User::query()->inRandomOrder()->first()->id ?? \App\Models\User::factory(),
+            'moto_id' => \App\Models\Moto::query()->inRandomOrder()->first()->id ?? \App\Models\Moto::factory(),
             'paypal_order_id' => 'PAYID-' . strtoupper(fake()->bothify('??#?#?#?#?')), // Simula un ID de PayPal
             'status' => fake()->randomElement(['COMPLETED', 'PENDING', 'CANCELLED']),
             'amount' => fake()->randomFloat(2, 50, 500), // Señal de reserva entre 50 y 500€
