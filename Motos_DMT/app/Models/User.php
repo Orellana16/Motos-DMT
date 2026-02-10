@@ -45,4 +45,21 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function transactions()
+    {
+        return $this->hasMany(Transaction::class);
+    }
+
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
+    }
+
+    // Relación N:M con Motos (Favoritos)
+    public function favoriteMotos()
+    {
+        return $this->belongsToMany(Moto::class, 'favorites')
+                    ->withTimestamps();
+    }
 }
