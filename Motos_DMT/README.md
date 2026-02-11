@@ -148,11 +148,8 @@ CREATE DATABASE motos_dmt CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 ### 7️⃣ Ejecutar Migraciones y Seeders
 
 ```bash
-# Ejecutar todas las migraciones
-php artisan migrate
-
-# Poblar la base de datos con datos de prueba
-php artisan db:seed
+# Ejecutar todas las migraciones, poblar la base de datos con datos de prueba y borra todos los registros anteriores para evitar fallos
+php artisan migrate:fresh --seed
 ```
 
 **Esto creará:**
