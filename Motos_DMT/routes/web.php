@@ -26,3 +26,30 @@ Route::post('/paypal/process', [PaymentController::class, 'processPayment'])
     ->middleware('auth');
 
 require __DIR__.'/auth.php';
+
+// Rutas de MotoController
+use App\Http\Controllers\MotoController;
+
+Route::get('/motos', [MotoController::class, 'index']);
+Route::get('/motos/{id}', [MotoController::class, 'show']);
+Route::post('/motos', [MotoController::class, 'store']);
+Route::put('/motos/{id}', [MotoController::class, 'update']);
+Route::delete('/motos/{id}', [MotoController::class, 'destroy']);
+
+// Rutas de AccessoryController
+use App\Http\Controllers\AccessoryController;
+
+Route::get('/accessories', [AccessoryController::class, 'index']);
+Route::get('/accessories/{id}', [AccessoryController::class, 'show']);
+Route::post('/accessories', [AccessoryController::class, 'store']);
+Route::put('/accessories/{id}', [AccessoryController::class, 'update']);
+Route::delete('/accessories/{id}', [AccessoryController::class, 'destroy']);
+
+// Rutas de ReviewController
+use App\Http\Controllers\ReviewController;
+
+Route::get('/reviews', [ReviewController::class, 'index']);
+Route::get('/reviews/{id}', [ReviewController::class, 'show']);
+Route::post('/reviews', [ReviewController::class, 'store']);
+Route::put('/reviews/{id}', [ReviewController::class, 'update']);
+Route::delete('/reviews/{id}', [ReviewController::class, 'destroy']);
