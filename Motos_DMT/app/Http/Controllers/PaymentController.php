@@ -7,6 +7,7 @@ use App\Models\Transaction; // El "Entity" que creamos
 use App\Mail\PaymentReceived; // El "Mailable"
 use Illuminate\Support\Facades\Mail; // El servicio de correo
 use Illuminate\Support\Facades\Auth; // Para el Security Context
+use App\Models\Moto; // Para validar el precio de la moto
 
 class PaymentController extends Controller
 {
@@ -28,9 +29,17 @@ class PaymentController extends Controller
         // 1. Validar los datos (Opcional pero recomendado)
         $request->validate([
             'order_id' => 'required',
-            'moto_id'  => 'required',
-            'amount'   => 'required',
+            'moto_id' => 'required',
+            'amount' => 'required',
         ]);
+
+        $moto = Moto::findOrFail($request->moto_id);
+
+        $precioReserva = $moto->precio * 0.25;
+
+        if ($request->amount != $precioReserva) {
+            return response()->json(['error' => 'Monto insuficiente'], 400);
+        }
 
         // 2. Crear y guardar la transacción (Active Record)
         $transaction = new Transaction();
@@ -46,7 +55,7 @@ class PaymentController extends Controller
 
         // 3. Enviar el email (JavaMailSender de Laravel)
         // Usamos el email del usuario logueado
-        Mail::to('davilitoorellana@gmail.com')->send(new PaymentReceived($transaction));
+        Mail::to(Auth::user()->email)->send(new PaymentReceived($transaction));
 
         return response()->json([
             'message' => 'Transacción guardada y email enviado',

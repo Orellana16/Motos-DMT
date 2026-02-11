@@ -10,16 +10,16 @@ class TransactionFactory extends Factory
 {
     public function definition(): array
     {
+        // Buscamos una moto al azar
         $moto = Moto::inRandomOrder()->first() ?? Moto::factory()->create();
-        $statuses = ['COMPLETED', 'PENDING', 'FAILED', 'REFUNDED'];
 
         return [
             'user_id' => User::inRandomOrder()->first()->id ?? User::factory(),
             'moto_id' => $moto->id,
-            'paypal_order_id' => 'ORDER-' . fake()->unique()->uuid(),
-            'status' => fake()->randomElement($statuses),
-            'amount' => $moto->precio,
-            'currency' => fake()->randomElement(['EUR', 'USD', 'GBP']),
+            'paypal_order_id' => 'PAYID-' . strtoupper(fake()->bothify('??#?#?#?#?')),
+            'status' => 'COMPLETED',
+            'amount' => $moto->precio * 0.25,
+            'currency' => 'EUR',
         ];
     }
 }
