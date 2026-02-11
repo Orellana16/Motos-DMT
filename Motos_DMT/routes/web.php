@@ -53,3 +53,36 @@ Route::get('/reviews/{id}', [ReviewController::class, 'show']);
 Route::post('/reviews', [ReviewController::class, 'store']);
 Route::put('/reviews/{id}', [ReviewController::class, 'update']);
 Route::delete('/reviews/{id}', [ReviewController::class, 'destroy']);
+
+// Rutas de CategoryController
+use App\Http\Controllers\CategoryController;
+
+Route::get('/categories', [CategoryController::class, 'index']);
+Route::get('/categories/{id}', [CategoryController::class, 'show']);
+Route::post('/categories', [CategoryController::class, 'store']);
+Route::put('/categories/{id}', [CategoryController::class, 'update']);
+Route::delete('/categories/{id}', [CategoryController::class, 'destroy']);
+
+// Rutas de ManufacturerController
+use App\Http\Controllers\ManufacturerController;
+
+Route::get('/manufacturers', [ManufacturerController::class, 'index']);
+Route::get('/manufacturers/{id}', [ManufacturerController::class, 'show']);
+Route::post('/manufacturers', [ManufacturerController::class, 'store']);
+Route::put('/manufacturers/{id}', [ManufacturerController::class, 'update']);
+Route::delete('/manufacturers/{id}', [ManufacturerController::class, 'destroy']);
+
+// Rutas de TransactionController
+use App\Http\Controllers\TransactionController;
+
+Route::get('/transactions', [TransactionController::class, 'index']);
+Route::get('/transactions/{id}', [TransactionController::class, 'show']);
+Route::post('/transactions', [TransactionController::class, 'store']);
+Route::put('/transactions/{id}', [TransactionController::class, 'update']);
+Route::delete('/transactions/{id}', [TransactionController::class, 'destroy']);
+
+// Rutas de UserController
+use App\Http\Controllers\UserController;
+
+Route::get('/users', [UserController::class, 'index']);
+Route::get('/users/{id}', [UserController::class, 'show']);
