@@ -26,6 +26,7 @@ class ProfileController extends Controller
      */
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
+        // El método fill usa los datos validados que incluyen lat/lng/address
         $request->user()->fill($request->validated());
 
         if ($request->user()->isDirty('email')) {
