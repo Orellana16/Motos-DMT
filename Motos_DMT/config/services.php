@@ -38,4 +38,9 @@ return [
     'google' => [
         'maps_key' => env('GOOGLE_MAPS_API_KEY'),
     ],
+
+    'exchangerate' => [
+        'key' => env('EXCHANGE_RATE_API_KEY'),
+        'url' => env('EXCHANGE_RATE_URL'),
+    ],
 ];
