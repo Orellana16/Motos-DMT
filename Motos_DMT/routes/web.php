@@ -86,3 +86,10 @@ use App\Http\Controllers\UserController;
 
 Route::get('/users', [UserController::class, 'index']);
 Route::get('/users/{id}', [UserController::class, 'show']);
+
+
+// Rutas de RentalController
+use App\Http\Controllers\RentalController;
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::resource('rentals', RentalController::class)->only(['index', 'store', 'destroy']);
+});

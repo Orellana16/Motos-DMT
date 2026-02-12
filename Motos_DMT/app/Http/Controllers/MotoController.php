@@ -90,7 +90,7 @@ class MotoController extends Controller
 
 public function destroy($id)
 {
-    $moto = \App\Models\Moto::findOrFail($id);
+    $moto = Moto::findOrFail($id);
     $moto->delete();
 
     return response()->json([

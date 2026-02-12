@@ -40,6 +40,10 @@ class PaymentReceived extends Mailable
     {
         return new Content(
             view: 'emails.payment_received',
+            with: [
+                'mapLink' => 'https://www.google.com/maps/search/?api=1&query=36.529,-6.292',
+                'transaction' => $this->transaction
+            ],
         );
     }
 

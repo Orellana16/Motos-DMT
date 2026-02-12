@@ -78,7 +78,7 @@ class AccessoryController extends Controller
 
 public function destroy($id)
 {
-    $accessory = \App\Models\Accessory::findOrFail($id);
+    $accessory = Accessory::findOrFail($id);
     $accessory->delete();
 
     return response()->json([

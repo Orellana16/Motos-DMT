@@ -76,7 +76,7 @@ class ReviewController extends Controller
 
 public function destroy($id)
 {
-    $review = \App\Models\Review::findOrFail($id);
+    $review = Review::findOrFail($id);
     $review->delete();
 
     return response()->json([
