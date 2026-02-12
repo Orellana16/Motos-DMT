@@ -1,69 +1,41 @@
 <!DOCTYPE html>
 <html>
-
 <head>
     <style>
-        body {
-            font-family: sans-serif;
-            line-height: 1.6;
-            color: #333;
-        }
-
-        .container {
-            width: 80%;
-            margin: 20px auto;
-            border: 1px solid #eee;
-            padding: 20px;
-            border-radius: 10px;
-        }
-
-        .header {
-            background: #d32f2f;
-            color: white;
-            padding: 10px;
-            text-align: center;
-            border-radius: 10px 10px 0 0;
-        }
-
-        .content {
-            margin: 20px 0;
-        }
-
-        .footer {
-            font-size: 0.8em;
-            color: #777;
-            text-align: center;
-        }
+        .card { border: 1px solid #e2e8f0; padding: 20px; border-radius: 8px; font-family: sans-serif; }
+        .badge { padding: 4px 8px; border-radius: 4px; font-weight: bold; }
+        .reserva { background-color: #dcfce7; color: #166534; }
+        .alquiler { background-color: #dbeafe; color: #1e40af; }
     </style>
 </head>
-
 <body>
-    <div class="container">
-        <div class="header">
-            <h1>Motos DMT</h1>
-        </div>
-        <div class="content">
-            <h2>¡Reserva Confirmada!</h2>
+    <div class="card">
+        <h1>¡Hola, {{ auth()->user()->name }}!</h1>
 
-            <p>Hola {{ $userName }},</p>
-            <p>¡Gracias por tu reserva! Hemos recibido tu pago de {{ number_format($amount, 2) }} {{ $currency }} por la
-                moto {{ $motoModel }}.</p>
+        @if($type === 'reserva')
+            <p>Has realizado la <strong>reserva de compra</strong> para tu próxima moto.</p>
+            <span class="badge reserva">Tipo: Compra</span>
+            <ul>
+                <li>Moto: {{ $data['moto_modelo'] }}</li>
+                <li>Señal pagada: {{ $data['amount'] }}€</li>
+            </ul>
+            <p>Pásate por nuestra oficina para formalizar la financiación y llevarte tu moto.</p>
+        @else
+            <p>Tu <strong>alquiler de moto</strong> ha sido confirmado correctamente.</p>
+            <span class="badge alquiler">Tipo: Alquiler</span>
+            <ul>
+                <li>Moto: {{ $data->moto->modelo }}</li>
+                <li>Desde: {{ $data->start_date }}</li>
+                <li>Hasta: {{ $data->end_date }}</li>
+                <li>Total pagado: {{ number_format($data->total_price, 2) }}€</li>
+            </ul>
+            <p>Recuerda traer tu carnet de conducir original el día de la recogida.</p>
+        @endif
 
-            <p>Para completar el proceso, debes acudir a nuestras oficinas con tu DNI y carnet de conducir.</p>
-
-            <div style="margin: 20px 0; padding: 15px; border: 1px solid #ddd;">
-                <h3>📍 ¿Dónde estamos?</h3>
-                <p>Haz clic en el enlace para ver la ruta en el mapa:</p>
-                <a href="{{ $mapLink }}"
-                    style="background: #4F46E5; color: white; padding: 10px 20px; text-decoration: none; rounded: 5px;">
-                    Ver ubicación en Google Maps
-                </a>
-            </div>
-        </div>
-        <div class="footer">
-            © 2026 Motos DMT - Pasión por las dos ruedas.
-        </div>
+        <hr>
+        <h3>📍 Ubicación de la oficina</h3>
+        <p>Te esperamos en: Calle del Motor, 12, Cádiz.</p>
+        <a href="https://maps.google.com/?q=IES+Mar+de+Cádiz">Ver en Google Maps</a>
     </div>
 </body>
-
 </html>
