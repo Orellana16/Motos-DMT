@@ -5,12 +5,12 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('inicio');
 });
 
 Route::get('/dashboard', function () {
     return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+})->middleware(['auth', 'verified'])->name('catalogo');
 
 Route::middleware('auth', 'verified')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -25,7 +25,7 @@ Route::get('/checkout/{moto_id}', [PaymentController::class, 'showCheckout'])
 Route::post('/paypal/process', [PaymentController::class, 'processPayment'])
     ->middleware('auth');
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
 
 // Rutas de MotoController
 use App\Http\Controllers\MotoController;
@@ -92,4 +92,7 @@ Route::get('/users/{id}', [UserController::class, 'show']);
 use App\Http\Controllers\RentalController;
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('rentals', RentalController::class)->only(['index', 'store', 'destroy']);
+    Route::post('/rentals', [RentalController::class, 'store'])->name('rentals.store');
+    Route::get('/rentals', [RentalController::class, 'index'])->name('rentals.index');
+    Route::delete('/rentals/{id}', [RentalController::class, 'destroy'])->name('rentals.destroy');
 });

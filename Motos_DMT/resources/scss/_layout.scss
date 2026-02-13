@@ -1,0 +1,210 @@
+// ============================================
+// LAYOUT
+// ============================================
+
+// ==================== BACKGROUND ====================
+
+.background {
+    position: fixed;
+    inset: 0;
+    z-index: $z-background;
+    
+    &__image {
+        position: absolute;
+        inset: 0;
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+    
+    &__overlay {
+        position: absolute;
+        inset: 0;
+        
+        &--horizontal {
+            @include gradient-overlay;
+        }
+        
+        &--vertical {
+            background: linear-gradient(
+                to top,
+                rgba($black, 0.9),
+                transparent,
+                rgba($black, 0.7)
+            );
+        }
+    }
+    
+    &__ambient {
+        position: absolute;
+        border-radius: 50%;
+        filter: blur(120px);
+        
+        &--primary {
+            top: 33%;
+            left: 25%;
+            width: 500px;
+            height: 500px;
+            background: rgba($red-600, 0.1);
+            animation: pulse-glow 4s ease-in-out infinite;
+        }
+        
+        &--secondary {
+            bottom: 25%;
+            right: 25%;
+            width: 400px;
+            height: 400px;
+            background: rgba($red-900, 0.15);
+            animation: pulse-glow 5s ease-in-out infinite 1s;
+        }
+    }
+}
+
+// ==================== DECORATIVE LINES ====================
+
+.decorative-lines {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    z-index: $z-decorative;
+    pointer-events: none;
+    
+    &--left {
+        left: 0;
+        width: 4px;
+        background: linear-gradient(
+            to bottom,
+            transparent,
+            $red-600,
+            transparent
+        );
+        opacity: 0.6;
+    }
+    
+    &--left-inner {
+        left: 16px;
+        width: 1px;
+        background: linear-gradient(
+            to bottom,
+            transparent,
+            rgba($red-600, 0.4),
+            transparent
+        );
+    }
+    
+    &--right {
+        right: 0;
+        width: 4px;
+        background: linear-gradient(
+            to bottom,
+            transparent,
+            rgba($red-600, 0.3),
+            transparent
+        );
+        opacity: 0.4;
+    }
+}
+
+// ==================== HEADER ====================
+
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: $z-header;
+    padding: $spacing-md $spacing-3xl;
+    @include glass(24px, rgba($black, 0.6));
+    border-bottom: 1px solid rgba($red-900, 0.4);
+    
+    &__container {
+        @include flex-between;
+        max-width: 1800px;
+        margin: 0 auto;
+    }
+}
+
+// ==================== MAIN / HERO ====================
+
+.hero {
+    position: relative;
+    z-index: $z-content;
+    height: 100vh;
+    @include flex-center;
+    padding: 0 $spacing-3xl;
+    
+    &__container {
+        @include flex-between;
+        width: 100%;
+        max-width: 1800px;
+        margin: 0 auto;
+    }
+    
+    &__left {
+        @include flex-column;
+        align-items: flex-start;
+        gap: $spacing-lg;
+        max-width: 640px;
+        animation: slide-in-left 0.8s ease-out;
+    }
+    
+    &__right {
+        @include flex-column;
+        align-items: center;
+        gap: $spacing-lg;
+        animation: slide-in-right 0.8s ease-out;
+    }
+    
+    &__description {
+        color: $gray-300;
+        font-size: 1.25rem;
+        line-height: 1.7;
+        font-weight: 300;
+        letter-spacing: 0.025em;
+        
+        .highlight {
+            color: $red-500;
+            font-weight: 600;
+        }
+    }
+}
+
+// ==================== FOOTER ====================
+
+.footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: $z-decorative;
+    padding: $spacing-md $spacing-3xl;
+    @include glass(8px, rgba($black, 0.7));
+    border-top: 1px solid rgba($gray-800, 0.5);
+    
+    &__container {
+        @include flex-between;
+        max-width: 1800px;
+        margin: 0 auto;
+    }
+    
+    &__copyright {
+        color: $gray-400;
+        font-size: 0.875rem;
+        letter-spacing: 0.05em;
+    }
+    
+    &__links {
+        display: flex;
+        align-items: center;
+        gap: $spacing-lg;
+    }
+    
+    &__link {
+        color: $gray-400;
+        font-size: 0.875rem;
+        
+        &:hover {
+            color: $red-500;
+        }
+    }
+}

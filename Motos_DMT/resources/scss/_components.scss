@@ -1,0 +1,300 @@
+// ============================================
+// COMPONENTES
+// ============================================
+
+// ========== BOTONES ==========
+.btn {
+    display: inline-flex;
+    align-items: center;
+    gap: $space-md;
+    padding: $space-lg $space-2xl;
+    font-family: $font-display;
+    font-weight: 700;
+    font-size: 1rem;
+    letter-spacing: 0.1em;
+    text-decoration: none;
+    border-radius: $radius-full;
+    border: 2px solid transparent;
+    cursor: pointer;
+    transition: $transition;
+
+    &--primary {
+        background: $red;
+        color: $white;
+        border-color: $red;
+
+        &:hover {
+            background: $red-dark;
+            border-color: $red-dark;
+            transform: translateY(-2px);
+        }
+    }
+
+    &--secondary {
+        background: transparent;
+        color: $red-light;
+        border-color: $red;
+
+        &:hover {
+            background: $red;
+            color: $white;
+        }
+    }
+
+    &__icon {
+        width: 20px;
+        height: 20px;
+    }
+}
+
+// ========== BADGE ==========
+.badge {
+    display: inline-flex;
+    align-items: center;
+    gap: $space-sm;
+    padding: $space-sm $space-lg;
+    background: rgba($red-dark, 0.3);
+    border: 1px solid rgba($red, 0.5);
+    border-radius: $radius-full;
+
+    &__dot {
+        width: 8px;
+        height: 8px;
+        background: $red;
+        border-radius: 50%;
+    }
+
+    &__text {
+        color: $red-light;
+        font-size: 0.8rem;
+        font-weight: 600;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+    }
+}
+
+// ========== LOGO ==========
+.logo {
+    display: flex;
+    align-items: center;
+    gap: $space-md;
+
+    &__icon {
+        width: 45px;
+        height: 45px;
+        background: $red;
+        border-radius: $radius;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        span {
+            font-family: $font-display;
+            font-weight: 900;
+            font-size: 1.2rem;
+            color: $white;
+        }
+    }
+
+    &__text {
+        &-title {
+            font-family: $font-display;
+            font-weight: 700;
+            font-size: 1.4rem;
+            color: $white;
+            letter-spacing: 0.05em;
+        }
+
+        &-subtitle {
+            font-size: 0.7rem;
+            color: $gray-light;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+        }
+    }
+
+    img {
+        width: 45px;
+        height: 45px;
+    }
+}
+
+// ========== NAVEGACIÓN ==========
+.nav {
+    display: flex;
+    gap: $space-sm;
+
+    &__link {
+        padding: $space-sm $space-lg;
+        font-family: $font-display;
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: $gray-light;
+        border-radius: $radius-full;
+        transition: $transition;
+
+        &:hover {
+            color: $white;
+            background: rgba($white, 0.1);
+        }
+
+        &--active {
+            background: $red;
+            color: $white;
+
+            &:hover {
+                background: $red-dark;
+            }
+        }
+    }
+}
+
+// ========== USER SECTION ==========
+.user-section {
+    display: flex;
+    align-items: center;
+    gap: $space-lg;
+
+    &__link {
+        color: $gray-light;
+        font-size: 0.9rem;
+
+        &:hover {
+            color: $white;
+        }
+    }
+
+    &__divider {
+        width: 1px;
+        height: 20px;
+        background: $gray;
+    }
+
+    &__avatar {
+        width: 40px;
+        height: 40px;
+        background: $gray-dark;
+        border-radius: $radius;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: $transition;
+
+        svg {
+            width: 20px;
+            height: 20px;
+            color: $gray-light;
+        }
+
+        &:hover {
+            background: $red;
+
+            svg {
+                color: $white;
+            }
+        }
+    }
+}
+
+// ========== STATS ==========
+.stats {
+    display: flex;
+    align-items: center;
+    gap: $space-xl;
+
+    &__item {
+        text-align: center;
+    }
+
+    &__value {
+        font-family: $font-display;
+        font-size: 2.2rem;
+        font-weight: 900;
+        color: $white;
+    }
+
+    &__label {
+        font-size: 0.8rem;
+        color: $gray;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+    }
+
+    &__divider {
+        width: 1px;
+        height: 50px;
+        background: $gray;
+    }
+}
+
+// ========== HERO IMAGE ==========
+.hero-image {
+    &__img {
+        width: 380px;
+        transition: $transition;
+
+        &:hover {
+            transform: scale(1.03);
+        }
+    }
+}
+
+// ========== SOCIAL ==========
+.social {
+    display: flex;
+    gap: $space-md;
+
+    &__link {
+        width: 40px;
+        height: 40px;
+        background: $gray-dark;
+        border-radius: $radius;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: $transition;
+
+        svg {
+            width: 18px;
+            height: 18px;
+            color: $gray;
+        }
+
+        &:hover {
+            background: $red;
+
+            svg {
+                color: $white;
+            }
+        }
+    }
+}
+
+// ========== SECONDARY LINKS ==========
+.secondary-links {
+    display: flex;
+    align-items: center;
+    gap: $space-lg;
+
+    &__link {
+        display: flex;
+        align-items: center;
+        gap: $space-sm;
+        color: $gray;
+        font-size: 0.85rem;
+
+        svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        &:hover {
+            color: $red-light;
+        }
+    }
+
+    &__separator {
+        color: $gray;
+    }
+}
