@@ -1,102 +1,221 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Finalizar Operación') }}
-        </h2>
-    </x-slot>
+<!DOCTYPE html>
+<html lang="es">
 
+<head>
+    <meta charset="UTF-8">
+    <title>Finalizar Operación - Motos DMT</title>
+    @vite('resources/scss/app.scss')
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/themes/dark.css">
+</head>
 
-    <div class="py-12">
-        <div class="max-w-5xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-8" x-data="checkoutHandler(
-                     {{ $moto->precio }}, 
-                     '{{ $currency }}', 
-                     '{{ request('mode', 'reserva') }}', 
-                     '{{ request('fechas', '') }}'
-                 )" x-init="init()">
+<body>
 
-                <div class="text-center mb-8">
-                    <h2 class="text-2xl font-bold text-gray-800">Hola, {{ Auth::user()->name }}.</h2>
-                    <p class="text-gray-600">Gestión para: <span
-                            class="font-bold text-indigo-600">{{ $moto->modelo }}</span></p>
-                </div>
-
-                <div class="flex justify-center mb-10">
-                    <div class="inline-flex rounded-md shadow-sm" role="group">
-                        <button @click="setMode('reserva')" type="button"
-                            :class="mode === 'reserva' ? 'bg-indigo-600 text-white' : 'bg-white text-gray-700'"
-                            class="px-6 py-2 text-sm font-medium border border-gray-200 rounded-l-lg hover:bg-gray-100 transition">
-                            🛒 Comprar (Dar Señal)
-                        </button>
-                        <button @click="setMode('alquiler')" type="button"
-                            :class="mode === 'alquiler' ? 'bg-indigo-600 text-white' : 'bg-white text-gray-700'"
-                            class="px-6 py-2 text-sm font-medium border border-gray-200 rounded-r-lg hover:bg-gray-100 transition">
-                            📅 Alquiler Diario
-                        </button>
-                    </div>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-
-                    <div class="space-y-6">
-
-                        <div x-show="mode === 'alquiler'" x-transition
-                            class="bg-blue-50 p-6 rounded-lg border border-blue-200">
-                            <h3 class="text-lg font-bold text-blue-800 mb-4">Configurar Alquiler (1% día)</h3>
-                            <label class="block text-sm font-medium text-gray-700">Selecciona fechas:</label>
-                            <input x-ref="datepicker" type="text"
-                                class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 bg-white"
-                                placeholder="Seleccionar días...">
-
-                            <p class="mt-3 text-sm text-blue-600 font-semibold">
-                                Días totales: <span x-text="dias" class="font-bold text-lg"></span>
-                            </p>
-                        </div>
-
-                        <div x-show="mode === 'reserva'" x-transition
-                            class="bg-green-50 p-6 rounded-lg border border-green-200">
-                            <h3 class="text-lg font-bold text-green-800 mb-2">Pago de Señal</h3>
-                            <p class="text-sm text-green-700">Se requiere el 25% del valor de la moto para formalizar la
-                                reserva.</p>
-                        </div>
-
-                        <div class="bg-gray-50 p-6 rounded-lg border border-gray-200">
-                            <h3 class="text-xs font-bold mb-2 text-gray-500 uppercase italic">Moneda de pago</h3>
-                            <form action="{{ route('checkout', $moto_id) }}" method="GET" id="currency-form">
-                                <input type="hidden" name="mode" :value="mode">
-                                <input type="hidden" name="fechas" :value="fechas">
-
-                                <select name="currency" onchange="this.form.submit()"
-                                    class="block w-full text-sm border-gray-300 rounded-md shadow-sm">
-                                    <option value="EUR" {{ $currency == 'EUR' ? 'selected' : '' }}>Euro (EUR)</option>
-                                    <option value="USD" {{ $currency == 'USD' ? 'selected' : '' }}>Dólar (USD)</option>
-                                    <option value="GBP" {{ $currency == 'GBP' ? 'selected' : '' }}>Libra (GBP)</option>
-                                </select>
-                            </form>
-                        </div>
-                    </div>
-
-                    <div
-                        class="flex flex-col justify-center items-center bg-gray-50 rounded-xl p-8 border-2 border-dashed border-gray-300">
-                        <div class="text-center mb-8">
-                            <p class="text-sm text-gray-500 uppercase font-bold"
-                                x-text="mode === 'reserva' ? 'Señal a pagar' : 'Precio Total Alquiler'"></p>
-                            <p class="text-5xl font-black text-indigo-600">
-                                <span x-text="totalPagar"></span><span x-text="simbolo"></span>
-                            </p>
-                        </div>
-
-                        <div id="paypal-button-container" class="w-full"></div>
-                        <p id="paypal-error" class="hidden text-red-500 text-sm mt-2">Error al cargar PayPal.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
+    {{-- Fondo --}}
+    <div class="background">
+        <div class="background__overlay"></div>
     </div>
 
+    {{-- Header --}}
+    <header class="header">
+        <div class="header__container">
+
+            <a href="{{ url('/') }}" class="logo">
+                <div class="logo__icon"><img src="{{ asset('img/logo.png') }}" alt="Logo Motos DMT"></div>
+                <div class="logo__text">
+                    <div class="logo__text-title">MOTOS DMT</div>
+                    <div class="logo__text-subtitle">NI UN PELO DE TONTOS</div>
+                </div>
+            </a>
+
+            <nav class="nav">
+                <a href="{{ url('/') }}" class="nav__link">INICIO</a>
+                <a href="#" class="nav__link">CATÁLOGO</a>
+                <a href="#" class="nav__link nav__link--active">CHECKOUT</a>
+            </nav>
+
+            <div class="user-section">
+                <span class="user-section__name">{{ Auth::user()->name }}</span>
+                <div class="user-section__avatar">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                            d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                    </svg>
+                </div>
+            </div>
+
+        </div>
+    </header>
+
+    {{-- Contenido principal --}}
+    <main class="checkout" x-data="checkoutHandler(
+        {{ $precio_convertido }}, 
+        '{{ $currency }}', 
+        '{{ request('mode', 'reserva') }}', 
+        '{{ request('fechas', '') }}'
+    )" x-init="init()">
+
+        <div class="checkout__container">
+
+            {{-- Título --}}
+            <div class="checkout__header">
+                <h1 class="checkout__title">Finalizar Operación</h1>
+                <p class="checkout__subtitle">
+                    Gestión para: <span class="highlight">{{ $moto->modelo }}</span>
+                </p>
+            </div>
+
+            {{-- Toggle de modo --}}
+            <div class="checkout__toggle">
+                <button @click="setMode('reserva')" type="button" class="toggle-btn"
+                    :class="mode === 'reserva' ? 'toggle-btn--active' : ''">
+                    <svg class="toggle-btn__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+                    </svg>
+                    Comprar (Señal)
+                </button>
+                <button @click="setMode('alquiler')" type="button" class="toggle-btn"
+                    :class="mode === 'alquiler' ? 'toggle-btn--active' : ''">
+                    <svg class="toggle-btn__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
+                    Alquiler Diario
+                </button>
+            </div>
+
+            {{-- Grid principal --}}
+            <div class="checkout__grid">
+
+                {{-- Columna izquierda: Opciones --}}
+                <div class="checkout__options">
+
+                    {{-- Panel Alquiler --}}
+                    <div x-show="mode === 'alquiler'" x-transition class="option-card option-card--rental">
+                        <div class="option-card__header">
+                            <svg class="option-card__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                            </svg>
+                            <h3 class="option-card__title">Configurar Alquiler</h3>
+                        </div>
+                        <p class="option-card__desc">Tarifa: 1% del valor por día</p>
+
+                        <label class="input-label">Selecciona fechas:</label>
+                        <input x-ref="datepicker" type="text" class="input-field" placeholder="Seleccionar días...">
+
+                        <div class="option-card__result">
+                            <span>Días totales:</span>
+                            <span class="option-card__days" x-text="dias"></span>
+                        </div>
+                    </div>
+
+                    {{-- Panel Reserva --}}
+                    <div x-show="mode === 'reserva'" x-transition class="option-card option-card--purchase">
+                        <div class="option-card__header">
+                            <svg class="option-card__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                            <h3 class="option-card__title">Pago de Señal</h3>
+                        </div>
+                        <p class="option-card__desc">
+                            Se requiere el <strong>25%</strong> del valor de la moto para formalizar la reserva.
+                        </p>
+                        <div class="option-card__info">
+                            <span>Precio total de la moto:</span>
+                            <span class="option-card__price">{{ number_format($precio_convertido, 2) }}<span
+                                    x-text="simbolo"></span></span>
+                        </div>
+                    </div>
+
+                    {{-- Selector de moneda --}}
+                    <div class="currency-card">
+                        <label class="input-label">Moneda de pago</label>
+                        <form action="{{ route('checkout', $moto_id) }}" method="GET" id="currency-form">
+                            <input type="hidden" name="mode" :value="mode">
+                            <input type="hidden" name="fechas" :value="fechas">
+                            <select name="currency" onchange="this.form.submit()" class="input-select">
+                                <option value="EUR" {{ $currency == 'EUR' ? 'selected' : '' }}>€ Euro (EUR)</option>
+                                <option value="USD" {{ $currency == 'USD' ? 'selected' : '' }}>$ Dólar (USD)</option>
+                                <option value="GBP" {{ $currency == 'GBP' ? 'selected' : '' }}>£ Libra (GBP)</option>
+                            </select>
+                        </form>
+                    </div>
+
+                </div>
+
+                {{-- Columna derecha: Resumen y PayPal --}}
+                <div class="checkout__summary">
+
+                    <div class="summary-card">
+                        <div class="summary-card__label"
+                            x-text="mode === 'reserva' ? 'SEÑAL A PAGAR' : 'TOTAL ALQUILER'"></div>
+                        <div class="summary-card__price">
+                            <span x-text="totalPagar"></span><span x-text="simbolo"></span>
+                        </div>
+
+                        <div class="summary-card__divider"></div>
+
+                        <div id="paypal-button-container" class="summary-card__paypal"></div>
+                        <p id="paypal-error" class="hidden summary-card__error">Error al cargar PayPal.</p>
+                    </div>
+
+                    {{-- Info adicional --}}
+                    <div class="checkout__info">
+                        <div class="info-item">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                            </svg>
+                            <span>Pago 100% seguro</span>
+                        </div>
+                        <div class="info-item">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                            <span>Confirmación inmediata</span>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+            {{-- Botón volver --}}
+            <div class="checkout__back">
+                <a href="{{ url()->previous() }}" class="btn-back">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                    </svg>
+                    Volver atrás
+                </a>
+            </div>
+
+        </div>
+
+    </main>
+
+    {{-- Footer --}}
+    <footer class="footer footer--simple">
+        <div class="footer__container">
+            <span class="footer__copyright">© 2025 Motos DMT. Todos los derechos reservados.</span>
+        </div>
+    </footer>
+
+{{-- Scripts --}}
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-    {{-- Usamos client-id=sb para mayor estabilidad en pruebas locales --}}
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/es.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <script src="https://www.paypal.com/sdk/js?client-id=sb&currency={{ $currency }}"></script>
 
     <script>
@@ -119,30 +238,46 @@
                         mode: "range",
                         minDate: "today",
                         dateFormat: "Y-m-d",
-                        defaultDate: this.fechas ? this.fechas.split(' to ') : null,
+                        locale: "es",
+                        // Soporta tanto el separador inglés "to" como el español "a"
+                        defaultDate: this.fechas ? this.fechas.split(/ to | a /) : null,
                         onChange: (selectedDates, dateStr) => {
+                            this.fechas = dateStr;
                             if (selectedDates.length === 2) {
-                                this.fechas = dateStr;
                                 this.calculateDays();
+                            } else {
+                                this.dias = 1;
                             }
                         }
                     });
                 },
 
                 calculateDays() {
-                    if (this.fechas && this.fechas.includes(' to ')) {
-                        const dates = this.fechas.split(' to ');
-                        const start = new Date(dates[0]);
-                        const end = new Date(dates[1]);
-                        const diffTime = Math.abs(end - start);
-                        this.dias = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1;
+                    // Detectamos el separador dinámicamente según lo que devuelva flatpickr
+                    if (this.fechas && (this.fechas.includes(' to ') || this.fechas.includes(' a '))) {
+                        const separator = this.fechas.includes(' to ') ? ' to ' : ' a ';
+                        const dates = this.fechas.split(separator);
+                        
+                        if (dates.length === 2) {
+                            const start = new Date(dates[0]);
+                            const end = new Date(dates[1]);
+                            
+                            if (!isNaN(start) && !isNaN(end)) {
+                                const diffTime = Math.abs(end - start);
+                                this.dias = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1;
+                            }
+                        }
                     } else {
                         this.dias = 1;
                     }
+                    
+                    // Si el modo es alquiler, refrescamos PayPal con el nuevo precio
+                    if (this.mode === 'alquiler') this.initPayPal();
                 },
 
                 setMode(newMode) {
                     this.mode = newMode;
+                    this.initPayPal();
                 },
 
                 get totalPagar() {
@@ -156,16 +291,14 @@
                 },
 
                 initPayPal() {
-                    if (typeof paypal === 'undefined') {
-                        document.getElementById('paypal-error').classList.remove('hidden');
-                        return;
-                    }
+                    if (typeof paypal === 'undefined') return;
 
-                    // Limpiamos el div antes de renderizar para que no se acumulen botones
-                    document.getElementById('paypal-button-container').innerHTML = '';
+                    const container = document.getElementById('paypal-button-container');
+                    if (!container) return;
 
+                    container.innerHTML = '';
                     paypal.Buttons({
-                        style: { layout: 'vertical', color: 'gold', shape: 'rect' },
+                        style: { layout: 'vertical', color: 'black', shape: 'rect', label: 'pay' },
                         createOrder: (data, actions) => {
                             return actions.order.create({
                                 purchase_units: [{
@@ -185,9 +318,10 @@
                                 };
 
                                 if (this.mode === 'alquiler') {
-                                    const dateParts = this.fechas.split(' to ');
-                                    payload.start_date = dateParts[0];
-                                    payload.end_date = dateParts[1];
+                                    const sep = this.fechas.includes(' to ') ? ' to ' : ' a ';
+                                    const parts = this.fechas.split(sep);
+                                    payload.start_date = parts[0];
+                                    payload.end_date = parts[1];
                                 }
 
                                 return fetch(targetUrl, {
@@ -198,7 +332,8 @@
                                     },
                                     body: JSON.stringify(payload)
                                 }).then(res => {
-                                    window.location.href = "{{ route('dashboard') }}?success=1";
+                                    // Redirigir según el tipo de operación
+                                    window.location.href = this.mode === 'alquiler' ? "{{ route('rentals.index') }}" : "{{ url('/') }}?reserva_ok=1";
                                 });
                             });
                         }
@@ -207,4 +342,7 @@
             }));
         });
     </script>
-</x-app-layout>
+
+</body>
+
+</html>

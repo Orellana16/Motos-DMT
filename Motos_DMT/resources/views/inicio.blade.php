@@ -14,7 +14,7 @@
         rel="stylesheet">
 </head>
 
-<body>
+<body class="no-scroll">
 
     {{-- Fondo --}}
     <div class="background">
