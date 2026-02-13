@@ -36,8 +36,8 @@
 
             <nav class="nav">
                 <a href="{{ url('/') }}" class="nav__link nav__link--active">INICIO</a>
-                <a href="#" class="nav__link">CATÁLOGO</a>
-                <a href="#" class="nav__link">NOSOTROS</a>
+                <a href="{{ url('/catalogo') }}" class="nav__link">CATÁLOGO</a>
+                <a href="{{ url('/nosotros') }}" class="nav__link">NOSOTROS</a>
             </nav>
 
             <div class="user-section">

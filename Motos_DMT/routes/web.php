@@ -8,6 +8,22 @@ Route::get('/', function () {
     return view('inicio');
 });
 
+Route::get('/catalogo', function () {
+    return view('catalogo');
+});
+
+Route::get('/nosotros', function () {
+    return view('nosotros');
+});
+
+Route::get('/new', function () {
+    return view('new');
+});
+
+Route::get('/edit', function () {
+    return view('edit');
+});
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('catalogo');
