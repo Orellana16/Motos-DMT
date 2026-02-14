@@ -1,0 +1,125 @@
+// ============================================
+// MIXINS
+// ============================================
+
+// Flexbox helpers
+@mixin flex-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@mixin flex-between {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+@mixin flex-column {
+    display: flex;
+    flex-direction: column;
+}
+
+// Gradientes
+@mixin gradient-red {
+    background: linear-gradient(135deg, $red-700, $red-600);
+}
+
+@mixin gradient-red-hover {
+    background: linear-gradient(135deg, $red-600, $red-500);
+}
+
+@mixin gradient-overlay {
+    background: linear-gradient(
+        to right,
+        $black,
+        rgba($black, 0.8),
+        rgba($black, 0.4)
+    );
+}
+
+// Glass effect
+@mixin glass($blur: 16px, $bg: rgba($black, 0.6)) {
+    background: $bg;
+    backdrop-filter: blur($blur);
+    -webkit-backdrop-filter: blur($blur);
+}
+
+// Text glow
+@mixin text-glow($color: $red-500, $intensity: 0.7) {
+    text-shadow: 
+        0 0 15px rgba($color, $intensity),
+        0 0 30px rgba($color, $intensity * 0.6);
+}
+
+@mixin text-glow-white {
+    text-shadow: 0 0 20px rgba($white, 0.3);
+}
+
+// Box glow
+@mixin box-glow {
+    box-shadow: $shadow-glow-red;
+}
+
+@mixin box-glow-hover {
+    box-shadow: $shadow-glow-red-hover;
+}
+
+// Border gradient
+@mixin border-glow {
+    box-shadow: 
+        inset 0 0 20px rgba($red-600, 0.1),
+        0 0 20px rgba($red-600, 0.1);
+}
+
+// Botón base
+@mixin button-base {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: $spacing-md;
+    padding: $spacing-lg $spacing-3xl;
+    font-family: $font-display;
+    font-weight: 700;
+    font-size: 1.125rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border-radius: $radius-full;
+    cursor: pointer;
+    overflow: hidden;
+    transition: all $transition-slow;
+    
+    &::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+            90deg,
+            transparent,
+            rgba($white, 0.25),
+            transparent
+        );
+        transform: translateX(-200%);
+        transition: transform $transition-slower;
+    }
+    
+    &:hover::before {
+        transform: translateX(200%);
+    }
+}
+
+// Transición suave
+@mixin smooth-transition($properties: all) {
+    transition: $properties $transition-base;
+}
+
+// Hover lift
+@mixin hover-lift($scale: 1.05) {
+    transition: transform $transition-base;
+    
+    &:hover {
+        transform: scale($scale);
+    }
+}

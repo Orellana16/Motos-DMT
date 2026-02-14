@@ -1,97 +1,49 @@
 <?php
 
-use App\Http\Controllers\PaymentController;
-use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\MotoWebController;
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('inicio');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/nosotros', function () {
+    return view('nosotros');
+});
 
-Route::middleware('auth', 'verified')->group(function () {
+// ✅ CORREGIDO: Ahora el catálogo llama al controlador correctamente
+Route::get('/catalogo', [MotoController::class, 'index'])->name('catalogo.index');
+
+/*
+|--------------------------------------------------------------------------
+| Rutas Autenticadas (Requieren Login)
+|--------------------------------------------------------------------------
+*/
+
+Route::middleware(['auth', 'verified'])->group(function () {
+    
+    // Dashboard
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->name('dashboard');
+
+    // Perfil de Usuario
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-});
 
-Route::get('/checkout/{moto_id}', [PaymentController::class, 'showCheckout'])
-    ->middleware('auth', 'verified')
-    ->name('checkout');
+    // Gestión de Motos (Admin/User acciones)
+    Route::get('/motos/create', [MotoController::class, 'create'])->name('motos.create');
+    Route::post('/motos', [MotoController::class, 'store'])->name('motos.store');
+    Route::get('/motos/{id}/edit', [MotoController::class, 'edit'])->name('edit');
+    Route::put('/motos/{id}', [MotoController::class, 'update'])->name('motos.update');
+    Route::delete('/motos/{id}', [MotoController::class, 'destroy'])->name('motos.destroy');
+    Route::get('/motos/{id}', [MotoController::class, 'show'])->name('motos.show');
 
-Route::post('/paypal/process', [PaymentController::class, 'processPayment'])
-    ->middleware('auth');
+    // Pagos y Checkout
+    Route::get('/checkout/{moto_id}', [PaymentController::class, 'showCheckout'])->name('checkout');
+    Route::post('/paypal/process', [PaymentController::class, 'processPayment'])->name('paypal.process');
 
-require __DIR__.'/auth.php';
-
-// Rutas de MotoController
-use App\Http\Controllers\MotoController;
-
-Route::get('/motos', [MotoController::class, 'index']);
-Route::get('/motos/{id}', [MotoController::class, 'show']);
-Route::post('/motos', [MotoController::class, 'store']);
-Route::put('/motos/{id}', [MotoController::class, 'update']);
-Route::delete('/motos/{id}', [MotoController::class, 'destroy']);
-
-// Rutas de AccessoryController
-use App\Http\Controllers\AccessoryController;
-
-Route::get('/accessories', [AccessoryController::class, 'index']);
-Route::get('/accessories/{id}', [AccessoryController::class, 'show']);
-Route::post('/accessories', [AccessoryController::class, 'store']);
-Route::put('/accessories/{id}', [AccessoryController::class, 'update']);
-Route::delete('/accessories/{id}', [AccessoryController::class, 'destroy']);
-
-// Rutas de ReviewController
-use App\Http\Controllers\ReviewController;
-
-Route::get('/reviews', [ReviewController::class, 'index']);
-Route::get('/reviews/{id}', [ReviewController::class, 'show']);
-Route::post('/reviews', [ReviewController::class, 'store']);
-Route::put('/reviews/{id}', [ReviewController::class, 'update']);
-Route::delete('/reviews/{id}', [ReviewController::class, 'destroy']);
-
-// Rutas de CategoryController
-use App\Http\Controllers\CategoryController;
-
-Route::get('/categories', [CategoryController::class, 'index']);
-Route::get('/categories/{id}', [CategoryController::class, 'show']);
-Route::post('/categories', [CategoryController::class, 'store']);
-Route::put('/categories/{id}', [CategoryController::class, 'update']);
-Route::delete('/categories/{id}', [CategoryController::class, 'destroy']);
-
-// Rutas de ManufacturerController
-use App\Http\Controllers\ManufacturerController;
-
-Route::get('/manufacturers', [ManufacturerController::class, 'index']);
-Route::get('/manufacturers/{id}', [ManufacturerController::class, 'show']);
-Route::post('/manufacturers', [ManufacturerController::class, 'store']);
-Route::put('/manufacturers/{id}', [ManufacturerController::class, 'update']);
-Route::delete('/manufacturers/{id}', [ManufacturerController::class, 'destroy']);
-
-// Rutas de TransactionController
-use App\Http\Controllers\TransactionController;
-
-Route::get('/transactions', [TransactionController::class, 'index']);
-Route::get('/transactions/{id}', [TransactionController::class, 'show']);
-Route::post('/transactions', [TransactionController::class, 'store']);
-Route::put('/transactions/{id}', [TransactionController::class, 'update']);
-Route::delete('/transactions/{id}', [TransactionController::class, 'destroy']);
-
-// Rutas de UserController
-use App\Http\Controllers\UserController;
-
-Route::get('/users', [UserController::class, 'index']);
-Route::get('/users/{id}', [UserController::class, 'show']);
-
-
-// Rutas de RentalController
-use App\Http\Controllers\RentalController;
-Route::middleware(['auth', 'verified'])->group(function () {
+    // Alquileres
     Route::resource('rentals', RentalController::class)->only(['index', 'store', 'destroy']);
 });
 
@@ -112,3 +64,27 @@ Route::post('/motos/admin', [MotoWebController::class, 'store'])->name('motos.st
 Route::get('/motos/admin/{moto}/editar', [MotoWebController::class, 'edit'])->name('motos.edit');
 Route::put('/motos/admin/{moto}', [MotoWebController::class, 'update'])->name('motos.update');
 Route::delete('/motos/admin/{moto}', [MotoWebController::class, 'destroy'])->name('motos.destroy');
+
+/*
+|--------------------------------------------------------------------------
+| Rutas de API / Gestión de Recursos (Asegúrate de que devuelvan vistas o JSON según necesites)
+|--------------------------------------------------------------------------
+*/
+
+// Usuarios
+Route::get('/users', [UserController::class, 'index'])->middleware('auth');
+Route::get('/users/{id}', [UserController::class, 'show'])->middleware('auth');
+
+// Otros Recursos (Categorías, Marcas, etc.)
+Route::resource('accessories', AccessoryController::class);
+Route::resource('reviews', ReviewController::class);
+Route::resource('categories', CategoryController::class);
+Route::resource('manufacturers', ManufacturerController::class);
+Route::resource('transactions', TransactionController::class);
+
+/*
+|--------------------------------------------------------------------------
+| Auth Routes (Login, Registro, etc.)
+|--------------------------------------------------------------------------
+*/
+require __DIR__ . '/auth.php';

@@ -20,14 +20,14 @@ class PaymentController extends Controller
     {
         $moto = Moto::findOrFail($moto_id);
 
-        // Calculamos el 25% de reserva obligatorio [cite: 60]
-        $reserva = $moto->precio * 0.25;
+        // Calculamos el 25% de reserva obligatorio
+        $precio = $moto->precio * 0.25;
 
         // Obtenemos la divisa seleccionada por el usuario (por defecto EUR)
         $currency = $request->get('currency', 'EUR');
 
-        // Consumo de la API externa en tiempo real [cite: 67]
-        $url = config('services.exchangerate.url') . config('services.exchangerate.key') . "/pair/EUR/{$currency}/{$reserva}";
+        // Consumo de la API externa en tiempo real
+        $url = config('services.exchangerate.url') . config('services.exchangerate.key') . "/pair/EUR/{$currency}/{$precio}";
 
         $response = Http::get($url);
 
@@ -36,7 +36,7 @@ class PaymentController extends Controller
 
         return view('checkout', [
             'moto' => $moto,
-            'reserva' => $reserva,
+            'precio' => $precio,
             'precio_convertido' => $precio_convertido,
             'currency' => $currency,
             'moto_id' => $moto_id

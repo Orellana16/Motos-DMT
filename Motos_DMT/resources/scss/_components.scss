@@ -1,0 +1,638 @@
+// ============================================
+// COMPONENTES
+// ============================================
+
+// ========== BOTONES ==========
+.btn {
+    display: inline-flex;
+    align-items: center;
+    gap: $space-md;
+    padding: $space-lg $space-2xl;
+    font-family: $font-display;
+    font-weight: 700;
+    font-size: 1rem;
+    letter-spacing: 0.1em;
+    text-decoration: none;
+    border-radius: $radius-full;
+    border: 2px solid transparent;
+    cursor: pointer;
+    transition: $transition;
+
+    &--primary {
+        background: $red;
+        color: $white;
+        border-color: $red;
+
+        &:hover {
+            background: $red-dark;
+            border-color: $red-dark;
+            transform: translateY(-2px);
+        }
+    }
+
+    &--secondary {
+        background: transparent;
+        color: $red-light;
+        border-color: $red;
+
+        &:hover {
+            background: $red;
+            color: $white;
+        }
+    }
+
+    &__icon {
+        width: 20px;
+        height: 20px;
+    }
+}
+
+// ========== BADGE ==========
+.badge {
+    display: inline-flex;
+    align-items: center;
+    gap: $space-sm;
+    padding: $space-sm $space-lg;
+    background: rgba($red-dark, 0.3);
+    border: 1px solid rgba($red, 0.5);
+    border-radius: $radius-full;
+
+    &__dot {
+        width: 8px;
+        height: 8px;
+        background: $red;
+        border-radius: 50%;
+    }
+
+    &__text {
+        color: $red-light;
+        font-size: 0.8rem;
+        font-weight: 600;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+    }
+}
+
+// ========== LOGO ==========
+.logo {
+    display: flex;
+    align-items: center;
+    gap: $space-md;
+
+    &__icon {
+        width: 45px;
+        height: 45px;
+        background: $red;
+        border-radius: $radius;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        span {
+            font-family: $font-display;
+            font-weight: 900;
+            font-size: 1.2rem;
+            color: $white;
+        }
+    }
+
+    &__text {
+        &-title {
+            font-family: $font-display;
+            font-weight: 700;
+            font-size: 1.4rem;
+            color: $white;
+            letter-spacing: 0.05em;
+        }
+
+        &-subtitle {
+            font-size: 0.7rem;
+            color: $gray-light;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+        }
+    }
+
+    img {
+        width: 45px;
+        height: 45px;
+    }
+}
+
+// ========== NAVEGACIÓN ==========
+.nav {
+    display: flex;
+    gap: $space-sm;
+
+    &__link {
+        padding: $space-sm $space-lg;
+        font-family: $font-display;
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: $gray-light;
+        border-radius: $radius-full;
+        transition: $transition;
+
+        &:hover {
+            color: $white;
+            background: rgba($white, 0.1);
+        }
+
+        &--active {
+            background: $red;
+            color: $white;
+
+            &:hover {
+                background: $red-dark;
+            }
+        }
+    }
+}
+
+// ========== USER SECTION ==========
+.user-section {
+    display: flex;
+    align-items: center;
+    gap: $space-lg;
+
+    &__link {
+        color: $gray-light;
+        font-size: 0.9rem;
+
+        &:hover {
+            color: $white;
+        }
+    }
+
+    &__divider {
+        width: 1px;
+        height: 20px;
+        background: $gray;
+    }
+
+    &__avatar {
+        width: 40px;
+        height: 40px;
+        background: $gray-dark;
+        border-radius: $radius;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: $transition;
+
+        svg {
+            width: 20px;
+            height: 20px;
+            color: $gray-light;
+        }
+
+        &:hover {
+            background: $red;
+
+            svg {
+                color: $white;
+            }
+        }
+    }
+}
+
+// ========== STATS ==========
+.stats {
+    display: flex;
+    align-items: center;
+    gap: $space-xl;
+
+    &__item {
+        text-align: center;
+    }
+
+    &__value {
+        font-family: $font-display;
+        font-size: 2.2rem;
+        font-weight: 900;
+        color: $white;
+    }
+
+    &__label {
+        font-size: 0.8rem;
+        color: $gray;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+    }
+
+    &__divider {
+        width: 1px;
+        height: 50px;
+        background: $gray;
+    }
+}
+
+// ========== HERO IMAGE ==========
+.hero-image {
+    &__img {
+        width: 380px;
+        transition: $transition;
+
+        &:hover {
+            transform: scale(1.03);
+        }
+    }
+}
+
+// ========== SOCIAL ==========
+.social {
+    display: flex;
+    gap: $space-md;
+
+    &__link {
+        width: 40px;
+        height: 40px;
+        background: $gray-dark;
+        border-radius: $radius;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: $transition;
+
+        svg {
+            width: 18px;
+            height: 18px;
+            color: $gray;
+        }
+
+        &:hover {
+            background: $red;
+
+            svg {
+                color: $white;
+            }
+        }
+    }
+}
+
+// ========== SECONDARY LINKS ==========
+.secondary-links {
+    display: flex;
+    align-items: center;
+    gap: $space-lg;
+
+    &__link {
+        display: flex;
+        align-items: center;
+        gap: $space-sm;
+        color: $gray;
+        font-size: 0.85rem;
+
+        svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        &:hover {
+            color: $red-light;
+        }
+    }
+
+    &__separator {
+        color: $gray;
+    }
+}
+
+// ============================================
+// CHECKOUT PAGE
+// ============================================
+
+.checkout {
+    position: relative;
+    z-index: 10;
+    min-height: 100vh;
+    padding: 120px $space-2xl $space-2xl;
+
+    &__container {
+        max-width: 1000px;
+        margin: 0 auto;
+    }
+
+    &__header {
+        text-align: center;
+        margin-bottom: $space-xl;
+    }
+
+    &__title {
+        font-family: $font-display;
+        font-size: 2rem;
+        font-weight: 700;
+        color: $white;
+        margin-bottom: $space-sm;
+    }
+
+    &__subtitle {
+        color: $gray-light;
+        font-size: 1.1rem;
+
+        .highlight {
+            color: $red;
+            font-weight: 600;
+        }
+    }
+
+    &__toggle {
+        display: flex;
+        justify-content: center;
+        gap: $space-sm;
+        margin-bottom: $space-xl;
+    }
+
+    &__grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: $space-xl;
+    }
+
+    &__options {
+        display: flex;
+        flex-direction: column;
+        gap: $space-lg;
+    }
+
+    &__summary {
+        display: flex;
+        flex-direction: column;
+        gap: $space-lg;
+    }
+
+    &__info {
+        display: flex;
+        flex-direction: column;
+        gap: $space-sm;
+    }
+
+    &__back {
+        margin-top: $space-xl;
+        text-align: center;
+    }
+}
+
+// Toggle Buttons
+.toggle-btn {
+    display: flex;
+    align-items: center;
+    gap: $space-sm;
+    padding: $space-md $space-lg;
+    font-family: $font-body;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: $gray-light;
+    background: $gray-dark;
+    border: 2px solid $gray;
+    border-radius: $radius;
+    cursor: pointer;
+    transition: $transition;
+
+    &__icon {
+        width: 20px;
+        height: 20px;
+    }
+
+    &:hover {
+        border-color: $red;
+        color: $white;
+    }
+
+    &--active {
+        background: $red;
+        border-color: $red;
+        color: $white;
+    }
+}
+
+// Option Cards
+.option-card {
+    background: $gray-dark;
+    border: 1px solid $gray;
+    border-radius: $radius;
+    padding: $space-lg;
+
+    &__header {
+        display: flex;
+        align-items: center;
+        gap: $space-sm;
+        margin-bottom: $space-md;
+    }
+
+    &__icon {
+        width: 24px;
+        height: 24px;
+        color: $red;
+    }
+
+    &__title {
+        font-family: $font-display;
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: $white;
+    }
+
+    &__desc {
+        color: $gray-light;
+        font-size: 0.9rem;
+        margin-bottom: $space-md;
+
+        strong {
+            color: $red-light;
+        }
+    }
+
+    &__result {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: $space-md;
+        padding-top: $space-md;
+        border-top: 1px solid $gray;
+        color: $gray-light;
+    }
+
+    &__days {
+        font-family: $font-display;
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: $red;
+    }
+
+    &__info {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: $space-md;
+        padding-top: $space-md;
+        border-top: 1px solid $gray;
+        color: $gray-light;
+    }
+
+    &__price {
+        font-family: $font-display;
+        font-size: 1.2rem;
+        font-weight: 700;
+        color: $white;
+    }
+
+    &--rental {
+        border-color: rgba($red, 0.3);
+    }
+
+    &--purchase {
+        border-color: rgba($red, 0.3);
+    }
+}
+
+// Currency Card
+.currency-card {
+    background: rgba($gray-dark, 0.5);
+    border: 1px solid $gray;
+    border-radius: $radius;
+    padding: $space-lg;
+}
+
+// Input styles
+.input-label {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: $gray-light;
+    margin-bottom: $space-sm;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.input-field {
+    width: 100%;
+    padding: $space-md;
+    font-family: $font-body;
+    font-size: 1rem;
+    color: $white;
+    background: $black;
+    border: 1px solid $gray;
+    border-radius: $radius;
+    outline: none;
+    transition: $transition;
+
+    &::placeholder {
+        color: $gray;
+    }
+
+    &:focus {
+        border-color: $red;
+    }
+}
+
+.input-select {
+    width: 100%;
+    padding: $space-md;
+    font-family: $font-body;
+    font-size: 1rem;
+    color: $white;
+    background: $black;
+    border: 1px solid $gray;
+    border-radius: $radius;
+    cursor: pointer;
+    outline: none;
+    transition: $transition;
+
+    &:focus {
+        border-color: $red;
+    }
+
+    option {
+        background: $black;
+        color: $white;
+    }
+}
+
+// Summary Card
+.summary-card {
+    background: linear-gradient(135deg, $gray-dark 0%, darken($gray-dark, 5%) 100%);
+    border: 2px solid $red;
+    border-radius: $radius;
+    padding: $space-xl;
+    text-align: center;
+
+    &__label {
+        font-size: 0.8rem;
+        font-weight: 700;
+        color: $gray-light;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        margin-bottom: $space-sm;
+    }
+
+    &__price {
+        font-family: $font-display;
+        font-size: 3rem;
+        font-weight: 900;
+        color: $red;
+        margin-bottom: $space-lg;
+    }
+
+    &__divider {
+        height: 1px;
+        background: linear-gradient(to right, transparent, $gray, transparent);
+        margin-bottom: $space-lg;
+    }
+
+    &__paypal {
+        min-height: 150px;
+    }
+
+    &__error {
+        color: $red;
+        font-size: 0.9rem;
+        margin-top: $space-md;
+    }
+}
+
+// Info Items
+.info-item {
+    display: flex;
+    align-items: center;
+    gap: $space-sm;
+    color: $gray;
+    font-size: 0.85rem;
+
+    svg {
+        width: 18px;
+        height: 18px;
+        color: $red;
+    }
+}
+
+// Back Button
+.btn-back {
+    display: inline-flex;
+    align-items: center;
+    gap: $space-sm;
+    color: $gray-light;
+    font-size: 0.9rem;
+    transition: $transition;
+
+    svg {
+        width: 18px;
+        height: 18px;
+    }
+
+    &:hover {
+        color: $red;
+    }
+}
+
+// Footer simple
+.footer--simple {
+    position: relative;
+    margin-top: $space-xl;
+}
+
+// Utility
+.hidden {
+    display: none;
+}

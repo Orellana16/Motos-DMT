@@ -1,0 +1,150 @@
+// ============================================
+// MOTOS DMT - ESTILOS SIMPLES
+// ============================================
+
+@import 'variables';
+@import 'components';
+@import 'catalogo';
+@import 'edit';
+
+// ========== BASE ==========
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: $font-body;
+    background: $black;
+    color: $white;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+// ========== BACKGROUND ==========
+.background {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+
+    &__image {
+        position: absolute;
+        inset: 0;
+        background-size: cover;
+        background-position: center;
+    }
+
+    &__overlay {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(to right, $black 0%, rgba($black, 0.7) 50%, rgba($black, 0.3) 100%);
+    }
+}
+
+// ========== HEADER ==========
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    padding: $space-md $space-2xl;
+    background: rgba($black, 0.8);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba($white, 0.1);
+
+    &__container {
+        max-width: 1600px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+}
+
+// ========== HERO ==========
+.hero {
+    position: relative;
+    z-index: 10;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 0 $space-2xl;
+
+    &__container {
+        max-width: 1600px;
+        margin: 0 auto;
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    &__left {
+        display: flex;
+        flex-direction: column;
+        gap: $space-lg;
+        max-width: 550px;
+    }
+
+    &__right {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: $space-lg;
+    }
+
+    &__description {
+        color: $gray-light;
+        font-size: 1.1rem;
+        line-height: 1.7;
+
+        .highlight {
+            color: $red-light;
+            font-weight: 600;
+        }
+    }
+}
+
+// ========== FOOTER ==========
+.footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 10;
+    padding: $space-md $space-2xl;
+    background: rgba($black, 0.9);
+    border-top: 1px solid rgba($white, 0.1);
+
+    &__container {
+        max-width: 1600px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    &__copyright {
+        color: $gray;
+        font-size: 0.85rem;
+    }
+
+    &__links {
+        display: flex;
+        gap: $space-lg;
+    }
+
+    &__link {
+        color: $gray;
+        font-size: 0.85rem;
+
+        &:hover {
+            color: $white;
+        }
+    }
+}
