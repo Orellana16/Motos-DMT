@@ -44,13 +44,23 @@
             <a href="{{ route('catalogo.index') }}" class="btn-filter">LIMPIAR FILTROS</a>
         </section>
 
+        <div class="sort-box">
+            <label>Ordenar por:</label>
+            <select onchange="window.location.href='/catalogo?sort=' + this.value">
+                <option value="id_asc" {{ request('sort') == 'id_asc' ? 'selected' : '' }}>Por defecto</option>
+                <option value="price_asc" {{ request('sort') == 'price_asc' ? 'selected' : '' }}>Precio más bajo</option>
+                <option value="price_desc" {{ request('sort') == 'price_desc' ? 'selected' : '' }}>Precio más alto
+                </option>
+                <option value="year_desc" {{ request('sort') == 'year_desc' ? 'selected' : '' }}>Más nuevas (Año)</option>
+            </select>
+        </div>
+
         <div class="moto-grid">
             @forelse($motos as $moto)
                 <article class="moto-card">
                     <div class="moto-card__image">
                         <div class="moto-card__actions">
-                            <a href="{{ route('motos.edit', $moto->id) }}" class="action-btn" title="Editar">✏</a>
-
+                            <a href="{{ url('/motos/' . $moto->id . '/edit') }}" class="action-btn" title="Editar">✏</a>
                             <form method="POST" action="{{ route('motos.destroy', $moto->id) }}"
                                 onsubmit="return confirm('¿Seguro que quieres eliminar esta bestia?')">
                                 @csrf

@@ -2,142 +2,132 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Editar Moto - Motos DMT</title>
-    @vite('resources/css/app.css')
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar {{ $moto->modelo }} - Motos DMT</title>
+    @vite(['resources/scss/app.scss'])
 </head>
-<body class="bg-black">
+<body class="edit-page">
 
-<div class="min-h-screen flex">
+    <div class="edit-container">
+        @php
+            $imagenUrl = $moto->imagen;
+            if ($imagenUrl && !Str::startsWith($imagenUrl, ['http://', 'https://'])) {
+                $imagenUrl = asset('storage/' . $imagenUrl);
+            } elseif (!$imagenUrl) {
+                $imagenUrl = asset('img/default-moto.png');
+            }
+        @endphp
 
-    <!-- LADO IZQUIERDO (IMAGEN) -->
-    <div class="w-1/3 bg-cover bg-center"
-         style="background-image: url('{{ asset('img/edit.png') }}');">
-    </div>
-
-
-    <!-- LADO DERECHO (FORMULARIO) -->
-    <div class="w-2/3 bg-gray-100 flex flex-col">
-
-        <!-- Volver -->
-        <div class="px-10 py-6 border-b border-gray-300">
-            <a href="{{ route('catalogo') }}" 
-               class="text-gray-700 font-semibold hover:text-black transition">
-                ← Volver
-            </a>
+        <div class="edit-sidebar" style="background-image: url('{{ $imagenUrl }}');">
+            <div class="edit-sidebar__overlay">
+                <div class="moto-info-badge">
+                    <span class="badge-year">{{ $moto->año }}</span>
+                    <h2 class="badge-model">{{ $moto->modelo }}</h2>
+                </div>
+            </div>
         </div>
 
-        <!-- Contenido -->
-        <div class="flex-1 px-24 py-16">
+        <div class="edit-content">
+            <nav class="edit-nav">
+                <a href="{{ route('catalogo.index') }}" class="btn-back">
+                    <span class="icon">←</span> VOLVER AL GARAJE
+                </a>
+            </nav>
 
-            <h1 class="text-6xl font-black text-black mb-16 text-right">
-                EDITAR
-            </h1>
+            <div class="edit-form-wrapper">
+                <header class="edit-header">
+                    <span class="edit-header__subtitle">Configuración de Máquina</span>
+                    <h1 class="edit-header__title">EDITAR <span>MOTO</span></h1>
+                </header>
 
-            <form method="POST" action="{{ route('motos.update', $moto->id) }}">
-                @csrf
-                @method('PUT')
-
-                <div class="grid grid-cols-2 gap-x-12 gap-y-8">
-
-                    <!-- ID Fabricador -->
-                    <div>
-                        <label class="block font-semibold text-lg mb-2">ID Fabricador</label>
-                        <select name="fabricador_id"
-                            class="w-full px-4 py-3 rounded-lg border border-gray-400 focus:ring-2 focus:ring-red-600">
-                            @foreach($fabricadores as $fabricador)
-                                <option value="{{ $fabricador->id }}"
-                                    {{ $moto->fabricador_id == $fabricador->id ? 'selected' : '' }}>
-                                    {{ $fabricador->nombre }}
-                                </option>
+                @if ($errors->any())
+                    <div class="alert-error">
+                        <div class="alert-error__title">¡Atención, motero! Revisa estos campos:</div>
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
                             @endforeach
-                        </select>
+                        </ul>
+                    </div>
+                @endif
+
+                <form method="POST" action="{{ route('motos.update', $moto->id) }}" class="ruda-form">
+                    @csrf
+                    @method('PUT')
+
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Fabricante</label>
+                            <select name="manufacturer_id" class="form-control">
+                                @foreach($fabricadores as $fabricador)
+                                    <option value="{{ $fabricador->id }}" {{ old('manufacturer_id', $moto->manufacturer_id) == $fabricador->id ? 'selected' : '' }}>
+                                        {{ $fabricador->nombre }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Categoría</label>
+                            <select name="category_id" class="form-control">
+                                @foreach($categorias as $categoria)
+                                    <option value="{{ $categoria->id }}" {{ old('category_id', $moto->category_id) == $categoria->id ? 'selected' : '' }}>
+                                        {{ $categoria->nombre }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Modelo</label>
+                            <input type="text" name="modelo" class="form-control" value="{{ old('modelo', $moto->modelo) }}">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Año</label>
+                            <input type="number" name="año" class="form-control" value="{{ old('año', $moto->año) }}">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Cilindrada (cc)</label>
+                            <input type="number" name="cilindrada" class="form-control" value="{{ old('cilindrada', $moto->cilindrada) }}">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Precio (€)</label>
+                            <input type="number" step="0.01" name="precio" class="form-control" value="{{ old('precio', $moto->precio) }}">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Stock</label>
+                            <input type="number" name="stock" class="form-control" value="{{ old('stock', $moto->stock) }}">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Estado</label>
+                            <select name="disponible" class="form-control">
+                                <option value="1" {{ old('disponible', $moto->disponible) == '1' ? 'selected' : '' }}>DISPONIBLE</option>
+                                <option value="0" {{ old('disponible', $moto->disponible) == '0' ? 'selected' : '' }}>FUERA DE STOCK</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group col-span-2">
+                            <label>URL de la Imagen</label>
+                            <input type="text" name="imagen" class="form-control" 
+                                   value="{{ old('imagen', $moto->imagen) }}" 
+                                   placeholder="https://ejemplo.com/foto-moto.jpg">
+                            <p class="helper-text">Pega el enlace directo a la imagen (.jpg, .png, etc.)</p>
+                        </div>
                     </div>
 
-                    <!-- ID Categoría -->
-                    <div>
-                        <label class="block font-semibold text-lg mb-2">ID Categoría</label>
-                        <select name="categoria_id"
-                            class="w-full px-4 py-3 rounded-lg border border-gray-400 focus:ring-2 focus:ring-red-600">
-                            @foreach($categorias as $categoria)
-                                <option value="{{ $categoria->id }}"
-                                    {{ $moto->categoria_id == $categoria->id ? 'selected' : '' }}>
-                                    {{ $categoria->nombre }}
-                                </option>
-                            @endforeach
-                        </select>
+                    <div class="form-actions">
+                        <button type="submit" class="btn-submit">
+                            <span>GUARDAR CAMBIOS</span>
+                        </button>
                     </div>
-
-                    <!-- Modelo -->
-                    <div>
-                        <label class="block font-semibold text-lg mb-2">Modelo</label>
-                        <input type="text" name="modelo" value="{{ $moto->modelo }}"
-                            class="w-full px-4 py-3 rounded-lg border border-gray-400 focus:ring-2 focus:ring-red-600">
-                    </div>
-
-                    <!-- Descripción -->
-                    <div>
-                        <label class="block font-semibold text-lg mb-2">Descripción</label>
-                        <input type="text" name="descripcion" value="{{ $moto->descripcion }}"
-                            class="w-full px-4 py-3 rounded-lg border border-gray-400 focus:ring-2 focus:ring-red-600">
-                    </div>
-
-                    <!-- Año -->
-                    <div>
-                        <label class="block font-semibold text-lg mb-2">Año</label>
-                        <input type="number" name="anio" value="{{ $moto->anio }}"
-                            class="w-full px-4 py-3 rounded-lg border border-gray-400 focus:ring-2 focus:ring-red-600">
-                    </div>
-
-                    <!-- Cilindrada -->
-                    <div>
-                        <label class="block font-semibold text-lg mb-2">Cilindrada</label>
-                        <input type="number" name="cilindrada" value="{{ $moto->cilindrada }}"
-                            class="w-full px-4 py-3 rounded-lg border border-gray-400 focus:ring-2 focus:ring-red-600">
-                    </div>
-
-                    <!-- Precio -->
-                    <div>
-                        <label class="block font-semibold text-lg mb-2">Precio</label>
-                        <input type="number" step="0.01" name="precio" value="{{ $moto->precio }}"
-                            class="w-full px-4 py-3 rounded-lg border border-gray-400 focus:ring-2 focus:ring-red-600">
-                    </div>
-
-                    <!-- Stock -->
-                    <div>
-                        <label class="block font-semibold text-lg mb-2">Stock</label>
-                        <input type="number" name="stock" value="{{ $moto->stock }}"
-                            class="w-full px-4 py-3 rounded-lg border border-gray-400 focus:ring-2 focus:ring-red-600">
-                    </div>
-
-                    <!-- Disponible -->
-                    <div>
-                        <label class="block font-semibold text-lg mb-2">Disponible</label>
-                        <select name="disponible"
-                            class="w-full px-4 py-3 rounded-lg border border-gray-400 focus:ring-2 focus:ring-red-600">
-                            <option value="1" {{ $moto->disponible ? 'selected' : '' }}>Sí</option>
-                            <option value="0" {{ !$moto->disponible ? 'selected' : '' }}>No</option>
-                        </select>
-                    </div>
-
-                </div>
-
-                <!-- Botón -->
-                <div class="mt-16 flex justify-center">
-                    <button type="submit"
-                        class="bg-red-700 hover:bg-red-800 transition duration-300
-                               text-white font-bold text-lg
-                               px-16 py-4 rounded-lg shadow-md">
-                        Guardar
-                    </button>
-                </div>
-
-            </form>
-
+                </form>
+            </div>
         </div>
-
     </div>
-
-</div>
-
 </body>
 </html>

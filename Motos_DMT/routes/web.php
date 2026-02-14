@@ -52,7 +52,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // Gestión de Motos (Admin/User acciones)
     Route::get('/motos/create', [MotoController::class, 'create'])->name('motos.create');
     Route::post('/motos', [MotoController::class, 'store'])->name('motos.store');
-    Route::get('/motos/{id}/edit', [MotoController::class, 'edit'])->name('motos.edit');
+    Route::get('/motos/{id}/edit', [MotoController::class, 'edit'])->name('edit');
     Route::put('/motos/{id}', [MotoController::class, 'update'])->name('motos.update');
     Route::delete('/motos/{id}', [MotoController::class, 'destroy'])->name('motos.destroy');
     Route::get('/motos/{id}', [MotoController::class, 'show'])->name('motos.show');
