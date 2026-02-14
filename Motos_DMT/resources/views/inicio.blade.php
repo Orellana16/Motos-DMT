@@ -90,7 +90,7 @@
 
             <div class="hero__right">
 
-                <a href="#" class="btn btn--primary">
+                <a href="{{ url('/catalogo') }}" class="btn btn--primary">
                     <span>VER MOTOS</span>
                     <svg class="btn__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"

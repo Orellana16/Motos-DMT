@@ -2,110 +2,106 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nosotros - Motos DMT</title>
-    @vite('resources/css/app.css')
+    @vite(['resources/css/app.css', 'resources/scss/app.scss'])
 </head>
-<body>
+<body class="antialiased selection:bg-red-light selection:text-white">
 
-<!-- BACKGROUND -->
-<div class="background">
-    <div class="background__image" style="background-image: url('{{ asset('img/nosotros.png') }}');"></div>
-    <div class="background__overlay"></div>
+<div class="background fixed inset-0 z-[-1]">
+    <div class="background__image w-full h-full bg-cover bg-center bg-no-repeat transition-transform duration-700 hover:scale-105" 
+         style="background-image: url('{{ asset('img/nosotros.png') }}');"></div>
+    <div class="background__overlay absolute inset-0 bg-gradient-to-br from-black/90 via-black/70 to-red-900/30"></div>
 </div>
 
-<!-- HEADER -->
-<header class="header">
-    <div class="header__container">
-        <a href="{{ route('inicio') }}" class="text-white font-semibold hover:text-red-light transition">
-            ← Volver
+<header class="header sticky top-0 z-50 backdrop-blur-sm bg-black/20">
+    <div class="header__container max-w-7xl mx-auto px-6 py-4">
+        <a href="{{ url('/') }}" class="inline-flex items-center text-white font-medium hover:text-red-light transition-colors group">
+            <span class="mr-2 transition-transform group-hover:-translate-x-1">←</span> Volver al inicio
         </a>
     </div>
 </header>
 
-<!-- HERO / CONTENIDO PRINCIPAL -->
-<section class="hero">
-    <div class="hero__container">
+<section class="hero min-h-[calc(100vh-160px)] flex items-center py-12">
+    <div class="hero__container max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-16 items-center">
 
-        <!-- LADO IZQUIERDO: Imagen (ya en background) -->
-        <div class="hero__left">
-            <h1 class="text-6xl font-black mb-6 text-red-light">NOSOTROS</h1>
-            <div class="hero__description">
-                <p class="mb-4">
-                    En Motos DMT desarrollamos soluciones enfocadas en la gestión 
-                    y comercialización de motocicletas, combinando diseño moderno 
-                    con funcionalidad eficiente.
+        <div class="hero__left space-y-8">
+            <div>
+                <span class="text-red-light font-bold tracking-widest uppercase text-sm mb-2 block">Nuestra Pasión</span>
+                <h1 class="text-7xl font-black text-white leading-none tracking-tighter">
+                    NOS<span class="text-red-light">OTROS</span>
+                </h1>
+            </div>
+            
+            <div class="hero__description space-y-6 text-lg text-gray-200 leading-relaxed max-w-xl">
+                <p class="border-l-4 border-red-light pl-6 py-2 bg-white/5 rounded-r-lg">
+                    En <strong class="text-white">Motos DMT</strong> desarrollamos soluciones enfocadas en la gestión y comercialización de motocicletas, combinando diseño moderno con funcionalidad eficiente.
                 </p>
-                <p>
-                    Nuestro objetivo es ofrecer una experiencia intuitiva tanto 
-                    para administradores como para clientes, priorizando rendimiento,
-                    claridad visual y una estética potente inspirada en el mundo biker.
+                <p class="pl-7">
+                    Nuestro objetivo es ofrecer una experiencia intuitiva tanto para administradores como para clientes, priorizando el rendimiento y una estética potente inspirada en el <span class="text-red-light font-semibold italic">estilo de vida biker</span>.
                 </p>
             </div>
         </div>
 
-        <!-- LADO DERECHO: Desarrolladores -->
         <div class="hero__right">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
 
-                <!-- Dev 1 -->
-                <div class="bg-black bg-opacity-70 rounded-xl shadow-md p-6">
-                    <h3 class="text-2xl font-bold mb-2 text-white">Marco</h3>
-                    <p class="text-gray-300 mb-2 text-sm">
-                        Especialista en backend y bases de datos. 
-                        Encargado de la arquitectura del sistema y lógica de negocio.
+                <div class="group bg-black/60 backdrop-blur-md border border-white/10 rounded-2xl p-6 transition-all duration-300 hover:border-red-light/50 hover:bg-black/80">
+                    <div class="w-12 h-1 bg-red-light mb-4 transition-all duration-300 group-hover:w-full"></div>
+                    <h3 class="text-2xl font-black text-white mb-2">Marco</h3>
+                    <p class="text-gray-400 mb-4 text-sm leading-snug">
+                        Especialista en backend. Encargado de la arquitectura del sistema y la robustez de la lógica de negocio.
                     </p>
-                    <span class="text-red-light font-semibold text-sm">
-                        Laravel • MySQL • API REST
-                    </span>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="bg-red-light/10 text-red-light px-2 py-1 rounded text-[10px] font-bold uppercase tracking-wider">Laravel</span>
+                        <span class="bg-red-light/10 text-red-light px-2 py-1 rounded text-[10px] font-bold uppercase tracking-wider">MySQL</span>
+                    </div>
                 </div>
 
-                <!-- Dev 2 -->
-                <div class="bg-black bg-opacity-70 rounded-xl shadow-md p-6">
-                    <h3 class="text-2xl font-bold mb-2 text-white">David</h3>
-                    <p class="text-gray-300 mb-2 text-sm">
-                        Responsable del diseño frontend y experiencia de usuario,
-                        asegurando coherencia visual y estilo moderno.
+                <div class="group bg-black/60 backdrop-blur-md border border-white/10 rounded-2xl p-6 transition-all duration-300 hover:border-red-light/50 hover:bg-black/80">
+                    <div class="w-12 h-1 bg-red-light mb-4 transition-all duration-300 group-hover:w-full"></div>
+                    <h3 class="text-2xl font-black text-white mb-2">David</h3>
+                    <p class="text-gray-400 mb-4 text-sm leading-snug">
+                        Responsable del diseño frontend y UI/UX, asegurando una interfaz moderna y coherente.
                     </p>
-                    <span class="text-red-light font-semibold text-sm">
-                        Tailwind • UI/UX • Diseño Web
-                    </span>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="bg-red-light/10 text-red-light px-2 py-1 rounded text-[10px] font-bold uppercase tracking-wider">Tailwind</span>
+                        <span class="bg-red-light/10 text-red-light px-2 py-1 rounded text-[10px] font-bold uppercase tracking-wider">UI/UX</span>
+                    </div>
                 </div>
 
-                <!-- Dev 3 -->
-                <div class="bg-black bg-opacity-70 rounded-xl shadow-md p-6">
-                    <h3 class="text-2xl font-bold mb-2 text-white">Tomás</h3>
-                    <p class="text-gray-300 mb-2 text-sm">
-                        Especialista en backend y bases de datos. 
-                        Encargado de la arquitectura del sistema y lógica de negocio.
+                <div class="group bg-black/60 backdrop-blur-md border border-white/10 rounded-2xl p-6 transition-all duration-300 hover:border-red-light/50 hover:bg-black/80 sm:col-span-2 md:col-span-1">
+                    <div class="w-12 h-1 bg-red-light mb-4 transition-all duration-300 group-hover:w-full"></div>
+                    <h3 class="text-2xl font-black text-white mb-2">Tomás</h3>
+                    <p class="text-gray-400 mb-4 text-sm leading-snug">
+                        Arquitecto de datos y lógica de servidor, optimizando cada proceso para máxima velocidad.
                     </p>
-                    <span class="text-red-light font-semibold text-sm">
-                        Laravel • MySQL • API REST
-                    </span>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="bg-red-light/10 text-red-light px-2 py-1 rounded text-[10px] font-bold uppercase tracking-wider">API Rest</span>
+                        <span class="bg-red-light/10 text-red-light px-2 py-1 rounded text-[10px] font-bold uppercase tracking-wider">Backend</span>
+                    </div>
                 </div>
 
-            </div>
+                <div class="flex items-center justify-center p-4">
+                    <a href="{{ url('/catalogo') }}"
+                       class="group relative overflow-hidden bg-red-light px-8 py-4 rounded-xl text-white font-black uppercase tracking-widest text-sm transition-all duration-300 hover:scale-105 active:scale-95 shadow-[0_0_20px_rgba(239,68,68,0.4)]">
+                        <span class="relative z-10 italic">Explorar Motos</span>
+                        <div class="absolute inset-0 bg-white/20 translate-y-full transition-transform duration-300 group-hover:translate-y-0"></div>
+                    </a>
+                </div>
 
-            <!-- Botón -->
-            <div class="mt-8 flex justify-center">
-                <a href="{{ route('catalogo') }}"
-                   class="bg-red-light hover:bg-red-700 transition duration-300
-                          text-white font-bold text-lg
-                          px-10 py-3 rounded-lg shadow-md">
-                    Ver catálogo
-                </a>
             </div>
         </div>
 
     </div>
 </section>
 
-<!-- FOOTER -->
-<footer class="footer">
-    <div class="footer__container">
-        <span class="footer__copyright">© 2026 Motos DMT</span>
-        <div class="footer__links">
-            <a href="#" class="footer__link">Política de privacidad</a>
-            <a href="#" class="footer__link">Términos de servicio</a>
+<footer class="footer border-t border-white/5 bg-black/40 backdrop-blur-md">
+    <div class="footer__container max-w-7xl mx-auto px-6 py-8 flex flex-col md:flex-row justify-between items-center gap-4">
+        <span class="footer__copyright text-gray-500 font-medium text-sm italic">© 2026 Motos <span class="text-red-light font-bold">DMT</span> — Road to Freedom</span>
+        <div class="footer__links flex gap-8">
+            <a href="#" class="text-gray-400 hover:text-white text-xs uppercase tracking-widest transition-colors">Privacidad</a>
+            <a href="#" class="text-gray-400 hover:text-white text-xs uppercase tracking-widest transition-colors">Términos</a>
         </div>
     </div>
 </footer>

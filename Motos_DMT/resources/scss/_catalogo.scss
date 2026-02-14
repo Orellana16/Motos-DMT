@@ -1,0 +1,388 @@
+// Variables
+$red: #b91c1c;
+$black: #000000;
+$gray-light: #f3f4f6;
+$gray-medium: #9ca3af;
+$white: #ffffff;
+$font-main: 'Inter', sans-serif; // O la que uses
+
+.catalogo-page {
+    background-color: $gray-light;
+    font-family: $font-main;
+    margin: 0;
+    color: $black;
+}
+
+// Navbar
+.navbar {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba($white, 0.8);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba($black, 0.1);
+
+    &__container {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem 2rem;
+    }
+
+    &__menu {
+        display: flex;
+        gap: 3rem;
+    }
+
+    &__link {
+        text-decoration: none;
+        color: $gray-medium;
+        font-weight: 900;
+        text-transform: uppercase;
+        font-style: italic;
+        letter-spacing: 1px;
+        transition: color 0.3s;
+
+        &:hover,
+        &--active {
+            color: $red;
+        }
+
+        &--active {
+            border-bottom: 2px solid $red;
+        }
+    }
+
+    &__user img {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        border: 2px solid $black;
+    }
+}
+
+// Header
+.main-header {
+    max-width: 1200px;
+    margin: 4rem auto;
+    padding: 0 2rem;
+
+    &__subtitle {
+        color: $red;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 5px;
+        font-size: 0.75rem;
+    }
+
+    &__title {
+        font-size: 5rem;
+        font-weight: 900;
+        text-transform: uppercase;
+        line-height: 0.9;
+        margin-top: 0.5rem;
+
+        span {
+            -webkit-text-stroke: 2px $black;
+            color: transparent;
+        }
+    }
+}
+
+// Buscador
+.search-section {
+    max-width: 1200px;
+    margin: 0 auto 4rem;
+    padding: 2rem;
+    background: $white;
+    border-radius: 20px;
+    display: flex;
+    gap: 2rem;
+    align-items: flex-end;
+    box-shadow: 0 10px 30px rgba($black, 0.05);
+
+    .search-box {
+        flex-grow: 1;
+
+        label {
+            display: block;
+            font-size: 0.7rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            color: $gray-medium;
+            margin-bottom: 0.5rem;
+            font-style: italic;
+        }
+
+        &__group {
+            display: flex;
+            background: $gray-light;
+            border-radius: 12px;
+            padding: 0.5rem;
+
+            input {
+                flex-grow: 1;
+                border: none;
+                background: transparent;
+                padding: 0.5rem 1rem;
+                font-size: 1rem;
+                outline: none;
+            }
+        }
+    }
+}
+
+// Grid de Motos
+.moto-grid {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 2.5rem;
+    padding: 0 2rem 5rem;
+}
+
+.moto-card {
+    background: $white;
+    border-radius: 24px;
+    overflow: hidden;
+    transition: all 0.4s ease;
+    border: 1px solid rgba($black, 0.05);
+
+    &:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 20px 40px rgba($black, 0.1);
+
+        .moto-card__actions {
+            opacity: 1; // Mostrar acciones al hacer hover
+        }
+    }
+
+    &__image {
+        height: 250px;
+        position: relative;
+        overflow: hidden;
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+
+        &:hover img {
+            transform: scale(1.1);
+        }
+    }
+
+    &__brand {
+        position: absolute;
+        bottom: 1rem;
+        left: 1rem;
+        background: $black;
+        color: $white;
+        font-size: 0.6rem;
+        font-weight: 900;
+        padding: 0.4rem 1rem;
+        border-radius: 50px;
+        text-transform: uppercase;
+        font-style: italic;
+    }
+
+    &__info {
+        padding: 2rem;
+    }
+
+    &__title {
+        font-size: 1.5rem;
+        font-weight: 900;
+        text-transform: uppercase;
+        margin: 0 0 0.5rem;
+        font-style: italic;
+    }
+
+    &__desc {
+        color: $gray-medium;
+        font-size: 0.9rem;
+        line-height: 1.6;
+        margin-bottom: 1.5rem;
+    }
+
+    &__footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-top: 1.5rem;
+        border-top: 1px solid $gray-light;
+    }
+
+    &__price {
+        font-size: 1.8rem;
+        font-weight: 900;
+
+        small {
+            color: $red;
+            font-size: 1rem;
+        }
+    }
+
+    &__actions {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        z-index: 10;
+        opacity: 0; // Oculto por defecto
+        transition: opacity 0.3s ease;
+    }
+}
+
+// Botones Generales
+.btn-filter {
+    background: $red;
+    color: $white;
+    border: none;
+    padding: 1.2rem 2.5rem;
+    border-radius: 12px;
+    font-weight: 900;
+    font-style: italic;
+    cursor: pointer;
+    transition: background 0.3s;
+
+    &:hover {
+        background: $black;
+    }
+}
+
+.action-btn {
+    width: 35px;
+    height: 35px;
+    border-radius: 8px;
+    background: $white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    margin-bottom: 0.5rem;
+
+    &--delete {
+        background: $red;
+        color: $white;
+        border: none;
+        cursor: pointer;
+    }
+}
+
+.footer {
+    text-align: center;
+    padding: 3rem;
+    font-size: 0.6rem;
+    font-weight: 900;
+    letter-spacing: 3px;
+    color: $gray-medium;
+}
+
+.pagination-container {
+    margin: 4rem auto;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+
+    nav {
+        display: flex;
+        flex-direction: column; // Botones arriba, números abajo
+        align-items: center;
+        gap: 30px; // Espacio entre los dos bloques
+
+        // BLOQUE 1: Botones Previous y Next
+        .flex.justify-between.flex-1.sm\:hidden,
+        div:first-of-type {
+            display: flex !important;
+            flex-direction: row !important; // Aseguramos que estén lado a lado
+            gap: 20px;
+            width: auto;
+        }
+
+        // BLOQUE 2: Lista de Números
+        .hidden.sm\:flex-1.sm\:flex.sm\:items-center.sm\:justify-between,
+        ul.pagination {
+            display: flex !important;
+            flex-direction: row !important; // ¡CRUCIAL! Los números vuelven a ser una fila
+            justify-content: center;
+
+            // Estilos para la lista (ul) y los elementos (li)
+            ul,
+            li{
+                display: flex !important;
+                flex-direction: row !important;
+                gap: 8px;
+                list-style: none;
+                padding: 0;
+                margin: 0;
+            }
+
+            // Estilo para los números (cuadritos pequeños)
+            li a,
+            li span {
+                width: 40px;
+                height: 40px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border: 2px solid #000;
+                background: #fff;
+                color: #000;
+                font-weight: 800;
+                text-decoration: none;
+                box-shadow: 3px 3px 0px #000;
+            }
+        }
+    }
+
+    // Estilo rudo para los botones grandes (Previous/Next)
+    a[rel="prev"],
+    a[rel="next"],
+    .btn-nav-large {
+        min-width: 150px;
+        height: 55px;
+        background: #fff;
+        border: 3px solid #000;
+        color: #000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 900;
+        font-style: italic;
+        text-transform: uppercase;
+        box-shadow: 6px 6px 0px #000;
+        text-decoration: none;
+        transition: 0.2s;
+
+        &:hover {
+            background: #b91c1c;
+            color: #fff;
+            transform: translate(-2px, -2px);
+            box-shadow: 8px 8px 0px #000;
+        }
+    }
+
+    // Página activa
+    .active span,
+    [aria-current="page"] span {
+        background: #000 !important;
+        color: #fff !important;
+        box-shadow: none;
+        transform: translate(2px, 2px);
+    }
+
+    // Ocultar textos basura de Laravel
+    p.text-sm,
+    .leading-5,
+    span.relative.z-0 {
+        display: none !important;
+    }
+}

@@ -1,155 +1,99 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Catálogo - Motos DMT</title>
-    @vite('resources/css/app.css')
+    @vite(['resources/scss/app.scss'])
 </head>
-<body class="bg-black">
 
-<div class="min-h-screen bg-gray-100">
+<body class="catalogo-page">
 
-    <!-- NAVBAR -->
-    <header class="border-b border-gray-300 bg-gray-100">
-        <div class="flex items-center justify-between px-10 py-6">
-
-            <!-- Menú -->
-            <nav class="flex gap-16 text-lg font-black tracking-wide">
-
-                <a href="{{ route('inicio') }}"
-                   class="hover:text-red-700 transition">
-                    INICIO
-                </a>
-
-                <a href="{{ route('catalogo') }}"
-                   class="border-b-4 border-red-700 pb-1">
-                    CATÁLOGO
-                </a>
-
-                <a href="{{ route('nosotros') }}"
-                   class="hover:text-red-700 transition">
-                    SOBRE NOSOTROS
-                </a>
-
-            </nav>
-
-            <!-- Icono usuario (imagen) -->
-            <div class="w-12 h-12 rounded-full border-2 border-black overflow-hidden">
+    <nav class="navbar">
+        <div class="navbar__container">
+            <div class="navbar__menu">
+                <a href="{{ url('/') }}" class="navbar__link">Inicio</a>
+                <a href="{{ route('catalogo.index') }}"
+                    class="navbar__link {{ request()->routeIs('catalogo.index') ? 'navbar__link--active' : '' }}">Catálogo</a>
+                <a href="{{ url('/nosotros') }}" class="navbar__link">Nosotros</a>
+            </div>
+            <div class="navbar__user">
                 <img src="{{ asset('img/user.png') }}"
-                     alt="Usuario"
-                     class="w-full h-full object-cover">
+                    onerror="this.src='https://ui-avatars.com/api/?name=Admin&background=b91c1c&color=fff'" alt="User">
             </div>
-
         </div>
-    </header>
+    </nav>
 
+    <main class="content">
+        <header class="main-header">
+            <span class="main-header__subtitle">Road to Freedom</span>
+            <h1 class="main-header__title">Nuestras <br> <span>Bestias</span></h1>
+        </header>
 
-    <!-- CONTENIDO -->
-    <div class="px-20 py-16">
-
-        <!-- TÍTULO -->
-        <h1 class="text-7xl font-black text-black leading-none mb-16">
-            NUESTRAS <br> MOTOS
-        </h1>
-
-        <!-- BUSCADOR Y FILTRO -->
-        <div class="flex items-end justify-between mb-12">
-
-            <div class="flex items-end gap-4 w-2/3">
-
-                <div class="w-full">
-                    <label class="block text-lg font-semibold mb-2">
-                        Buscar
-                    </label>
-                    <input type="text"
-                           placeholder="Buscar moto..."
-                           class="w-full px-4 py-3 rounded-lg border border-gray-400
-                                  focus:outline-none focus:ring-2 focus:ring-red-600">
+        <section class="search-section">
+            <form action="{{ route('catalogo.index') }}" method="GET" class="search-box">
+                <label for="search">¿Qué buscas exactamente?</label>
+                <div class="search-box__group">
+                    <input type="text" name="search" id="search" value="{{ request('search') }}"
+                        placeholder="Ej: Sportster, Naked, Custom...">
+                    <button type="submit" class="btn-search">🔍</button>
                 </div>
+            </form>
 
-                <!-- Botón buscar -->
-                <button class="w-12 h-12 rounded-full border-2 border-red-700 
-                               flex items-center justify-center text-red-700 
-                               hover:bg-red-700 hover:text-white transition">
-                    🔍
-                </button>
+            <a href="{{ route('catalogo.index') }}" class="btn-filter">LIMPIAR FILTROS</a>
+        </section>
 
-            </div>
+        <div class="moto-grid">
+            @forelse($motos as $moto)
+                <article class="moto-card">
+                    <div class="moto-card__image">
+                        <div class="moto-card__actions">
+                            <a href="{{ route('motos.edit', $moto->id) }}" class="action-btn" title="Editar">✏</a>
 
-            <!-- Botón filtrar -->
-            <button class="bg-red-700 hover:bg-red-800 transition duration-300
-                           text-white font-bold text-lg
-                           px-12 py-3 rounded-full shadow-md">
-                FILTRAR
-            </button>
+                            <form method="POST" action="{{ route('motos.destroy', $moto->id) }}"
+                                onsubmit="return confirm('¿Seguro que quieres eliminar esta bestia?')">
+                                @csrf
+                                @method('DELETE')
+                                <button class="action-btn action-btn--delete" title="Eliminar">🗑</button>
+                            </form>
+                        </div>
 
-        </div>
+                        @if($moto->imagen)
+                            <img src="{{ $moto->imagen }}" alt="{{ $moto->modelo }}">
+                        @else
+                            <img src="https://via.placeholder.com/400x300?text=Sin+Imagen" alt="No image">
+                        @endif
 
-
-        <!-- GRID DE MOTOS -->
-        <div class="grid grid-cols-3 gap-10">
-
-            @foreach($motos ?? [] as $moto)
-            <div class="bg-white rounded-xl border border-gray-300 shadow-sm overflow-hidden">
-
-                <!-- Imagen -->
-                <div class="h-56 bg-gray-200 relative">
-
-                    <!-- Botones editar / eliminar -->
-                    <div class="absolute top-4 right-4 flex gap-3">
-
-                        <a href="{{ route('motos.edit', $moto->id) }}"
-                           class="w-10 h-10 rounded-full bg-red-700 text-white 
-                                  flex items-center justify-center hover:bg-red-800 transition">
-                            ✏
-                        </a>
-
-                        <form method="POST" action="{{ route('motos.destroy', $moto->id) }}">
-                            @csrf
-                            @method('DELETE')
-                            <button class="w-10 h-10 rounded-full bg-red-700 text-white 
-                                           flex items-center justify-center hover:bg-red-800 transition">
-                                🗑
-                            </button>
-                        </form>
-
+                        <span class="moto-card__brand">{{ $moto->manufacturer->name ?? 'DMT Custom' }}</span>
                     </div>
 
-                    @if($moto->imagen)
-                        <img src="{{ asset('storage/'.$moto->imagen) }}"
-                             class="w-full h-full object-cover">
-                    @endif
-
+                    <div class="moto-card__info">
+                        <h2 class="moto-card__title">{{ $moto->modelo }}</h2>
+                        <p class="moto-card__desc">{{ Str::limit($moto->descripcion, 80) }}</p>
+                        <div class="moto-card__footer">
+                            <span
+                                class="moto-card__price">${{ number_format($moto->precio, 0, ',', '.') }}<small>.00</small></span>
+                            <a href="{{ route('motos.show', $moto->id) }}" class="btn-detail">Detalles →</a>
+                        </div>
+                    </div>
+                </article>
+            @empty
+                <div class="no-results">
+                    <p>No se encontraron motos en el garaje.</p>
                 </div>
-
-                <!-- Información -->
-                <div class="p-6">
-
-                    <h2 class="text-2xl font-black mb-1">
-                        {{ $moto->modelo }}
-                        <span class="text-lg font-semibold">
-                            {{ $moto->marca }}
-                        </span>
-                    </h2>
-
-                    <p class="text-gray-700 mb-4">
-                        {{ $moto->descripcion }}
-                    </p>
-
-                    <p class="text-2xl font-black">
-                        ${{ number_format($moto->precio, 2) }}
-                    </p>
-
-                </div>
-
-            </div>
-            @endforeach
-
+            @endforelse
         </div>
 
-    </div>
+        <div class="pagination-container">
+            {{ $motos->onEachSide(10)->links() }}
+        </div>
+    </main>
 
-</div>
+    <footer class="footer">
+        <p>© 2026 MOTOS DMT — POWER & STYLE</p>
+    </footer>
 
 </body>
+
 </html>
