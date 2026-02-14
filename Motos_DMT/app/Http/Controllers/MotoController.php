@@ -120,9 +120,21 @@ class MotoController extends Controller
         ]);
     }
 
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
-        Moto::findOrFail($id)->delete();
-        return redirect()->back()->with('success', 'Moto eliminada correctamente');
+        $moto = Moto::findOrFail($id);
+        $moto->delete();
+
+        // Si la petición es API (JSON)
+        if ($request->expectsJson() || $request->wantsJson()) {
+            return response()->json([
+                'message' => 'Moto eliminada correctamente'
+            ]);
+        }
+
+        // Si viene de la web (Blade)
+        return redirect()
+            ->route('catalogo')
+            ->with('success', 'Moto eliminada correctamente');
     }
 }
