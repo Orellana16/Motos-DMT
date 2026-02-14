@@ -3,6 +3,7 @@
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\MotoWebController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -93,3 +94,21 @@ use App\Http\Controllers\RentalController;
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('rentals', RentalController::class)->only(['index', 'store', 'destroy']);
 });
+
+
+// Páginas públicas (Blade)
+Route::get('/inicio', fn () => view('inicio'))->name('inicio');
+Route::get('/catalogo', [MotoWebController::class, 'catalogo'])->name('catalogo');
+
+// Placeholder si aún no existe la vista:
+Route::get('/nosotros', fn () => view('nosotros'))->name('nosotros');
+
+// Detalle web (evita conflicto con tu GET /motos/{id} JSON)
+Route::get('/motos/detalle/{moto}', [MotoWebController::class, 'show'])->name('motos.show');
+
+// Admin web (evita conflicto con /motos JSON)
+Route::get('/motos/admin/nueva', [MotoWebController::class, 'create'])->name('motos.create');
+Route::post('/motos/admin', [MotoWebController::class, 'store'])->name('motos.store');
+Route::get('/motos/admin/{moto}/editar', [MotoWebController::class, 'edit'])->name('motos.edit');
+Route::put('/motos/admin/{moto}', [MotoWebController::class, 'update'])->name('motos.update');
+Route::delete('/motos/admin/{moto}', [MotoWebController::class, 'destroy'])->name('motos.destroy');

@@ -127,8 +127,9 @@
 
                     <h2 class="text-2xl font-black mb-1">
                         {{ $moto->modelo }}
+                        {{ $moto->modelo }}
                         <span class="text-lg font-semibold">
-                            {{ $moto->marca }}
+                            {{ optional($moto->manufacturer)->nombre ?? '' }}
                         </span>
                     </h2>
 
@@ -139,6 +140,12 @@
                     <p class="text-2xl font-black">
                         ${{ number_format($moto->precio, 2) }}
                     </p>
+                    <a href="{{ route('motos.show', $moto->id) }}"
+                    class="mt-5 inline-block bg-black hover:bg-gray-900 transition
+                            text-white font-bold text-base px-6 py-3 rounded-full shadow-md">
+                        VER DETALLES
+                    </a>
+
 
                 </div>
 
