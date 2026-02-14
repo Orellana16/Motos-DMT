@@ -36,12 +36,15 @@
 
             <nav class="nav">
                 <a href="{{ url('/') }}" class="nav__link nav__link--active">INICIO</a>
-                <a href="{{ url('/catalogo') }}" class="nav__link">CATÁLOGO</a>
+                <a href="{{ route('catalogo.index') }}" class="nav__link">CATÁLOGO</a>
                 <a href="{{ url('/nosotros') }}" class="nav__link">NOSOTROS</a>
             </nav>
 
             <div class="user-section">
-                <a href="#" class="user-section__link">Iniciar Sesión</a>
+                <a href="{{ route('login') }}">LOG IN</a>
+                @if(Route::has('register'))
+                <a href="{{ route('register') }}">REGISTRO</a>
+                @endif
                 <div class="user-section__divider"></div>
                 <div class="user-section__avatar">
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -90,7 +93,7 @@
 
             <div class="hero__right">
 
-                <a href="{{ url('/catalogo') }}" class="btn btn--primary">
+                <a href="{{ route('catalogo.index') }}" class="btn btn--primary">
                     <span>VER MOTOS</span>
                     <svg class="btn__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
@@ -98,7 +101,7 @@
                     </svg>
                 </a>
 
-                <a href="#" class="btn btn--secondary">
+                <a href="{{ route('contactar') }}" class="btn btn--secondary">
                     <span>CONTACTAR</span>
                     <svg class="btn__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4" />

@@ -68,16 +68,17 @@
                 <article class="moto-card">
                     <div class="moto-card__image">
                         <div class="moto-card__actions">
-                            {{-- Edit (ajusta si tu ruta edit es distinta) --}}
-                            <a href="{{ url('/motos/' . $moto->id . '/edit') }}" class="action-btn" title="Editar">✏</a>
+                            @auth
+                                <a href="{{ route('motos.admin.edit', $moto->id) }}" class="action-btn" title="Editar">✏</a>
 
-                            {{-- Delete -> MotoController@destroy --}}
-                            <form method="POST" action="{{ route('motos.destroy', $moto->id) }}"
-                                onsubmit="return confirm('¿Seguro que quieres eliminar esta bestia?')">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="action-btn action-btn--delete" title="Eliminar">🗑</button>
-                            </form>
+                                <form method="POST" action="{{ route('motos.admin.destroy', $moto->id) }}"
+                                    onsubmit="return confirm('¿Seguro que quieres eliminar esta bestia?')">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="action-btn action-btn--delete" title="Eliminar">🗑</button>
+                                </form>
+                            @endauth
+
                         </div>
 
                         @php

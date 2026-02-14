@@ -119,11 +119,15 @@
                             Reservar / Pagar
                         </a>
 
-                        <a href="{{ route('motos.edit', $moto->id) }}"
-                           class="flex-1 bg-black hover:bg-gray-900 transition text-white font-black text-lg
-                                  px-10 py-4 rounded-full shadow-md text-center">
-                            Editar
-                        </a>
+                        @auth
+                            <a href="{{ route('motos.admin.edit', $moto->id) }}"
+                            class="flex-1 bg-black hover:bg-gray-900 transition text-white font-black text-lg
+                                    px-10 py-4 rounded-full shadow-md text-center">
+                                Editar
+                            </a>
+                        @endauth
+
+
                     </div>
 
                 </div>
