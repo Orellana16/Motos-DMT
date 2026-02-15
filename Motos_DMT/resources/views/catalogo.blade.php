@@ -92,30 +92,31 @@
                     </div>
 
                     <!-- Información -->
-                    <div class="p-6">
-                        <h2 class="text-2xl font-black mb-1">
+                    <div class="moto-card__info">
+                        <h2 class="moto-card__title">
                             {{ $moto->modelo }}
-                            <span class="text-lg font-semibold">
+                            <span>
                                 {{ optional($moto->manufacturer)->nombre ?? '' }}
                             </span>
                         </h2>
 
-                        <p class="text-gray-700 mb-4">
+                        <p class="moto-card__desc">
                             {{ $moto->descripcion ?? '' }}
                         </p>
 
-                        <p class="text-2xl font-black">
-                            ${{ number_format($moto->precio, 2) }}
-                        </p>
+                        <div class="moto-card__footer">
+                            <div class="moto-card__price">
+                                ${{ number_format($moto->precio, 2) }}
+                            </div>
 
-                        {{-- CTA Detalle (si ya tienes la ruta web de detalle) --}}
-                        @if(Route::has('motos.show'))
-                            <a href="{{ route('motos.show', $moto->id) }}" class="btn-filter"
-                                style="display:inline-block; margin-top: 14px;">
-                                VER DETALLES
-                            </a>
-                        @endif
+                            @if(Route::has('motos.show'))
+                                <a href="{{ route('motos.show', $moto->id) }}" class="btn-filter">
+                                    VER DETALLES
+                                </a>
+                            @endif
+                        </div>
                     </div>
+
                 </article>
             @empty
                 <p>No hay motos disponibles.</p>

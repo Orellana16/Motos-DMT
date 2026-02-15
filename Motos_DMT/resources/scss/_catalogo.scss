@@ -151,6 +151,9 @@ $font-main: 'Inter', sans-serif; // O la que uses
     overflow: hidden;
     transition: all 0.4s ease;
     border: 1px solid rgb(0, 0, 0);
+    display: flex;
+    flex-direction: column;
+    min-height: 560px;
 
     &:hover {
         transform: translateY(-10px);
@@ -194,6 +197,9 @@ $font-main: 'Inter', sans-serif; // O la que uses
 
     &__info {
         padding: 2rem;
+        display: flex;
+        flex-direction: column;
+        flex: 1;
     }
 
     &__title {
@@ -208,14 +214,21 @@ $font-main: 'Inter', sans-serif; // O la que uses
         color: $gray-medium;
         font-size: 0.9rem;
         line-height: 1.6;
-        margin-bottom: 1.5rem;
+        margin-bottom: 1.25rem;
+
+        // ✅ Limitar a 5 líneas para que la card no se estire
+        display: -webkit-box;
+        -webkit-line-clamp: 5;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
     }
 
     &__footer {
         display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding-top: 1.5rem;
+        flex-direction: column;
+        gap: 12px;
+        margin-top: auto;           
+        padding-top: 1.25rem;
         border-top: 1px solid $gray-light;
     }
 
@@ -297,96 +310,149 @@ $font-main: 'Inter', sans-serif; // O la que uses
         display: flex;
         flex-direction: column; // Botones arriba, números abajo
         align-items: center;
-        gap: 30px; // Espacio entre los dos bloques
+        gap: 30px;
 
-        // BLOQUE 1: Botones Previous y Next
-        .flex.justify-between.flex-1.sm\:hidden,
-        div:first-of-type {
+        // ===================================================
+        // BLOQUE 1: Prev/Next (bloque superior - móvil en Laravel)
+        // ===================================================
+        > .d-flex.justify-content-between.flex-fill.d-sm-none {
             display: flex !important;
-            flex-direction: row !important; // Aseguramos que estén lado a lado
+            flex-direction: row !important;
             gap: 20px;
             width: auto;
-        }
 
-        // BLOQUE 2: Lista de Números
-        .hidden.sm\:flex-1.sm\:flex.sm\:items-center.sm\:justify-between,
-        ul.pagination {
-            display: flex !important;
-            flex-direction: row !important; // ¡CRUCIAL! Los números vuelven a ser una fila
-            justify-content: center;
-
-            // Estilos para la lista (ul) y los elementos (li)
-            ul,
-            li {
+            ul.pagination {
                 display: flex !important;
                 flex-direction: row !important;
-                gap: 8px;
-                list-style: none;
+                gap: 20px;
                 padding: 0;
                 margin: 0;
+                list-style: none;
             }
 
-            // Estilo para los números (cuadritos pequeños)
-            li a,
-            li span {
-                width: 40px;
-                height: 40px;
+            // ✅ Botones grandes SOLO aquí
+            .page-link {
+                min-width: 150px;
+                height: 55px;
+                background: #fff;
+                border: 3px solid #000;
+                color: #000;
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                border: 2px solid #000;
-                background: #fff;
-                color: #000;
-                font-weight: 800;
+                font-weight: 900;
+                font-style: italic;
+                text-transform: uppercase;
+                box-shadow: 6px 6px 0px #000;
                 text-decoration: none;
+                transition: 0.2s;
+                box-sizing: border-box;
+                line-height: 1;
+                padding: 0 18px;
+            }
+
+            a.page-link:hover {
+                background: #b91c1c;
+                color: #fff;
+                transform: translate(-2px, -2px);
+                box-shadow: 8px 8px 0px #000;
+            }
+
+            .page-item.disabled .page-link {
+                opacity: 0.35;
+                cursor: not-allowed;
+                user-select: none;
+                transform: none;
+            }
+        }
+
+        // ===================================================
+        // BLOQUE 2: Números (bloque inferior - desktop)
+        // ===================================================
+        > .d-none.flex-sm-fill.d-sm-flex.align-items-sm-center.justify-content-sm-between {
+            // Ocultar "Showing x to y..."
+            p.small.text-muted {
+                display: none !important;
+            }
+
+            // Contenedor del UL (suele ser el último div)
+            > div:last-child {
+                display: flex;
+                justify-content: center;
+                width: 100%;
+            }
+
+            ul.pagination {
+                display: flex !important;
+                flex-direction: row !important;
+                justify-content: center;
+                flex-wrap: wrap;
+                gap: 10px;
+                row-gap: 14px;
+                max-width: 900px; // ✅ más compacto y “pro”
+                padding: 0;
+                margin: 0;
+                list-style: none;
+            }
+
+            .page-item {
+                list-style: none;
+                flex: 0 0 auto; // ✅ evita que se estire
+            }
+
+            // ✅ Números SIEMPRE 40x40 aquí
+            .page-link {
+                width: 40px;
+                min-width: 40px;
+                height: 40px;
+                padding: 0;
+                background: #fff;
+                border: 2px solid #000;
+                color: #000;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-weight: 800;
+                font-style: normal;
+                text-transform: none;
                 box-shadow: 3px 3px 0px #000;
+                text-decoration: none;
+                transition: 0.2s;
+                box-sizing: border-box;
+                line-height: 1;
+            }
+
+            a.page-link:hover {
+                background: #b91c1c;
+                color: #fff;
+                transform: translate(-1px, -1px);
+            }
+
+            .page-item.disabled .page-link {
+                opacity: 0.35;
+                cursor: not-allowed;
+                user-select: none;
+                transform: none;
+            }
+
+            .page-item.active .page-link {
+                background: #000 !important;
+                color: #fff !important;
+                box-shadow: none;
+                transform: translate(2px, 2px);
+                border-color: #000;
             }
         }
     }
 
-    // Estilo rudo para los botones grandes (Previous/Next)
-    a[rel="prev"],
-    a[rel="next"],
-    .btn-nav-large {
-        min-width: 150px;
-        height: 55px;
-        background: #fff;
-        border: 3px solid #000;
-        color: #000;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-weight: 900;
-        font-style: italic;
-        text-transform: uppercase;
-        box-shadow: 6px 6px 0px #000;
-        text-decoration: none;
-        transition: 0.2s;
-
-        &:hover {
-            background: #b91c1c;
-            color: #fff;
-            transform: translate(-2px, -2px);
-            box-shadow: 8px 8px 0px #000;
-        }
-    }
-
-    // Página activa
-    .active span,
-    [aria-current="page"] span {
-        background: #000 !important;
-        color: #fff !important;
-        box-shadow: none;
-        transform: translate(2px, 2px);
-    }
-
-    // Ocultar textos basura de Laravel
-    p.text-sm,
-    .leading-5,
-    span.relative.z-0 {
+    // Ocultar textos basura adicionales (por si acaso)
+    span.relative.z-0,
+    .leading-5 {
         display: none !important;
     }
 }
+
+
 
 // VARIABLES ADICIONALES PARA EL SELECTOR
 $shadow-ruda: 6px 6px 0px $black;
