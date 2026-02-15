@@ -1,60 +1,44 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
-// Controllers públicos
-use App\Http\Controllers\CatalogoController;
-use App\Http\Controllers\ContactController;
-use App\Http\Controllers\MotoWebController;
-
-// Controllers autenticados
-use App\Http\Controllers\MotoController;
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\PaymentController;
-use App\Http\Controllers\RentalController;
-use App\Http\Controllers\UserController;
-
-// Resources (si los quieres públicos o protegidos, lo definimos luego)
-use App\Http\Controllers\AccessoryController;
-use App\Http\Controllers\ReviewController;
-use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\ManufacturerController;
-use App\Http\Controllers\TransactionController;
+use App\Http\Controllers\{
+    MotoController,
+    CatalogoController,
+    ContactController,
+    PaymentController,
+    ProfileController,
+    AccessoryController,
+    ReviewController,
+    CategoryController,
+    ManufacturerController,
+    TransactionController,
+    UserController,
+    RentalController
+};
 
 /*
 |--------------------------------------------------------------------------
-| Páginas públicas (NO requieren login)
+| Páginas Públicas
 |--------------------------------------------------------------------------
 */
 
-// Home / Inicio
 Route::get('/', fn () => view('inicio'))->name('home');
-Route::get('/inicio', fn () => view('inicio'))->name('inicio');
-
-// Nosotros
 Route::get('/nosotros', fn () => view('nosotros'))->name('nosotros');
-
-// Catálogo (tu vista usa route('catalogo.index'))
-Route::get('/catalogo', [CatalogoController::class, 'index'])->name('catalogo.index');
-
-// Alias opcional (si en algún sitio usas route('catalogo'))
-Route::get('/catalogo/index', [CatalogoController::class, 'index'])->name('catalogo');
-
-// Detalle web (PÚBLICO)
-Route::get('/motos/detalle/{moto}', [MotoWebController::class, 'show'])->name('motos.show');
-
-// Contactar
 Route::get('/contactar', [ContactController::class, 'show'])->name('contactar');
 Route::post('/contactar', [ContactController::class, 'send'])->name('contactar.send');
 
+// Catálogo y Detalle (Público)
+Route::get('/catalogo', [CatalogoController::class, 'index'])->name('catalogo.index');
+Route::get('/motos/detalle/{moto}', [MotoController::class, 'show'])->name('motos.show');
 
 /*
 |--------------------------------------------------------------------------
-| Rutas autenticadas (requieren login)
+| Rutas Autenticadas (Requieren Login)
 |--------------------------------------------------------------------------
 */
-Route::middleware(['auth', 'verified'])->group(function () {
 
+Route::middleware(['auth', 'verified'])->group(function () {
+    
     // Dashboard
     Route::get('/dashboard', fn () => view('dashboard'))->name('dashboard');
 
@@ -63,13 +47,16 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    // Gestión de Motos (ADMIN) -> MotoWebController (Blade) o MotoController (JSON)
-    // Te dejo la versión web consistente con tus vistas:
-    Route::get('/motos/admin/nueva', [MotoWebController::class, 'create'])->name('motos.admin.create');
-    Route::post('/motos/admin', [MotoWebController::class, 'store'])->name('motos.admin.store');
-    Route::get('/motos/admin/{moto}/editar', [MotoWebController::class, 'edit'])->name('motos.admin.edit');
-    Route::put('/motos/admin/{moto}', [MotoWebController::class, 'update'])->name('motos.admin.update');
-    Route::delete('/motos/admin/{moto}', [MotoWebController::class, 'destroy'])->name('motos.admin.destroy');
+    // Gestión de Motos (ADMIN / CRUD)
+    // He unificado aquí las rutas que tu compañero puso como "admin" 
+    // pero usando el controlador principal MotoController
+    Route::prefix('motos')->name('motos.')->group(function () {
+        Route::get('/create', [MotoController::class, 'create'])->name('create');
+        Route::post('/', [MotoController::class, 'store'])->name('store');
+        Route::get('/{moto}/edit', [MotoController::class, 'edit'])->name('edit');
+        Route::put('/{moto}', [MotoController::class, 'update'])->name('update');
+        Route::delete('/{moto}', [MotoController::class, 'destroy'])->name('destroy');
+    });
 
     // Pagos y Checkout
     Route::get('/checkout/{moto_id}', [PaymentController::class, 'showCheckout'])->name('checkout');
@@ -78,16 +65,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // Alquileres
     Route::resource('rentals', RentalController::class)->only(['index', 'store', 'destroy']);
 
-    // Usuarios (si quieres que sea solo admin en el futuro)
+    // Gestión de Usuarios
     Route::get('/users', [UserController::class, 'index']);
     Route::get('/users/{id}', [UserController::class, 'show']);
 });
 
-
 /*
 |--------------------------------------------------------------------------
-| Recursos (AHORA mismo los dejo públicos como estaban)
-| Si quieres, luego los movemos a auth también
+| Recursos Compartidos (Public/Auth según necesites)
 |--------------------------------------------------------------------------
 */
 Route::resource('accessories', AccessoryController::class);
@@ -96,10 +81,4 @@ Route::resource('categories', CategoryController::class);
 Route::resource('manufacturers', ManufacturerController::class);
 Route::resource('transactions', TransactionController::class);
 
-
-/*
-|--------------------------------------------------------------------------
-| Auth routes
-|--------------------------------------------------------------------------
-*/
 require __DIR__ . '/auth.php';

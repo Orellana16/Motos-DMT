@@ -5,8 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Manufacturer;
 use App\Models\Moto;
-// Importamos el Facade correcto para evitar errores de configuración
-use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 use Illuminate\Http\Request;
 
 class MotoController extends Controller
@@ -51,32 +49,29 @@ class MotoController extends Controller
         }
 
         $motos = $query->paginate(9)->withQueryString();
-
         return view('catalogo', compact('motos'));
+    }
+
+    public function create()
+    {
+        $fabricadores = Manufacturer::all();
+        $categorias = Category::all();
+        return view('motos.create', compact('fabricadores', 'categorias'));
     }
 
     public function store(Request $request)
     {
         $validated = $this->validateMoto($request);
 
-        // Subida a Cloudinary
-        $url = Cloudinary::upload($request->file('imagen')->getRealPath())->getSecurePath();
-
-        $validated['imagen'] = $url;
+        // Al ser URL, simplemente guardamos el string que viene del form
         Moto::create($validated);
 
         return redirect()->route('catalogo.index')->with('success', '¡Bestia añadida al garaje!');
     }
 
-    /**
-     * Mostrar el formulario para editar una moto
-     */
     public function edit($id)
     {
-        // Buscamos la moto o lanzamos error 404 si no existe
         $moto = Moto::findOrFail($id);
-
-        // Traemos todos los fabricantes y categorías para llenar los select
         $fabricadores = Manufacturer::all();
         $categorias = Category::all();
 
@@ -86,23 +81,16 @@ class MotoController extends Controller
     public function update(Request $request, $id)
     {
         $moto = Moto::findOrFail($id);
-
-        // Validamos
         $validated = $this->validateMoto($request, true);
 
-        // Si el usuario sube una imagen nueva, la cambiamos. Si no, dejamos la que estaba.
-        if ($request->hasFile('imagen')) {
-            $url = Cloudinary::upload($request->file('imagen')->getRealPath())->getSecurePath();
-            $validated['imagen'] = $url;
-        }
-
+        // Como ahora el input es de texto (URL), simplemente actualizamos
         $moto->update($validated);
 
         return redirect()->route('catalogo.index')->with('success', 'Moto actualizada correctamente');
     }
 
     /**
-     * FUNCIÓN DE APOYO: Para no repetir las reglas de validación dos veces
+     * FUNCIÓN DE APOYO: Validamos que la imagen sea un string (URL)
      */
     protected function validateMoto(Request $request, $isUpdate = false)
     {
@@ -110,7 +98,7 @@ class MotoController extends Controller
             'manufacturer_id' => 'required|exists:manufacturers,id',
             'category_id' => 'required|exists:categories,id',
             'modelo' => 'required|string|max:255',
-            'imagen' => ($isUpdate ? 'nullable' : 'required') . '|string',
+            'imagen' => 'required|string', // Quitamos 'nullable' para asegurar que siempre haya foto
             'descripcion' => 'nullable|string',
             'año' => 'required|integer',
             'cilindrada' => 'required|integer',
@@ -120,21 +108,15 @@ class MotoController extends Controller
         ]);
     }
 
-    public function destroy(Request $request, $id)
+    public function destroy($id)
     {
-        $moto = Moto::findOrFail($id);
-        $moto->delete();
+        Moto::findOrFail($id)->delete();
+        return redirect()->back()->with('success', 'Moto eliminada correctamente');
+    }
 
-        // Si la petición es API (JSON)
-        if ($request->expectsJson() || $request->wantsJson()) {
-            return response()->json([
-                'message' => 'Moto eliminada correctamente'
-            ]);
-        }
-
-        // Si viene de la web (Blade)
-        return redirect()
-            ->route('catalogo')
-            ->with('success', 'Moto eliminada correctamente');
+    public function show(Moto $moto)
+    {
+        $moto->load(['manufacturer', 'category', 'accessories', 'reviews']);
+        return view('motos.show', compact('moto'));
     }
 }

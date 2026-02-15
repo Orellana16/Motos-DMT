@@ -58,7 +58,8 @@
             <select onchange="window.location.href='{{ url('/catalogo') }}?sort=' + this.value">
                 <option value="id_asc" {{ request('sort') == 'id_asc' ? 'selected' : '' }}>Por defecto</option>
                 <option value="price_asc" {{ request('sort') == 'price_asc' ? 'selected' : '' }}>Precio más bajo</option>
-                <option value="price_desc" {{ request('sort') == 'price_desc' ? 'selected' : '' }}>Precio más alto</option>
+                <option value="price_desc" {{ request('sort') == 'price_desc' ? 'selected' : '' }}>Precio más alto
+                </option>
                 <option value="year_desc" {{ request('sort') == 'year_desc' ? 'selected' : '' }}>Más nuevas (Año)</option>
             </select>
         </div>
@@ -69,9 +70,9 @@
                     <div class="moto-card__image">
                         <div class="moto-card__actions">
                             @auth
-                                <a href="{{ route('motos.admin.edit', $moto->id) }}" class="action-btn" title="Editar">✏</a>
+                                <a href="{{ route('motos.edit', $moto->id) }}" class="action-btn" title="Editar">✏</a>
 
-                                <form method="POST" action="{{ route('motos.admin.destroy', $moto->id) }}"
+                                <form method="POST" action="{{ route('motos.destroy', $moto->id) }}"
                                     onsubmit="return confirm('¿Seguro que quieres eliminar esta bestia?')">
                                     @csrf
                                     @method('DELETE')
@@ -81,27 +82,13 @@
 
                         </div>
 
-                        @php
-                            // Imagen consistente:
-                            // - si ya es URL absoluta (http/https), úsala tal cual
-                            // - si es ruta de storage (motos/xxx.jpg), usa asset('storage/...')
-                            $img = null;
-                            if (!empty($moto->imagen)) {
-                                $img = str_starts_with($moto->imagen, 'http://') || str_starts_with($moto->imagen, 'https://')
-                                    ? $moto->imagen
-                                    : asset('storage/' . ltrim($moto->imagen, '/'));
-                            }
-                        @endphp
-
-                        @if($img)
-                            <img src="{{ $img }}" alt="{{ $moto->modelo }}">
+                        @if($moto->imagen)
+                            <img src="{{ $moto->imagen }}" alt="{{ $moto->modelo }}">
                         @else
                             <img src="https://via.placeholder.com/400x300?text=Sin+Imagen" alt="No image">
                         @endif
 
-                        <span class="moto-card__brand">
-                            {{ optional($moto->manufacturer)->nombre ?? 'DMT Custom' }}
-                        </span>
+                        <span class="moto-card__brand">{{ $moto->manufacturer->nombre ?? 'DMT Custom' }}</span>
                     </div>
 
                     <!-- Información -->
@@ -123,7 +110,8 @@
 
                         {{-- CTA Detalle (si ya tienes la ruta web de detalle) --}}
                         @if(Route::has('motos.show'))
-                            <a href="{{ route('motos.show', $moto->id) }}" class="btn-filter" style="display:inline-block; margin-top: 14px;">
+                            <a href="{{ route('motos.show', $moto->id) }}" class="btn-filter"
+                                style="display:inline-block; margin-top: 14px;">
                                 VER DETALLES
                             </a>
                         @endif
