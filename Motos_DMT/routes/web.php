@@ -23,6 +23,7 @@ use App\Http\Controllers\{
 */
 
 Route::get('/', fn () => view('inicio'))->name('home');
+Route::get('/inicio', fn () => view('inicio'))->name('inicio'); 
 Route::get('/nosotros', fn () => view('nosotros'))->name('nosotros');
 Route::get('/contactar', [ContactController::class, 'show'])->name('contactar');
 Route::post('/contactar', [ContactController::class, 'send'])->name('contactar.send');

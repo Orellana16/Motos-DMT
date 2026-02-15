@@ -16,7 +16,7 @@
                 <a href="{{ route('inicio') }}" class="hover:text-red-700 transition">
                     INICIO
                 </a>
-                <a href="{{ route('catalogo') }}" class="hover:text-red-700 transition">
+                <a href="{{ route('catalogo.index') }}" class="hover:text-red-700 transition">
                     CATÁLOGO
                 </a>
                 <a href="{{ route('nosotros') }}" class="hover:text-red-700 transition">
@@ -39,7 +39,7 @@
                 DETALLE <br> MOTO
             </h1>
 
-            <a href="{{ route('catalogo') }}"
+            <a href="{{ route('catalogo.index') }}"
                class="bg-red-700 hover:bg-red-800 transition text-white font-bold text-lg px-10 py-3 rounded-full shadow-md">
                 ← Volver al catálogo
             </a>
