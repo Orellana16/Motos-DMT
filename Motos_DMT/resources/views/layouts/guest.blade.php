@@ -4,37 +4,63 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{ config('app.name', 'Motos DMT') }}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     @vite(['resources/scss/app.scss'])
 </head>
 
 <body class="auth-page">
 
-    {{-- Navbar estilo DMT --}}
-    <nav class="navbar">
-        <div class="navbar__container">
-            <div class="navbar__menu">
-                <a href="{{ route('home') }}" class="navbar__link {{ request()->routeIs('home') ? 'navbar__link--active' : '' }}">Inicio</a>
-                <a href="{{ route('catalogo.index') }}" class="navbar__link {{ request()->routeIs('catalogo.index') ? 'navbar__link--active' : '' }}">Catálogo</a>
-                <a href="{{ route('nosotros') }}" class="navbar__link {{ request()->routeIs('nosotros') ? 'navbar__link--active' : '' }}">Nosotros</a>
-                <a href="{{ route('contactar') }}" class="navbar__link {{ request()->routeIs('contactar') ? 'navbar__link--active' : '' }}">Contactar</a>
+    {{-- Header --}}
+    <header class="header">
+        <div class="header__container">
+            <div class="logo">
+                <div class="logo__icon"><img src="{{ asset('img/logo.png') }}" alt="Logo Motos DMT"></div>
+                <div class="logo__text">
+                    <div class="logo__text-title">MOTOS DMT</div>
+                    <div class="logo__text-subtitle">NI UN PELO DE TONTOS</div>
+                </div>
             </div>
-
-            <div class="navbar__user">
-                <img src="{{ asset('img/user.png') }}"
-                     onerror="this.src='https://ui-avatars.com/api/?name=DMT&background=b91c1c&color=fff'"
-                     alt="User">
+            <nav class="nav">
+                <a href="{{ url('/') }}" class="nav__link {{ request()->is('/') || request()->is('inicio') ? 'nav__link--active' : '' }}">INICIO</a>
+                <a href="{{ route('catalogo.index') }}" class="nav__link {{ request()->routeIs('catalogo.*') ? 'nav__link--active' : '' }}">CATÁLOGO</a>
+                <a href="{{ url('/nosotros') }}" class="nav__link {{ request()->is('nosotros') ? 'nav__link--active' : '' }}">NOSOTROS</a>
+            </nav>
+            <div class="user-section">
+                @auth
+                    <a href="{{ route('dashboard') }}">MI CUENTA</a>
+                @else
+                    <a href="{{ route('login') }}" class="user-section__link">LOG IN</a>
+                    @if(Route::has('register'))
+                    <a href="{{ route('register') }}" class="user-section__link">REGISTRO</a>
+                    @endif
+                @endauth
+                <div class="user-section__divider"></div>
+                <div class="user-section__avatar">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                    </svg>
+                </div>
             </div>
         </div>
-    </nav>
+    </header>
 
-    <main class="auth">
+    <main class="content auth" style="align-items: center; margin-top: 10vh;">
         <section class="auth__card">
             {{ $slot }}
         </section>
     </main>
 
     <footer class="footer">
-        <p>© 2026 MOTOS DMT — POWER & STYLE</p>
+        <div class="footer__container">
+            <span class="footer__copyright">© 2026 Motos DMT. Todos los derechos reservados.</span>
+            <div class="footer__links">
+                <a href="#" class="footer__link">Términos</a>
+                <a href="#" class="footer__link">Privacidad</a>
+                <a href="#" class="footer__link">Cookies</a>
+            </div>
+        </div>
     </footer>
 
 </body>

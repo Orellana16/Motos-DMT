@@ -1,17 +1,24 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contactar - Motos DMT</title>
+    <title>@yield('title', 'Motos DMT')</title>
+    @vite(['resources/scss/app.scss', 'resources/js/app.js'])
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    @vite(['resources/scss/app.scss'])
+    @stack('styles')
 </head>
-
-<body class="catalogo-page">
+<body class="@yield('body-class')">
+    {{-- Background --}}
+    @section('background')
+    <div class="background">
+        <div class="background__image" style="background-image: url('{{ asset('img/fondo.png') }}');"></div>
+        <div class="background__overlay"></div>
+    </div>
+    @show
 
     {{-- Header --}}
     <header class="header">
@@ -47,49 +54,9 @@
         </div>
     </header>
 
-    <main class="content">
-        <header class="main-header">
-            <span class="main-header__subtitle">Road to Freedom</span>
-            <h1 class="main-header__title">Hablemos <br> <span>Hoy</span></h1>
-        </header>
+    @yield('content')
 
-        @if(session('success'))
-            <div class="mb-6 bg-white border border-gray-300 rounded-xl px-6 py-4 shadow-sm" style="max-width: 1200px; margin: 0 auto;">
-                <p class="font-bold text-black">{{ session('success') }}</p>
-            </div>
-        @endif
-
-        <section class="search-section">
-            <form action="{{ route('contactar.send') }}" method="POST" class="search-box">
-                @csrf
-
-                <label for="nombre">Tu nombre</label>
-                <div class="search-box__group">
-                    <input type="text" id="nombre" name="nombre" value="{{ old('nombre') }}" placeholder="Ej: Picha">
-                </div>
-                @error('nombre') <p style="color:#b91c1c;font-weight:700;margin-top:6px;">{{ $message }}</p> @enderror
-
-                <label for="email" style="margin-top:18px;">Tu email</label>
-                <div class="search-box__group">
-                    <input type="email" id="email" name="email" value="{{ old('email') }}" placeholder="Ej: tu@email.com">
-                </div>
-                @error('email') <p style="color:#b91c1c;font-weight:700;margin-top:6px;">{{ $message }}</p> @enderror
-
-                <label for="mensaje" style="margin-top:18px;">Mensaje</label>
-                <div class="search-box__group">
-                    <textarea id="mensaje" name="mensaje" rows="6"
-                              style="width:100%;padding:14px;border-radius:14px;border:1px solid #e5e7eb; background: transparent; outline: none;"
-                              placeholder="Cuéntanos qué necesitas...">{{ old('mensaje') }}</textarea>
-                </div>
-                @error('mensaje') <p style="color:#b91c1c;font-weight:700;margin-top:6px;">{{ $message }}</p> @enderror
-
-                <div style="margin-top:18px;">
-                    <button type="submit" class="btn-filter">ENVIAR MENSAJE</button>
-                </div>
-            </form>
-        </section>
-    </main>
-
+    {{-- Footer --}}
     <footer class="footer">
         <div class="footer__container">
             <span class="footer__copyright">© 2026 Motos DMT. Todos los derechos reservados.</span>
@@ -100,6 +67,5 @@
             </div>
         </div>
     </footer>
-
 </body>
 </html>
