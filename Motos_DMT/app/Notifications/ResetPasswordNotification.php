@@ -2,53 +2,21 @@
 
 namespace App\Notifications;
 
-use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Mail\Mailable;
-use Illuminate\Mail\Mailables\Content;
-use Illuminate\Mail\Mailables\Envelope;
-use Illuminate\Queue\SerializesModels;
+use Illuminate\Notifications\Notification;
+use Illuminate\Notifications\Messages\MailMessage;
 
-class ResetPasswordNotification extends Mailable
+class ResetPasswordNotification extends Notification
 {
-    use Queueable, SerializesModels;
+    public $token;
 
-    /**
-     * Create a new message instance.
-     */
-    public function __construct()
+    public function __construct($token)
     {
-        //
+        $this->token = $token;
     }
 
-    /**
-     * Get the message envelope.
-     */
-    public function envelope(): Envelope
+    public function via($notifiable)
     {
-        return new Envelope(
-            subject: 'Reset Password Notification',
-        );
-    }
-
-    /**
-     * Get the message content definition.
-     */
-    public function content(): Content
-    {
-        return new Content(
-            view: 'view.name',
-        );
-    }
-
-    /**
-     * Get the attachments for the message.
-     *
-     * @return array<int, \Illuminate\Mail\Mailables\Attachment>
-     */
-    public function attachments(): array
-    {
-        return [];
+        return ['mail'];
     }
 
     public function toMail($notifiable)
@@ -58,7 +26,7 @@ class ResetPasswordNotification extends Mailable
             'email' => $notifiable->getEmailForPasswordReset(),
         ], false));
 
-        return (new \Illuminate\Notifications\Messages\MailMessage)
+        return (new MailMessage)
             ->subject('RECUPERAR LLAVES - MOTOS DMT')
             ->view('emails.reset-password', [
                 'url' => $url,
