@@ -72,7 +72,7 @@ class PaymentController extends Controller
         $transaction->paypal_order_id = $request->order_id;
         $transaction->status = $request->status;
         $transaction->amount = $request->amount;
-        $transaction->currency = 'EUR';
+        $transaction->currency = $request->get('currency', 'EUR');
         $transaction->save();
 
         // Generación automática de correo electrónico de confirmación [cite: 62]

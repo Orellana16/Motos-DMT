@@ -2,40 +2,50 @@
 <html>
 <head>
     <style>
-        .card { border: 1px solid #e2e8f0; padding: 20px; border-radius: 8px; font-family: sans-serif; }
-        .badge { padding: 4px 8px; border-radius: 4px; font-weight: bold; }
-        .reserva { background-color: #dcfce7; color: #166534; }
-        .alquiler { background-color: #dbeafe; color: #1e40af; }
+        .button:hover { background-color: #ff0000 !important; }
     </style>
 </head>
-<body>
-    <div class="card">
-        <h1>¡Hola, {{ auth()->user()->name }}!</h1>
+<body style="background-color: #0a0a0a; color: #ffffff; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 20px;">
+    <table align="center" border="0" cellpadding="0" cellspacing="0" width="600" style="background-color: #1a1a1a; border: 2px solid #ff4444; border-radius: 10px; overflow: hidden;">
+        <tr>
+            <td align="center" style="padding: 40px 0; background: linear-gradient(45deg, #1a1a1a, #330000);">
+                <h1 style="color: #ff4444; font-family: 'Orbitron', sans-serif; text-transform: uppercase; letter-spacing: 5px; margin: 0;">MOTOS DMT</h1>
+                <p style="color: #cccccc; text-transform: uppercase; font-size: 12px; letter-spacing: 2px;">Ni un pelo de tontos</p>
+            </td>
+        </tr>
 
-        @if($type === 'reserva')
-            <p>Has realizado la <strong>reserva de compra</strong> para tu próxima moto.</p>
-            <span class="badge reserva">Tipo: Compra</span>
-            <ul>
-                <li>Moto: {{ $data['moto_modelo'] }}</li>
-                <li>Señal pagada: {{ $data['amount'] }}€</li>
-            </ul>
-            <p>Pásate por nuestra oficina para formalizar la financiación y llevarte tu moto.</p>
-        @else
-            <p>Tu <strong>alquiler de moto</strong> ha sido confirmado correctamente.</p>
-            <span class="badge alquiler">Tipo: Alquiler</span>
-            <ul>
-                <li>Moto: {{ $data->moto->modelo }}</li>
-                <li>Desde: {{ $data->start_date }}</li>
-                <li>Hasta: {{ $data->end_date }}</li>
-                <li>Total pagado: {{ number_format($data->total_price, 2) }}€</li>
-            </ul>
-            <p>Recuerda traer tu carnet de conducir original el día de la recogida.</p>
-        @endif
+        <tr>
+            <td style="padding: 40px;">
+                <h2 style="color: #ffffff; border-bottom: 1px solid #333; padding-bottom: 10px;">¡CONFIRMACIÓN DE {{ strtoupper($tipo) }}!</h2>
+                <p style="font-size: 16px; line-height: 1.6; color: #dddddd;">
+                    Hola, piloto. Los motores ya están calentando. Hemos recibido correctamente el pago de tu {{ $tipo }}.
+                </p>
+                
+                <div style="background-color: #000; padding: 20px; border-left: 4px solid #ff4444; margin: 20px 0;">
+                    <p style="margin: 5px 0;"><strong>BESTIA:</strong> {{ $data['moto_modelo'] }}</p>
+                    <p style="margin: 5px 0;"><strong>TOTAL PAGADO:</strong> {{ $data['amount'] }} EUR</p>
+                    <p style="margin: 5px 0;"><strong>ORDEN ID:</strong> {{ $data['order_id'] }}</p>
+                </div>
 
-        <hr>
-        <h3>📍 Ubicación de la oficina</h3>
-        <p>Te esperamos en: Calle del Motor, 12, Cádiz.</p>
-        <a href="https://maps.google.com/?q=IES+Mar+de+Cádiz">Ver en Google Maps</a>
-    </div>
+                <p style="font-size: 14px; color: #888888;">
+                    Puedes revisar los detalles de tu adquisición entrando en tu perfil de usuario en nuestra plataforma.
+                </p>
+
+                <table border="0" cellpadding="0" cellspacing="0" width="100%" style="margin-top: 30px;">
+                    <tr>
+                        <td align="center">
+                            <a href="{{ url('/profile') }}" class="button" style="background-color: #ff4444; color: #ffffff; padding: 15px 30px; text-decoration: none; font-weight: bold; border-radius: 5px; display: inline-block; text-transform: uppercase;">VER MI CUENTA</a>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+        <tr>
+            <td align="center" style="padding: 20px; background-color: #000; font-size: 11px; color: #555555;">
+                © 2026 MOTOS DMT. No respondas a este correo, es un envío automático desde el garaje.
+            </td>
+        </tr>
+    </table>
 </body>
 </html>
