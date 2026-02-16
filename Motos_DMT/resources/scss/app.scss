@@ -7,6 +7,7 @@
 @import 'catalogo';
 @import 'edit';
 @import 'auth';
+@import 'show';
 
 // ========== BASE ==========
 * {
@@ -109,12 +110,6 @@ a {
             font-weight: 600;
         }
     }
-}
-
-// ========== CONTENT (GENERIC) ==========
-.content {
-    padding-top: 120px;
-    min-height: 100vh;
 }
 
 // ========== FOOTER ==========

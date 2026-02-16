@@ -1,17 +1,27 @@
-@extends('layouts.public')
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nosotros - Motos DMT</title>
+    @vite(['resources/css/app.css', 'resources/scss/app.scss'])
+</head>
+<body class="antialiased selection:bg-red-light selection:text-white">
 
-@section('title', 'Nosotros - Motos DMT')
-@section('body-class', 'antialiased selection:bg-red-light selection:text-white')
-
-@section('background')
 <div class="background fixed inset-0 z-[-1]">
     <div class="background__image w-full h-full bg-cover bg-center bg-no-repeat transition-transform duration-700 hover:scale-105" 
          style="background-image: url('{{ asset('img/nosotros.png') }}');"></div>
     <div class="background__overlay absolute inset-0 bg-gradient-to-br from-black/90 via-black/70 to-red-900/30"></div>
 </div>
-@endsection
 
-@section('content')
+<header class="header sticky top-0 z-50 backdrop-blur-sm bg-black/20">
+    <div class="header__container max-w-7xl mx-auto px-6 py-4">
+        <a href="{{ url('/') }}" class="inline-flex items-center text-white font-medium hover:text-red-light transition-colors group">
+            <span class="mr-2 transition-transform group-hover:-translate-x-1">←</span> Volver al inicio
+        </a>
+    </div>
+</header>
+
 <section class="hero min-h-[calc(100vh-160px)] flex items-center py-12">
     <div class="hero__container max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-16 items-center">
 
@@ -19,7 +29,7 @@
             <div>
                 <span class="text-red-light font-bold tracking-widest uppercase text-sm mb-2 block">Nuestra Pasión</span>
                 <h1 class="text-7xl font-black text-white leading-none tracking-tighter">
-                    <span class="text-red-light">NOSOTROS</span>
+                    NOS<span class="text-red-light">OTROS</span>
                 </h1>
             </div>
             
@@ -85,4 +95,16 @@
 
     </div>
 </section>
-@endsection
+
+<footer class="footer border-t border-white/5 bg-black/40 backdrop-blur-md">
+    <div class="footer__container max-w-7xl mx-auto px-6 py-8 flex flex-col md:flex-row justify-between items-center gap-4">
+        <span class="footer__copyright text-gray-500 font-medium text-sm italic">© 2026 Motos <span class="text-red-light font-bold">DMT</span> — Road to Freedom</span>
+        <div class="footer__links flex gap-8">
+            <a href="#" class="text-gray-400 hover:text-white text-xs uppercase tracking-widest transition-colors">Privacidad</a>
+            <a href="#" class="text-gray-400 hover:text-white text-xs uppercase tracking-widest transition-colors">Términos</a>
+        </div>
+    </div>
+</footer>
+
+</body>
+</html>
