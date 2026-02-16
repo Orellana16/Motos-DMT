@@ -1,0 +1,154 @@
+// Variables de marca (Asegúrate de que coincidan con las tuyas)
+$primary-orange: #ff4d00;
+$dark-bg: rgba(0, 0, 0, 0.8);
+$card-bg: rgba(20, 20, 20, 0.9);
+$font-display: 'Orbitron', sans-serif;
+$font-body: 'Rajdhani', sans-serif;
+
+.profile-container {
+    padding: 120px 20px 60px; // Espacio para el header fixed
+    min-height: 100vh;
+    position: relative;
+    z-index: 1;
+}
+
+.profile-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+    gap: 25px;
+    margin-top: 40px;
+
+    @media (max-width: 600px) {
+        grid-template-columns: 1fr;
+    }
+}
+
+// Estilo de las tarjetas (Secciones del perfil)
+.option-card {
+    background: $card-bg;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    padding: 30px;
+    backdrop-filter: blur(10px);
+    transition: transform 0.3s ease, border-color 0.3s ease;
+
+    &:hover {
+        border-color: rgba($primary-orange, 0.5);
+    }
+
+    &--danger {
+        border: 1px solid rgba(239, 68, 68, 0.3);
+        
+        .option-card__title { color: #ef4444; }
+        .option-card__icon { color: #ef4444; }
+        
+        button {
+            background: #ef4444 !important;
+            &:hover { background: #b91c1c !important; }
+        }
+    }
+}
+
+.option-card__header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 25px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    padding-bottom: 15px;
+}
+
+.option-card__icon {
+    width: 28px;
+    height: 28px;
+    color: $primary-orange;
+}
+
+.option-card__title {
+    font-family: $font-display;
+    font-size: 1.1rem;
+    color: white;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin: 0;
+}
+
+// Reset de los formularios de Breeze dentro del perfil
+.profile-form-wrapper {
+    
+    // Texto descriptivo de Breeze
+    .text-sm {
+        color: #9ca3af;
+        font-family: $font-body;
+        margin-bottom: 20px;
+    }
+
+    form {
+        display: grid;
+        gap: 20px;
+    }
+
+    // Estilo de Inputs (Forzado para anular Tailwind)
+    input[type="text"],
+    input[type="email"],
+    input[type="password"],
+    select {
+        width: 100% !important;
+        background: rgba(0, 0, 0, 0.4) !important;
+        border: 1px solid rgba(255, 255, 255, 0.2) !important;
+        color: white !important;
+        padding: 12px 15px !important;
+        border-radius: 8px !important;
+        font-family: $font-body !important;
+        font-size: 1rem !important;
+
+        &:focus {
+            border-color: $primary-orange !important;
+            outline: none !important;
+            box-shadow: 0 0 0 2px rgba($primary-orange, 0.2) !important;
+        }
+    }
+
+    // Etiquetas
+    label {
+        color: white;
+        font-family: $font-body;
+        font-weight: 600;
+        text-transform: uppercase;
+        font-size: 0.85rem;
+        margin-bottom: 8px;
+        display: block;
+    }
+
+    // Botones Primary (Guardar)
+    button {
+        background: $primary-orange !important;
+        color: white !important;
+        font-family: $font-display !important;
+        font-weight: 700 !important;
+        padding: 12px 25px !important;
+        border-radius: 5px !important;
+        text-transform: uppercase !important;
+        cursor: pointer !important;
+        border: none !important;
+        transition: all 0.3s ease !important;
+
+        &:hover {
+            background: lighten($primary-orange, 10%) !important;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba($primary-orange, 0.3);
+        }
+
+        &:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+    }
+
+    // Mensajes de éxito (Saved.)
+    .text-gray-600 {
+        color: #10b981 !important; // Verde éxito
+        font-weight: bold;
+        margin-left: 10px;
+    }
+}

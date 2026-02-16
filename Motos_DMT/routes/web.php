@@ -40,9 +40,6 @@ Route::get('/motos/detalle/{moto}', [MotoController::class, 'show'])->name('moto
 
 Route::middleware(['auth', 'verified'])->group(function () {
     
-    // Dashboard
-    Route::get('/dashboard', fn () => view('dashboard'))->name('dashboard');
-
     // Perfil de Usuario
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

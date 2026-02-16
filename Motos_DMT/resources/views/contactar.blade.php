@@ -30,7 +30,7 @@
             </nav>
             <div class="user-section">
                 @auth
-                    <a href="{{ route('dashboard') }}">MI CUENTA</a>
+                    <a href="{{ route('profile.edit') }}">MI CUENTA</a>
                 @else
                     <a href="{{ route('login') }}" class="user-section__link">LOG IN</a>
                     @if(Route::has('register'))

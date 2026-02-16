@@ -35,7 +35,7 @@
             </nav>
             <div class="user-section">
                 @auth
-                    <a href="{{ route('dashboard') }}">MI CUENTA</a>
+                    <a href="{{ route('profile.edit') }}">MI CUENTA</a>
                 @else
                     <a href="{{ route('login') }}" class="user-section__link">LOG IN</a>
                     @if(Route::has('register'))
@@ -59,10 +59,18 @@
             <h1 class="main-header__title">Nuestras <br> <span>Bestias</span></h1>
         </header>
 
-        {{-- Flash message --}}
-        @if(session('success'))
-            <div class="mb-6 bg-white border border-gray-300 rounded-xl px-6 py-4 shadow-sm">
-                <p class="font-bold text-black">{{ session('success') }}</p>
+        @if(request()->get('success') == 'payment_ok')
+            <div class="alert-success-custom">
+                <div class="alert-content">
+                    <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <div>
+                        <strong>¡OPERACIÓN COMPLETADA!</strong>
+                        <p>Tu moto ya está reservada. "Ni un pelo de tonto", has hecho una gran compra.</p>
+                    </div>
+                </div>
             </div>
         @endif
 
@@ -97,7 +105,7 @@
                         <div class="moto-card__actions">
                             @auth
                                 {{-- Usamos check() por seguridad y comparamos el rol --}}
-                                @if(auth()->user()->rol === 'admin')
+                                @if(Auth::user()?->rol === \App\Enums\UserRol::ADMIN)
                                     <div class="admin-controls">
                                         <a href="{{ route('motos.edit', $moto->id) }}" class="action-btn" title="Edit">✏</a>
 

@@ -36,11 +36,12 @@
 
             <nav class="nav">
                 <a href="{{ url('/') }}" class="nav__link">INICIO</a>
-                <a href="#" class="nav__link">CATÁLOGO</a>
+                <a href="{{ route('motos.index') }}" class="nav__link">CATÁLOGO</a>
                 <a href="#" class="nav__link nav__link--active">CHECKOUT</a>
             </nav>
 
-            <div class="user-section">
+            {{-- Cambio: Redirección a Perfil --}}
+            <a href="{{ route('profile.show') }}" class="user-section" style="text-decoration: none; color: inherit;">
                 <span class="user-section__name">{{ Auth::user()->name }}</span>
                 <div class="user-section__avatar">
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -48,7 +49,7 @@
                             d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                     </svg>
                 </div>
-            </div>
+            </a>
 
         </div>
     </header>
@@ -63,7 +64,6 @@
 
         <div class="checkout__container">
 
-            {{-- Título --}}
             <div class="checkout__header">
                 <h1 class="checkout__title">Finalizar Operación</h1>
                 <p class="checkout__subtitle">
@@ -71,7 +71,6 @@
                 </p>
             </div>
 
-            {{-- Toggle de modo --}}
             <div class="checkout__toggle">
                 <button @click="setMode('reserva')" type="button" class="toggle-btn"
                     :class="mode === 'reserva' ? 'toggle-btn--active' : ''">
@@ -91,13 +90,10 @@
                 </button>
             </div>
 
-            {{-- Grid principal --}}
             <div class="checkout__grid">
 
-                {{-- Columna izquierda: Opciones --}}
+                {{-- Columna izquierda --}}
                 <div class="checkout__options">
-
-                    {{-- Panel Alquiler --}}
                     <div x-show="mode === 'alquiler'" x-transition class="option-card option-card--rental">
                         <div class="option-card__header">
                             <svg class="option-card__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -107,17 +103,14 @@
                             <h3 class="option-card__title">Configurar Alquiler</h3>
                         </div>
                         <p class="option-card__desc">Tarifa: 1% del valor por día</p>
-
                         <label class="input-label">Selecciona fechas:</label>
                         <input x-ref="datepicker" type="text" class="input-field" placeholder="Seleccionar días...">
-
                         <div class="option-card__result">
                             <span>Días totales:</span>
                             <span class="option-card__days" x-text="dias"></span>
                         </div>
                     </div>
 
-                    {{-- Panel Reserva --}}
                     <div x-show="mode === 'reserva'" x-transition class="option-card option-card--purchase">
                         <div class="option-card__header">
                             <svg class="option-card__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -126,17 +119,14 @@
                             </svg>
                             <h3 class="option-card__title">Pago de Señal</h3>
                         </div>
-                        <p class="option-card__desc">
-                            Se requiere el <strong>25%</strong> del valor de la moto para formalizar la reserva.
-                        </p>
+                        <p class="option-card__desc">Se requiere el 25% del valor para formalizar la reserva.</p>
                         <div class="option-card__info">
-                            <span>Precio total de la moto:</span>
+                            <span>Precio total:</span>
                             <span class="option-card__price">{{ number_format($precio_convertido, 2) }}<span
                                     x-text="simbolo"></span></span>
                         </div>
                     </div>
 
-                    {{-- Selector de moneda --}}
                     <div class="currency-card">
                         <label class="input-label">Moneda de pago</label>
                         <form action="{{ route('checkout', $moto_id) }}" method="GET" id="currency-form">
@@ -149,48 +139,23 @@
                             </select>
                         </form>
                     </div>
-
                 </div>
 
-                {{-- Columna derecha: Resumen y PayPal --}}
+                {{-- Columna derecha --}}
                 <div class="checkout__summary">
-
                     <div class="summary-card">
                         <div class="summary-card__label"
                             x-text="mode === 'reserva' ? 'SEÑAL A PAGAR' : 'TOTAL ALQUILER'"></div>
                         <div class="summary-card__price">
                             <span x-text="totalPagar"></span><span x-text="simbolo"></span>
                         </div>
-
                         <div class="summary-card__divider"></div>
-
                         <div id="paypal-button-container" class="summary-card__paypal"></div>
                         <p id="paypal-error" class="hidden summary-card__error">Error al cargar PayPal.</p>
                     </div>
-
-                    {{-- Info adicional --}}
-                    <div class="checkout__info">
-                        <div class="info-item">
-                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-                            </svg>
-                            <span>Pago 100% seguro</span>
-                        </div>
-                        <div class="info-item">
-                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                            </svg>
-                            <span>Confirmación inmediata</span>
-                        </div>
-                    </div>
-
                 </div>
-
             </div>
 
-            {{-- Botón volver --}}
             <div class="checkout__back">
                 <a href="{{ url()->previous() }}" class="btn-back">
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -200,19 +165,15 @@
                     Volver atrás
                 </a>
             </div>
-
         </div>
-
     </main>
 
-    {{-- Footer --}}
     <footer class="footer footer--simple">
         <div class="footer__container">
             <span class="footer__copyright">© 2025 Motos DMT. Todos los derechos reservados.</span>
         </div>
     </footer>
 
-{{-- Scripts --}}
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/es.js"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
@@ -239,7 +200,6 @@
                         minDate: "today",
                         dateFormat: "Y-m-d",
                         locale: "es",
-                        // Soporta tanto el separador inglés "to" como el español "a"
                         defaultDate: this.fechas ? this.fechas.split(/ to | a /) : null,
                         onChange: (selectedDates, dateStr) => {
                             this.fechas = dateStr;
@@ -253,15 +213,12 @@
                 },
 
                 calculateDays() {
-                    // Detectamos el separador dinámicamente según lo que devuelva flatpickr
                     if (this.fechas && (this.fechas.includes(' to ') || this.fechas.includes(' a '))) {
                         const separator = this.fechas.includes(' to ') ? ' to ' : ' a ';
                         const dates = this.fechas.split(separator);
-                        
                         if (dates.length === 2) {
                             const start = new Date(dates[0]);
                             const end = new Date(dates[1]);
-                            
                             if (!isNaN(start) && !isNaN(end)) {
                                 const diffTime = Math.abs(end - start);
                                 this.dias = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1;
@@ -270,8 +227,6 @@
                     } else {
                         this.dias = 1;
                     }
-                    
-                    // Si el modo es alquiler, refrescamos PayPal con el nuevo precio
                     if (this.mode === 'alquiler') this.initPayPal();
                 },
 
@@ -281,18 +236,12 @@
                 },
 
                 get totalPagar() {
-                    let total = 0;
-                    if (this.mode === 'reserva') {
-                        total = this.precioMoto * 0.25;
-                    } else {
-                        total = (this.precioMoto * 0.01) * this.dias;
-                    }
+                    let total = this.mode === 'reserva' ? (this.precioMoto * 0.25) : ((this.precioMoto * 0.01) * this.dias);
                     return total.toFixed(2);
                 },
 
                 initPayPal() {
                     if (typeof paypal === 'undefined') return;
-
                     const container = document.getElementById('paypal-button-container');
                     if (!container) return;
 
@@ -301,15 +250,12 @@
                         style: { layout: 'vertical', color: 'black', shape: 'rect', label: 'pay' },
                         createOrder: (data, actions) => {
                             return actions.order.create({
-                                purchase_units: [{
-                                    amount: { value: this.totalPagar }
-                                }]
+                                purchase_units: [{ amount: { value: this.totalPagar } }]
                             });
                         },
                         onApprove: (data, actions) => {
                             return actions.order.capture().then((details) => {
                                 const targetUrl = this.mode === 'alquiler' ? '/rentals' : '/paypal/process';
-
                                 let payload = {
                                     order_id: details.id,
                                     status: details.status,
@@ -332,8 +278,8 @@
                                     },
                                     body: JSON.stringify(payload)
                                 }).then(res => {
-                                    // Redirigir según el tipo de operación
-                                    window.location.href = this.mode === 'alquiler' ? "{{ route('rentals.index') }}" : "{{ url('/') }}?reserva_ok=1";
+                                    // Cambio: Redirección al catálogo con mensaje de éxito
+                                    window.location.href = "{{ route('motos.index') }}?success=1";
                                 });
                             });
                         }
@@ -342,7 +288,6 @@
             }));
         });
     </script>
-
 </body>
 
 </html>
