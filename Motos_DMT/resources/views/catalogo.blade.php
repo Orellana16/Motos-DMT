@@ -59,16 +59,20 @@
             <h1 class="main-header__title">Nuestras <br> <span>Bestias</span></h1>
         </header>
 
-        @if(request()->get('success') == 'payment_ok')
-            <div class="alert-success-custom">
-                <div class="alert-content">
-                    <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        @if(request()->get('success'))
+            <div class="alert-success-custom" style="margin-bottom: 2rem;">
+                <div class="alert-content"
+                    style="background: rgba(0, 255, 136, 0.1); border: 1px solid #00ff88; padding: 1.5rem; border-radius: 8px; display: flex; align-items: center; gap: 1rem; color: #00ff88; font-family: 'Rajdhani', sans-serif;">
+                    <svg class="icon" style="width: 32px; height: 32px;" fill="none" stroke="currentColor"
+                        viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
                     <div>
-                        <strong>¡OPERACIÓN COMPLETADA!</strong>
-                        <p>Tu moto ya está reservada. "Ni un pelo de tonto", has hecho una gran compra.</p>
+                        <strong style="font-family: 'Orbitron', sans-serif; display: block; font-size: 1.2rem;">¡OPERACIÓN
+                            COMPLETADA!</strong>
+                        <p style="margin: 0; opacity: 0.9;">Tu moto ya está gestionada correctamente. "Ni un pelo de tonto",
+                            has hecho una gran compra.</p>
                     </div>
                 </div>
             </div>

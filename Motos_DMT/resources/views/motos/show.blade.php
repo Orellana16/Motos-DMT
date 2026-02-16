@@ -32,7 +32,7 @@
 
             <div class="user-section">
                 @auth
-                    <a href="{{ route('dashboard') }}" class="user-section__link">MI CUENTA</a>
+                    <a href="{{ route('profile.edit') }}" class="user-section__link">MI CUENTA</a>
                 @else
                     <a href="{{ route('login') }}" class="user-section__link">LOG IN</a>
                 @endauth

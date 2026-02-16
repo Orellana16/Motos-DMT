@@ -36,12 +36,12 @@
 
             <nav class="nav">
                 <a href="{{ url('/') }}" class="nav__link">INICIO</a>
-                <a href="{{ route('motos.index') }}" class="nav__link">CATÁLOGO</a>
+                <a href="{{ route('catalogo.index') }}" class="nav__link">CATÁLOGO</a>
                 <a href="#" class="nav__link nav__link--active">CHECKOUT</a>
             </nav>
 
             {{-- Cambio: Redirección a Perfil --}}
-            <a href="{{ route('profile.show') }}" class="user-section" style="text-decoration: none; color: inherit;">
+            <a href="{{ route('profile.edit') }}" class="user-section" style="text-decoration: none; color: inherit;">
                 <span class="user-section__name">{{ Auth::user()->name }}</span>
                 <div class="user-section__avatar">
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -151,7 +151,6 @@
                         </div>
                         <div class="summary-card__divider"></div>
                         <div id="paypal-button-container" class="summary-card__paypal"></div>
-                        <p id="paypal-error" class="hidden summary-card__error">Error al cargar PayPal.</p>
                     </div>
                 </div>
             </div>
@@ -279,7 +278,7 @@
                                     body: JSON.stringify(payload)
                                 }).then(res => {
                                     // Cambio: Redirección al catálogo con mensaje de éxito
-                                    window.location.href = "{{ route('motos.index') }}?success=1";
+                                    window.location.href = "{{ route('catalogo.index') }}?success=1";
                                 });
                             });
                         }
