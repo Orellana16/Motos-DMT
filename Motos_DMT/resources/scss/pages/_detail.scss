@@ -1,0 +1,326 @@
+// ============================================
+// DETALLE DE MOTO
+// ============================================
+
+.moto-detail-page {
+  background-color: color('bg-dark');
+  color: color('white');
+  font-family: $font-body;
+  min-height: 100vh;
+}
+
+// Navbar específica del detalle
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: z('header');
+  background: rgba(color('black'), 0.8);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(color('white'), 0.1);
+
+  &__container {
+    @include container;
+    @include flex-between;
+    padding: space('lg') 0;
+  }
+
+  &__menu {
+    @include flex(flex-start, center);
+    gap: space('2xl');
+  }
+
+  &__link {
+    color: color('gray-medium');
+    font-weight: 900;
+    text-transform: uppercase;
+    font-style: italic;
+    letter-spacing: 1px;
+    transition: color transition('base');
+
+    &:hover,
+    &--active {
+      color: color('red-primary');
+    }
+
+    &--active {
+      border-bottom: 2px solid color('red-primary');
+    }
+  }
+}
+
+// Container del detalle
+.detail-container {
+  @include container;
+  padding: space('3xl') space('xl');
+}
+
+// Header del detalle
+.detail-header {
+  @include flex-between;
+  margin-bottom: space('3xl');
+
+  &__title {
+    font-family: $font-display;
+    font-size: 3rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    color: color('white');
+
+    span {
+      color: color('red-primary');
+    }
+  }
+}
+
+.btn-back {
+  @include flex(flex-start, center);
+  gap: space('sm');
+  color: color('gray-light');
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: transition('base');
+
+  &:hover {
+    color: color('red-primary');
+  }
+}
+
+// Card principal de la moto
+.moto-main-card {
+  background: color('gray-darker');
+  border-radius: radius('xl');
+  overflow: hidden;
+  border: 1px solid #333;
+  margin-bottom: space('3xl');
+
+  &__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    
+    @media (max-width: 900px) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  &__image-container {
+    img {
+      width: 100%;
+      height: 100%;
+      min-height: 400px;
+      object-fit: cover;
+    }
+  }
+
+  &__content {
+    padding: space('3xl');
+  }
+
+  &__header {
+    @include flex-between;
+    margin-bottom: space('2xl');
+    flex-wrap: wrap;
+    gap: space('lg');
+  }
+}
+
+.moto-title {
+  font-size: 2.5rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  color: color('white');
+  margin: 0;
+}
+
+.moto-subtitle {
+  color: color('gray-medium');
+  font-size: 1rem;
+  margin-top: space('sm');
+}
+
+.moto-price {
+  text-align: right;
+
+  &__label {
+    display: block;
+    font-size: 0.8rem;
+    color: color('text-gray');
+    margin-bottom: space('xs');
+  }
+
+  &__value {
+    font-size: 2.5rem;
+    font-weight: 900;
+    color: color('red-primary');
+  }
+}
+
+.moto-description {
+  color: color('gray-light');
+  line-height: 1.7;
+  margin-bottom: space('2xl');
+}
+
+// Grid de especificaciones
+.moto-specs-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: space('lg');
+  margin-bottom: space('2xl');
+}
+
+.spec-item {
+  background: #252525;
+  padding: space('lg');
+  border-radius: radius('lg');
+
+  .spec-label {
+    display: block;
+    font-size: 0.7rem;
+    color: color('text-gray');
+    margin-bottom: space('xs');
+  }
+
+  .spec-value {
+    font-weight: 700;
+    font-size: 1.2rem;
+    color: color('white');
+  }
+}
+
+.text-success {
+  color: color('success');
+}
+
+.text-danger {
+  color: color('danger');
+}
+
+// Acciones
+.moto-actions {
+  @include flex(flex-start, center);
+  gap: space('lg');
+  flex-wrap: wrap;
+}
+
+.btn-primary,
+.btn-secondary {
+  @include btn-base;
+  padding: space('lg') space('2xl');
+}
+
+.btn-primary {
+  background: color('red-primary');
+  color: color('white');
+
+  &:hover {
+    background: color('red-dark');
+  }
+}
+
+.btn-secondary {
+  background: transparent;
+  border: 2px solid color('white');
+  color: color('white');
+
+  &:hover {
+    background: color('white');
+    color: color('black');
+  }
+}
+
+// Grid extra (accesorios y reseñas)
+.detail-extra-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: space('2xl');
+
+  @media (max-width: 900px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.extra-card {
+  background: color('gray-darker');
+  border: 1px solid #333;
+  border-radius: radius('xl');
+  padding: space('2xl');
+
+  &__title {
+    font-family: $font-display;
+    font-size: 1.5rem;
+    color: color('red-primary');
+    text-transform: uppercase;
+    margin-bottom: space('xl');
+    padding-bottom: space('md');
+    border-bottom: 2px solid #333;
+  }
+
+  &__list {
+    @include flex-column(space('lg'));
+  }
+}
+
+.extra-item {
+  @include flex-between;
+  background: #252525;
+  padding: space('lg') space('xl');
+  border-radius: radius('lg');
+  border: 1px solid transparent;
+  transition: border-color transition('base');
+
+  &:hover {
+    border-color: color('red-primary');
+  }
+
+  &__name {
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  &__price {
+    color: color('red-primary');
+    font-weight: 900;
+    font-size: 1.1rem;
+  }
+}
+
+.review-item {
+  background: #252525;
+  padding: space('xl');
+  border-radius: radius('lg');
+  border-left: 4px solid color('red-primary');
+
+  &__header {
+    @include flex-between;
+    margin-bottom: space('md');
+
+    strong {
+      font-size: 1.1rem;
+      text-transform: uppercase;
+    }
+
+    .rating {
+      background: color('red-primary');
+      padding: space('xs') space('sm');
+      border-radius: radius('sm');
+      font-size: 0.8rem;
+      font-weight: 900;
+    }
+  }
+
+  p {
+    color: color('text-gray');
+    font-style: italic;
+    line-height: 1.4;
+    margin: 0;
+  }
+}
+
+.empty-text {
+  color: #555;
+  text-align: center;
+  padding: space('xl');
+  font-style: italic;
+}

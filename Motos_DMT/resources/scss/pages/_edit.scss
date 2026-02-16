@@ -1,0 +1,207 @@
+// ============================================
+// EDITAR MOTO
+// ============================================
+
+.edit-page {
+  background-color: color('bg-dark');
+  color: color('white');
+  font-family: $font-body;
+  min-height: 100vh;
+}
+
+.edit-container {
+  display: flex;
+  min-height: 100vh;
+}
+
+// Sidebar con imagen
+.edit-sidebar {
+  width: 40%;
+  background-size: cover;
+  background-position: center;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  border-right: 4px solid color('red-primary');
+
+  &__overlay {
+    @include flex(flex-start, flex-end);
+    height: 100%;
+    padding: space('3xl');
+    background: linear-gradient(
+      0deg,
+      rgba(color('black'), 0.8) 0%,
+      rgba(color('black'), 0.2) 100%
+    );
+  }
+}
+
+.moto-info-badge {
+  .badge-year {
+    display: inline-block;
+    background: color('red-primary');
+    padding: space('sm') space('lg');
+    font-weight: bold;
+    font-size: 0.9rem;
+    border-radius: radius('sm');
+    margin-bottom: space('md');
+  }
+
+  .badge-model {
+    font-size: 3rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    line-height: 1;
+    letter-spacing: -1px;
+  }
+}
+
+// Contenido del formulario
+.edit-content {
+  width: 60%;
+  padding: space('3xl');
+  overflow-y: auto;
+}
+
+.edit-nav {
+  margin-bottom: space('3xl');
+
+  .btn-back {
+    @include flex(flex-start, center);
+    gap: space('sm');
+    color: #aaa;
+    font-weight: bold;
+    font-size: 0.8rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    transition: color transition('base');
+
+    &:hover {
+      color: color('red-primary');
+    }
+  }
+}
+
+.edit-header {
+  margin-bottom: space('3xl');
+
+  &__subtitle {
+    color: color('red-primary');
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    margin-bottom: space('sm');
+  }
+
+  &__title {
+    font-family: $font-display;
+    font-size: 2.5rem;
+    font-weight: 900;
+    color: color('white');
+
+    span {
+      @include text-outline;
+    }
+  }
+}
+
+// Formulario
+.ruda-form {
+  .form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: space('xl');
+  }
+
+  .form-group {
+    @include flex-column(space('sm'));
+
+    label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #888;
+      font-weight: 700;
+    }
+
+    &.col-span-2 {
+      grid-column: span 2;
+    }
+  }
+
+  .form-control {
+    background: color('gray-darker');
+    border: 1px solid #333;
+    padding: space('md') space('lg');
+    color: color('white');
+    border-radius: radius('sm');
+    font-size: 1rem;
+    transition: transition('base');
+
+    &::placeholder {
+      color: #555;
+    }
+
+    &:focus {
+      outline: none;
+      border-color: color('red-primary');
+      box-shadow: 0 0 10px rgba(color('red-primary'), 0.2);
+    }
+  }
+
+  .helper-text {
+    font-size: 0.75rem;
+    color: #666;
+    margin-top: space('xs');
+  }
+}
+
+.form-actions {
+  margin-top: space('3xl');
+}
+
+.btn-submit {
+  @include brutal-shadow;
+  width: 100%;
+  background: color('red-primary');
+  color: color('white');
+  border: none;
+  padding: space('xl') space('3xl');
+  font-weight: 800;
+  font-size: 1.125rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: transition('base');
+  clip-path: polygon(5% 0%, 100% 0%, 95% 100%, 0% 100%);
+
+  &:hover {
+    background: color('red-dark');
+    transform: translateY(-2px);
+  }
+}
+
+// Alertas de error
+.alert-error {
+  background: rgba(color('red-primary'), 0.1);
+  border-left: 4px solid color('red-primary');
+  padding: space('xl');
+  border-radius: radius('sm');
+  margin-bottom: space('2xl');
+
+  &__title {
+    font-weight: 700;
+    margin-bottom: space('md');
+  }
+
+  ul {
+    margin: space('md') 0 0;
+    padding-left: space('xl');
+    color: #ff9fa6;
+
+    li {
+      margin-bottom: space('xs');
+    }
+  }
+}

@@ -1,0 +1,160 @@
+// ============================================
+// HOME PAGE
+// ============================================
+
+.hero {
+  position: relative;
+  z-index: z('content');
+  height: 100vh;
+  @include flex-center;
+  padding: 0 space('3xl');
+
+  &__container {
+    @include container(1800px);
+    @include flex-between;
+    width: 100%;
+  }
+
+  &__left {
+    @include flex-column(space('lg'));
+    max-width: 640px;
+    animation: slide-in-left 0.8s ease-out;
+  }
+
+  &__right {
+    @include flex-column(space('lg'));
+    align-items: center;
+    animation: slide-in-right 0.8s ease-out;
+  }
+
+  &__description {
+    color: color('gray-light');
+    font-size: 1.25rem;
+    line-height: 1.7;
+    font-weight: 300;
+
+    .highlight {
+      color: color('red-light');
+      font-weight: 600;
+    }
+  }
+
+  &__image {
+    img {
+      width: 380px;
+      transition: transition('base');
+
+      &:hover {
+        transform: scale(1.03);
+      }
+    }
+  }
+}
+
+// Background
+.background {
+  position: fixed;
+  inset: 0;
+  z-index: z('background');
+  background: color('black');
+
+  &__image {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+  }
+
+  &__overlay {
+    position: absolute;
+    inset: 0;
+    @include gradient-overlay;
+
+    &:only-child {
+      background: radial-gradient(
+        ellipse at top,
+        color('gray-dark') 0%,
+        color('black') 70%
+      );
+    }
+  }
+
+  &__ambient {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(120px);
+
+    &--primary {
+      top: 33%;
+      left: 25%;
+      width: 500px;
+      height: 500px;
+      background: rgba(color('red-primary'), 0.1);
+      animation: pulse-glow 4s ease-in-out infinite;
+    }
+
+    &--secondary {
+      bottom: 25%;
+      right: 25%;
+      width: 400px;
+      height: 400px;
+      background: rgba(color('red-dark'), 0.15);
+      animation: pulse-glow 5s ease-in-out infinite 1s;
+    }
+  }
+}
+
+// Stats
+.stats {
+  @include flex(flex-start, center);
+  gap: space('xl');
+
+  &__item {
+    text-align: center;
+  }
+
+  &__value {
+    font-family: $font-display;
+    font-size: 2.2rem;
+    font-weight: 900;
+    color: color('white');
+  }
+
+  &__label {
+    font-size: 0.8rem;
+    color: color('gray');
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  &__divider {
+    width: 1px;
+    height: 50px;
+    background: color('gray');
+  }
+}
+
+// Badge
+.badge {
+  @include flex(flex-start, center);
+  gap: space('sm');
+  padding: space('sm') space('lg');
+  background: rgba(color('red-dark'), 0.3);
+  border: 1px solid rgba(color('red'), 0.5);
+  border-radius: radius('full');
+
+  &__dot {
+    width: 8px;
+    height: 8px;
+    background: color('red');
+    border-radius: 50%;
+  }
+
+  &__text {
+    color: color('red-light');
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+}

@@ -1,0 +1,137 @@
+// ============================================
+// HEADER
+// ============================================
+
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: z('header');
+  padding: space('md') space('3xl');
+  @include glass(24px, rgba(color('black'), 0.6));
+  border-bottom: 1px solid rgba(color('red-dark'), 0.4);
+
+  &__container {
+    @include container(1800px);
+    @include flex-between;
+  }
+}
+
+// Logo
+.logo {
+  @include flex(flex-start, center);
+  gap: space('md');
+
+  &__icon {
+    @include flex-center;
+    width: 45px;
+    height: 45px;
+    background: color('red-primary');
+    border-radius: radius('md');
+
+    span {
+      font-family: $font-display;
+      font-weight: 900;
+      font-size: 1.2rem;
+      color: color('white');
+    }
+  }
+
+  &__text {
+    &-title {
+      font-family: $font-display;
+      font-weight: 700;
+      font-size: 1.4rem;
+      color: color('white');
+      letter-spacing: 0.05em;
+    }
+
+    &-subtitle {
+      font-size: 0.7rem;
+      color: color('gray-light');
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+    }
+  }
+
+  img {
+    width: 45px;
+    height: 45px;
+  }
+}
+
+// Navigation
+.nav {
+  @include flex(flex-start, center);
+  gap: space('sm');
+
+  &__link {
+    padding: space('sm') space('lg');
+    font-family: $font-display;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: color('gray-light');
+    border-radius: radius('full');
+    transition: transition('base');
+
+    &:hover {
+      color: color('white');
+      background: rgba(color('white'), 0.1);
+    }
+
+    &--active {
+      background: color('red-primary');
+      color: color('white');
+
+      &:hover {
+        background: color('red-dark');
+      }
+    }
+  }
+}
+
+// User section
+.user-section {
+  @include flex(flex-end, center);
+  gap: space('lg');
+
+  &__link {
+    color: color('gray-light');
+    font-size: 0.9rem;
+
+    &:hover {
+      color: color('white');
+    }
+  }
+
+  &__divider {
+    width: 1px;
+    height: 20px;
+    background: color('gray');
+  }
+
+  &__avatar {
+    @include flex-center;
+    width: 40px;
+    height: 40px;
+    background: color('gray-dark');
+    border-radius: radius('md');
+    cursor: pointer;
+    transition: transition('base');
+
+    svg {
+      width: 20px;
+      height: 20px;
+      color: color('gray-light');
+    }
+
+    &:hover {
+      background: color('red-primary');
+
+      svg {
+        color: color('white');
+      }
+    }
+  }
+}

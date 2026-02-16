@@ -1,0 +1,91 @@
+// ============================================
+// BOTONES
+// ============================================
+
+.btn {
+  @include btn-base;
+
+  // Variantes
+  &--primary {
+    background: color('red-primary');
+    color: color('white');
+    border-color: color('red-primary');
+
+    &:hover:not(:disabled) {
+      background: color('red-dark');
+      border-color: color('red-dark');
+      transform: translateY(-2px);
+    }
+  }
+
+  &--secondary {
+    background: transparent;
+    color: color('red-light');
+    border-color: color('red');
+
+    &:hover:not(:disabled) {
+      background: color('red');
+      color: color('white');
+    }
+  }
+
+  &--brutal {
+    @include brutal-shadow;
+    background: color('white');
+    color: color('black');
+    font-style: italic;
+  }
+
+  &--outline {
+    background: transparent;
+    color: color('white');
+    border-color: color('white');
+
+    &:hover:not(:disabled) {
+      background: color('white');
+      color: color('black');
+    }
+  }
+
+  // Tamaños
+  &--sm {
+    padding: space('sm') space('lg');
+    font-size: 0.875rem;
+  }
+
+  &--lg {
+    padding: space('xl') space('3xl');
+    font-size: 1.125rem;
+  }
+
+  // Con icono
+  &__icon {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+// Botón de acción (editar, eliminar)
+.action-btn {
+  @include flex-center;
+  width: 35px;
+  height: 35px;
+  border-radius: radius('md');
+  background: color('white');
+  transition: transition('base');
+
+  &--delete {
+    background: color('red-primary');
+    color: color('white');
+
+    &:hover {
+      background: color('red-dark');
+    }
+  }
+
+  &--edit {
+    &:hover {
+      background: color('gray-light');
+    }
+  }
+}

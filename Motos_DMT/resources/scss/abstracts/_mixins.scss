@@ -1,0 +1,169 @@
+// ============================================
+// MIXINS CONSOLIDADOS
+// ============================================
+
+// Responsive breakpoints
+@mixin respond-to($breakpoint) {
+  @if map-has-key($breakpoints, $breakpoint) {
+    @media (min-width: map-get($breakpoints, $breakpoint)) {
+      @content;
+    }
+  }
+}
+
+// Flexbox helpers
+@mixin flex($justify: flex-start, $align: stretch, $direction: row) {
+  display: flex;
+  flex-direction: $direction;
+  justify-content: $justify;
+  align-items: $align;
+}
+
+@mixin flex-center {
+  @include flex(center, center);
+}
+
+@mixin flex-between {
+  @include flex(space-between, center);
+}
+
+@mixin flex-column($gap: 0) {
+  @include flex(flex-start, stretch, column);
+  @if $gap > 0 {
+    gap: $gap;
+  }
+}
+
+// Glass effect
+@mixin glass($blur: 16px, $bg: rgba(color('black'), 0.6)) {
+  background: $bg;
+  backdrop-filter: blur($blur);
+  -webkit-backdrop-filter: blur($blur);
+}
+
+// Text effects
+@mixin text-glow($color: color('red'), $intensity: 0.7) {
+  text-shadow: 
+    0 0 15px rgba($color, $intensity),
+    0 0 30px rgba($color, $intensity * 0.6);
+}
+
+@mixin text-outline($color: color('white'), $width: 1px) {
+  -webkit-text-stroke: $width $color;
+  color: transparent;
+}
+
+// Box effects
+@mixin box-glow($color: color('red'), $blur: 20px, $opacity: 0.3) {
+  box-shadow: 0 0 $blur rgba($color, $opacity);
+}
+
+// Brutal shadow (estilo neobrutalism)
+@mixin brutal-shadow($size: 'md') {
+  box-shadow: shadow($size);
+  border: 3px solid color('black');
+  
+  &:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: shadow('lg');
+  }
+}
+
+// Gradientes
+@mixin gradient-overlay($direction: to right) {
+  background: linear-gradient(
+    $direction,
+    color('black'),
+    rgba(color('black'), 0.7),
+    rgba(color('black'), 0.3)
+  );
+}
+
+// Botón base
+@mixin btn-base {
+  @include flex(center, center);
+  gap: space('md');
+  padding: space('lg') space('2xl');
+  font-family: $font-display;
+  font-weight: 700;
+  font-size: 1rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border-radius: radius('full');
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: transition('base');
+  
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+// Transiciones suaves
+@mixin smooth-hover($property: all, $transform: translateY(-2px)) {
+  transition: $property transition('base');
+  
+  &:hover:not(:disabled) {
+    transform: $transform;
+  }
+}
+
+// Container con max-width
+@mixin container($max-width: 1200px) {
+  max-width: $max-width;
+  margin: 0 auto;
+  padding: 0 space('xl');
+}
+
+// Ocultar scrollbar
+@mixin hide-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+// Truncate text
+@mixin truncate($lines: 1) {
+  @if $lines == 1 {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  } @else {
+    display: -webkit-box;
+    -webkit-line-clamp: $lines;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+}
+
+// Absolute center
+@mixin absolute-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+// Aspect ratio
+@mixin aspect-ratio($width: 16, $height: 9) {
+  position: relative;
+  
+  &::before {
+    content: '';
+    display: block;
+    padding-top: ($height / $width) * 100%;
+  }
+  
+  > * {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+}

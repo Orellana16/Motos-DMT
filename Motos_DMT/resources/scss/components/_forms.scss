@@ -1,0 +1,121 @@
+// ============================================
+// FORMULARIOS
+// ============================================
+
+.form {
+  &__group {
+    @include flex-column(space('sm'));
+    margin-bottom: space('lg');
+
+    &--col-2 {
+      grid-column: span 2;
+    }
+  }
+
+  &__label {
+    font-size: 0.75rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-style: italic;
+    color: color('gray-medium');
+  }
+
+  &__input,
+  &__select,
+  &__textarea {
+    width: 100%;
+    padding: space('md') space('lg');
+    background: color('white');
+    border: 3px solid color('black');
+    border-radius: radius('lg');
+    font-weight: 800;
+    color: color('black');
+    outline: none;
+    transition: transition('base');
+    box-shadow: shadow('md');
+
+    &::placeholder {
+      color: color('gray');
+    }
+
+    &:focus {
+      background: color('black');
+      color: color('white');
+      box-shadow: shadow('lg');
+    }
+
+    // Versión dark
+    .theme-dark & {
+      background: color('gray-darker');
+      border-color: #333;
+      color: color('white');
+
+      &:focus {
+        border-color: color('red-primary');
+      }
+    }
+  }
+
+  &__select {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24'%3E%3Cpath d='M0 7l12 10 12-10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right space('lg') center;
+    padding-right: space('3xl');
+    cursor: pointer;
+  }
+
+  &__textarea {
+    min-height: 120px;
+    resize: vertical;
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: space('lg');
+
+    @include respond-to('md') {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  &__error {
+    color: color('danger');
+    font-size: 0.875rem;
+    font-weight: 600;
+    margin-top: space('sm');
+  }
+}
+
+// Search box
+.search-box {
+  @include brutal-shadow;
+  @include flex(space-between, stretch);
+  background: color('gray-light');
+  border-radius: radius('lg');
+  padding: space('sm');
+  overflow: hidden;
+
+  &__input {
+    flex: 1;
+    border: none;
+    background: transparent;
+    padding: space('sm') space('lg');
+    font-size: 1rem;
+    outline: none;
+  }
+
+  &__button {
+    background: color('black');
+    color: color('white');
+    padding: 0 space('xl');
+    border-radius: radius('md');
+    transition: transition('base');
+
+    &:hover {
+      background: color('red-primary');
+    }
+  }
+}

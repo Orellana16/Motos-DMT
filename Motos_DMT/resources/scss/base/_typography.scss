@@ -1,0 +1,61 @@
+// ============================================
+// TIPOGRAFÍA
+// ============================================
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: $font-display;
+  font-weight: 900;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.title {
+  &--xl {
+    font-size: clamp(3rem, 8vw, 5rem);
+    letter-spacing: -0.02em;
+  }
+  
+  &--lg {
+    font-size: clamp(2rem, 5vw, 3rem);
+  }
+  
+  &--md {
+    font-size: clamp(1.5rem, 3vw, 2.5rem);
+  }
+  
+  &--outline {
+    @include text-outline;
+  }
+}
+
+.subtitle {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: color('red-primary');
+}
+
+.text {
+  &--body {
+    font-size: 1.125rem;
+    line-height: 1.7;
+    color: color('gray-light');
+  }
+  
+  &--small {
+    font-size: 0.875rem;
+  }
+  
+  &--italic {
+    font-style: italic;
+  }
+  
+  &--bold {
+    font-weight: 900;
+  }
+  
+  &--glow {
+    @include text-glow;
+  }
+}

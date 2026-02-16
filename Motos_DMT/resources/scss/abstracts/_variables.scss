@@ -1,0 +1,105 @@
+// ============================================
+// VARIABLES CONSOLIDADAS
+// ============================================
+
+// Colores principales
+$colors: (
+  'black': #000,
+  'white': #fff,
+  'red': #dc2626,
+  'red-dark': #991b1b,
+  'red-light': #f87171,
+  'red-primary': #b91c1c,
+  'gray': #6b7280,
+  'gray-light': #9ca3af,
+  'gray-medium': #a3a3a3,
+  'gray-dark': #1f2937,
+  'gray-darker': #1a1a1a,
+  'bg-dark': #0a0a0a,
+  'text-gray': #a3a3a3,
+  'success': #22c55e,
+  'danger': #ef4444
+);
+
+// Función helper para obtener colores
+@function color($key) {
+  @return map-get($colors, $key);
+}
+
+// Fuentes
+$font-display: 'Orbitron', sans-serif;
+$font-body: 'Rajdhani', sans-serif;
+
+// Espaciado (usando escala consistente)
+$spacing: (
+  'xs': 0.25rem,
+  'sm': 0.5rem,
+  'md': 1rem,
+  'lg': 1.5rem,
+  'xl': 2rem,
+  '2xl': 3rem,
+  '3xl': 4rem
+);
+
+@function space($key) {
+  @return map-get($spacing, $key);
+}
+
+// Transiciones
+$transitions: (
+  'fast': 0.15s ease,
+  'base': 0.3s ease,
+  'slow': 0.5s ease
+);
+
+@function transition($key: 'base') {
+  @return map-get($transitions, $key);
+}
+
+// Border radius
+$radius: (
+  'sm': 4px,
+  'md': 8px,
+  'lg': 12px,
+  'xl': 20px,
+  '2xl': 24px,
+  'full': 50px
+);
+
+@function radius($key) {
+  @return map-get($radius, $key);
+}
+
+// Sombras
+$shadows: (
+  'sm': 3px 3px 0px color('black'),
+  'md': 5px 5px 0px color('black'),
+  'lg': 8px 8px 0px color('black'),
+  'xl': 10px 10px 0px color('black')
+);
+
+@function shadow($key) {
+  @return map-get($shadows, $key);
+}
+
+// Z-index
+$z-index: (
+  'background': 0,
+  'decorative': 5,
+  'content': 10,
+  'header': 100,
+  'modal': 1000
+);
+
+@function z($key) {
+  @return map-get($z-index, $key);
+}
+
+// Breakpoints
+$breakpoints: (
+  'sm': 640px,
+  'md': 768px,
+  'lg': 1024px,
+  'xl': 1280px,
+  '2xl': 1536px
+);

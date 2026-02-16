@@ -1,0 +1,388 @@
+// ============================================
+// CATÁLOGO
+// ============================================
+
+.catalogo-page {
+  min-height: 100vh;
+  background: color('black');
+  color: color('white');
+  font-family: $font-body;
+}
+
+.content {
+  padding-top: 100px; // Espacio para el header fixed
+  padding-bottom: space('3xl');
+}
+
+// Header del catálogo
+.main-header {
+  @include container;
+  padding: space('3xl') 0;
+
+  &__subtitle {
+    display: block;
+    color: color('red-primary');
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 5px;
+    font-size: 0.75rem;
+    margin-bottom: space('md');
+  }
+
+  &__title {
+    font-family: $font-display;
+    font-size: clamp(3rem, 8vw, 5rem);
+    font-weight: 900;
+    text-transform: uppercase;
+    line-height: 0.9;
+    color: color('white');
+
+    span {
+      @include text-outline(color('white'), 2px);
+    }
+  }
+}
+
+// Search section
+.search-section {
+  @include container;
+  @include brutal-shadow;
+  background: color('black');
+  border-radius: radius('xl');
+  padding: space('2xl');
+  margin-bottom: space('2xl');
+  display: flex;
+  gap: space('2xl');
+  align-items: flex-end;
+  flex-wrap: wrap;
+
+  .search-box {
+    flex: 1;
+    min-width: 300px;
+
+    label {
+      display: block;
+      font-size: 0.7rem;
+      font-weight: 900;
+      text-transform: uppercase;
+      color: color('gray-medium');
+      margin-bottom: space('sm');
+      font-style: italic;
+    }
+
+    &__group {
+      @include flex(space-between, center);
+      background: color('gray-light');
+      border-radius: radius('lg');
+      padding: space('sm');
+      overflow: hidden;
+
+      input {
+        flex: 1;
+        border: none;
+        background: transparent;
+        padding: space('sm') space('lg');
+        font-size: 1rem;
+        outline: none;
+        color: color('black');
+
+        &::placeholder {
+          color: color('gray');
+        }
+      }
+
+      textarea {
+        width: 100%;
+        padding: space('md');
+        border-radius: radius('md');
+        border: 1px solid #e5e7eb;
+        background: transparent;
+        outline: none;
+        color: color('white');
+        resize: vertical;
+      }
+    }
+
+    &:hover {
+        transition: all 0.3s ease;
+    }
+  }
+
+  .btn-search {
+    background: color('black');
+    color: color('white');
+    border: none;
+    padding: 0 space('xl');
+    border-radius: radius('md');
+    cursor: pointer;
+    font-size: 1.2rem;
+    transition: transition('base');
+  }
+}
+
+.btn-filter {
+  @include brutal-shadow;
+  background: color('red-primary');
+  color: color('white');
+  border: none;
+  padding: space('lg') space('2xl');
+  border-radius: radius('lg');
+  font-weight: 900;
+  font-style: italic;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: transition('base');
+
+  &:hover {
+    background: color('black');
+  }
+}
+
+// Sort box
+.sort-box {
+  @include container;
+  @include flex(flex-end, center);
+  gap: space('lg');
+  margin-bottom: space('2xl');
+
+  label {
+    font-weight: 900;
+    text-transform: uppercase;
+    font-style: italic;
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+    color: color('white');
+  }
+
+  select {
+    @include brutal-shadow('sm');
+    background: color('white');
+    padding: space('md') space('2xl');
+    font-family: $font-body;
+    font-weight: 800;
+    text-transform: uppercase;
+    font-style: italic;
+    cursor: pointer;
+    outline: none;
+    transition: transition('base');
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24'%3E%3Cpath d='M0 7l12 10 12-10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right space('lg') center;
+    padding-right: space('3xl');
+
+    &:focus {
+      background-color: color('black');
+      color: color('white');
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='white'%3E%3Cpath d='M0 7l12 10 12-10z'/%3E%3C/svg%3E");
+    }
+  }
+}
+
+// Grid de motos
+.moto-grid {
+  @include container;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: space('2xl');
+  margin-bottom: space('3xl');
+}
+
+.moto-card {
+  background: color('white');
+  border-radius: radius('2xl');
+  overflow: hidden;
+  @include brutal-shadow;
+  display: flex;
+  flex-direction: column;
+  min-height: 560px;
+  transition: transition('base');
+
+  &:hover {
+    transform: translateY(-10px);
+
+    .moto-card__actions {
+      opacity: 1;
+    }
+
+    .moto-card__image img {
+      transform: scale(1.1);
+    }
+  }
+
+  &__image {
+    position: relative;
+    height: 250px;
+    overflow: hidden;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s ease;
+    }
+  }
+
+  &__brand {
+    position: absolute;
+    bottom: space('md');
+    left: space('md');
+    background: color('black');
+    color: color('white');
+    font-size: 0.6rem;
+    font-weight: 900;
+    padding: space('sm') space('lg');
+    border-radius: radius('full');
+    text-transform: uppercase;
+    font-style: italic;
+  }
+
+  &__actions {
+    position: absolute;
+    top: space('md');
+    right: space('md');
+    @include flex-column(space('sm'));
+    z-index: z('content');
+    opacity: 0;
+    transition: opacity transition('base');
+  }
+
+  &__info {
+    padding: space('2xl');
+    @include flex-column;
+    flex: 1;
+    color: color('black');
+  }
+
+  &__title {
+    font-size: 1.5rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    font-style: italic;
+    margin-bottom: space('sm');
+
+    span {
+      display: block;
+      font-size: 0.9rem;
+      color: color('gray');
+      margin-top: space('xs');
+    }
+  }
+
+  &__desc {
+    @include truncate(5);
+    color: color('gray-medium');
+    font-size: 0.9rem;
+    line-height: 1.6;
+    margin-bottom: space('lg');
+  }
+
+  &__footer {
+    @include flex-column(space('md'));
+    margin-top: auto;
+    padding-top: space('lg');
+    border-top: 1px solid color('gray-light');
+  }
+
+  &__price {
+    font-size: 1.8rem;
+    font-weight: 900;
+    color: color('black');
+  }
+}
+
+// Pagination
+.pagination-container {
+  @include container;
+  margin: space('3xl') 0;
+  
+  nav {
+    @include flex-column(space('2xl'));
+    align-items: center;
+
+    // Botones Prev/Next (móvil)
+    > .d-flex.justify-content-between.flex-fill.d-sm-none {
+      display: flex !important;
+      gap: space('xl');
+
+      ul.pagination {
+        @include flex(center, center);
+        gap: space('xl');
+        list-style: none;
+      }
+
+      .page-link {
+        @include brutal-shadow;
+        @include flex-center;
+        min-width: 150px;
+        height: 55px;
+        background: color('white');
+        color: color('black');
+        font-weight: 900;
+        font-style: italic;
+        text-transform: uppercase;
+        padding: 0 space('xl');
+        transition: transition('base');
+      }
+
+      a.page-link:hover {
+        background: color('red-primary');
+        color: color('white');
+      }
+
+      .page-item.disabled .page-link {
+        opacity: 0.35;
+        cursor: not-allowed;
+      }
+    }
+
+    // Números de página (desktop)
+    > .d-none.flex-sm-fill.d-sm-flex {
+      width: 100%;
+
+      p.small.text-muted {
+        display: none !important;
+      }
+
+      > div:last-child {
+        @include flex-center;
+        width: 100%;
+      }
+
+      ul.pagination {
+        @include flex(center, center);
+        flex-wrap: wrap;
+        gap: space('sm');
+        list-style: none;
+      }
+
+      .page-link {
+        @include brutal-shadow('sm');
+        @include flex-center;
+        min-width: 40px;
+        height: 40px;
+        background: color('white');
+        color: color('black');
+        font-weight: 800;
+        transition: transition('base');
+      }
+
+      a.page-link:hover {
+        background: color('red-primary');
+        color: color('white');
+      }
+
+      .page-item.active .page-link {
+        background: color('black');
+        color: color('white');
+        box-shadow: none;
+        transform: translate(2px, 2px);
+      }
+
+      .page-item.disabled .page-link {
+        opacity: 0.35;
+        cursor: not-allowed;
+      }
+    }
+  }
+}
