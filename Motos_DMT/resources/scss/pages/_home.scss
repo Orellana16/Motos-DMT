@@ -25,6 +25,26 @@
     @include flex-column(space('lg'));
     align-items: center;
     animation: slide-in-right 0.8s ease-out;
+
+    .secondary-links {
+      display: flex;
+      gap: space('md');
+      margin-top: space('md');
+      font-size: 0.9rem;
+
+      span {
+        align-self: center;
+      }
+
+      a {
+        color: color('gray-light');
+        transition: transition('base');
+
+        &:hover {
+          color: color('red-light');
+        }
+      }
+    }
   }
 
   &__description {
@@ -71,11 +91,9 @@
     @include gradient-overlay;
 
     &:only-child {
-      background: radial-gradient(
-        ellipse at top,
-        color('gray-dark') 0%,
-        color('black') 70%
-      );
+      background: radial-gradient(ellipse at top,
+          color('gray-dark') 0%,
+          color('black') 70%);
     }
   }
 

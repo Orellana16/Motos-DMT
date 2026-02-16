@@ -7,7 +7,9 @@
     <title>Catálogo - Motos DMT</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
     @vite(['resources/scss/app.scss'])
 </head>
 
@@ -24,9 +26,12 @@
                 </div>
             </div>
             <nav class="nav">
-                <a href="{{ url('/') }}" class="nav__link {{ request()->is('/') || request()->is('inicio') ? 'nav__link--active' : '' }}">INICIO</a>
-                <a href="{{ route('catalogo.index') }}" class="nav__link {{ request()->routeIs('catalogo.*') ? 'nav__link--active' : '' }}">CATÁLOGO</a>
-                <a href="{{ url('/nosotros') }}" class="nav__link {{ request()->is('nosotros') ? 'nav__link--active' : '' }}">NOSOTROS</a>
+                <a href="{{ url('/') }}"
+                    class="nav__link {{ request()->is('/') || request()->is('inicio') ? 'nav__link--active' : '' }}">INICIO</a>
+                <a href="{{ route('catalogo.index') }}"
+                    class="nav__link {{ request()->routeIs('catalogo.*') ? 'nav__link--active' : '' }}">CATÁLOGO</a>
+                <a href="{{ url('/nosotros') }}"
+                    class="nav__link {{ request()->is('nosotros') ? 'nav__link--active' : '' }}">NOSOTROS</a>
             </nav>
             <div class="user-section">
                 @auth
@@ -34,13 +39,14 @@
                 @else
                     <a href="{{ route('login') }}" class="user-section__link">LOG IN</a>
                     @if(Route::has('register'))
-                    <a href="{{ route('register') }}" class="user-section__link">REGISTRO</a>
+                        <a href="{{ route('register') }}" class="user-section__link">REGISTRO</a>
                     @endif
                 @endauth
                 <div class="user-section__divider"></div>
                 <div class="user-section__avatar">
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                            d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                     </svg>
                 </div>
             </div>
@@ -90,16 +96,20 @@
                     <div class="moto-card__image">
                         <div class="moto-card__actions">
                             @auth
-                                <a href="{{ route('motos.edit', $moto->id) }}" class="action-btn" title="Editar">✏</a>
+                                {{-- Usamos check() por seguridad y comparamos el rol --}}
+                                @if(auth()->user()->rol === 'admin')
+                                    <div class="admin-controls">
+                                        <a href="{{ route('motos.edit', $moto->id) }}" class="action-btn" title="Edit">✏</a>
 
-                                <form method="POST" action="{{ route('motos.destroy', $moto->id) }}"
-                                    onsubmit="return confirm('¿Seguro que quieres eliminar esta bestia?')">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="action-btn action-btn--delete" title="Eliminar">🗑</button>
-                                </form>
+                                        <form method="POST" action="{{ route('motos.destroy', $moto->id) }}" style="display:inline;"
+                                            onsubmit="return confirm('¿Eliminar esta bestia?')">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="action-btn action-btn--delete">🗑</button>
+                                        </form>
+                                    </div>
+                                @endif
                             @endauth
-
                         </div>
 
                         @if($moto->imagen)

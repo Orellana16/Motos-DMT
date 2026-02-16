@@ -1,0 +1,233 @@
+// ============================================
+// CHECKOUT - MOTOS DMT STYLE
+// ============================================
+
+.checkout {
+    @include container(1200px);
+    padding-top: 140px;
+    padding-bottom: space('3xl');
+    position: relative;
+    z-index: 2;
+
+    &__header {
+        text-align: center;
+        margin-bottom: space('2xl');
+    }
+
+    &__title {
+        font-family: $font-display;
+        font-size: clamp(2.5rem, 5vw, 4rem);
+        text-transform: uppercase;
+        font-weight: 900;
+        line-height: 1;
+        margin-bottom: 10px;
+        @include text-outline(color('white'), 2px);
+    }
+
+    &__subtitle {
+        font-size: 1.2rem;
+        color: color('gray-light');
+        .highlight {
+            color: color('red-primary');
+            font-weight: 700;
+            font-family: $font-display;
+        }
+    }
+
+    // Toggle de Modo (Reserva vs Alquiler)
+    &__toggle {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        margin-bottom: 40px;
+
+        .toggle-btn {
+            background: rgba(color('white'), 0.05);
+            border: 2px solid rgba(color('white'), 0.1);
+            color: color('white');
+            padding: 15px 30px;
+            border-radius: 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+
+            &__icon { width: 20px; height: 20px; }
+
+            &:hover {
+                background: rgba(color('white'), 0.1);
+                border-color: color('red-primary');
+            }
+
+            &--active {
+                background: color('red-primary') !important;
+                border-color: color('red-primary') !important;
+                box-shadow: 0 0 20px rgba(color('red-primary'), 0.4);
+            }
+        }
+    }
+
+    // Grid Principal
+    &__grid {
+        display: grid;
+        grid-template-columns: 1.2fr 0.8fr;
+        gap: 40px;
+        align-items: start;
+
+        @media (max-width: 900px) {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    // Tarjetas de Opciones
+    .option-card, .currency-card, .summary-card {
+        background: rgba(20, 20, 20, 0.8);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 20px;
+        padding: 30px;
+        margin-bottom: 25px;
+    }
+
+    .option-card {
+        &__header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        &__icon {
+            width: 30px;
+            height: 30px;
+            color: color('red-primary');
+        }
+
+        &__title {
+            font-family: $font-display;
+            font-size: 1.5rem;
+            text-transform: uppercase;
+        }
+
+        &__desc {
+            color: color('gray-light');
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+
+        &__result {
+            margin-top: 20px;
+            background: rgba(color('red-primary'), 0.1);
+            padding: 15px;
+            border-radius: 10px;
+            display: flex;
+            justify-content: space-between;
+            font-weight: 700;
+        }
+    }
+
+    // Inputs Estilizados
+    .input-label {
+        display: block;
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        color: color('red-primary');
+        margin-bottom: 10px;
+        letter-spacing: 1px;
+    }
+
+    .input-field, .input-select {
+        width: 100%;
+        background: #000;
+        border: 1px solid #333;
+        color: #fff;
+        padding: 15px;
+        border-radius: 8px;
+        font-family: inherit;
+        font-size: 1rem;
+        outline: none;
+
+        &:focus {
+            border-color: color('red-primary');
+        }
+    }
+
+    // Columna de Resumen
+    .summary-card {
+        border: 2px solid color('red-primary');
+        position: sticky;
+        top: 120px;
+
+        &__label {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: color('gray-light');
+            text-align: center;
+        }
+
+        &__price {
+            font-family: $font-display;
+            font-size: 3rem;
+            text-align: center;
+            margin: 10px 0 25px;
+            color: color('white');
+        }
+
+        &__divider {
+            height: 1px;
+            background: rgba(255, 255, 255, 0.1);
+            margin-bottom: 25px;
+        }
+
+        &__paypal {
+            min-height: 150px;
+        }
+    }
+
+    // Info de Seguridad
+    .checkout__info {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        margin-top: 20px;
+
+        .info-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: color('gray-light');
+            font-size: 0.9rem;
+
+            svg { width: 18px; color: color('red-primary'); }
+        }
+    }
+
+    &__back {
+        margin-top: 30px;
+        .btn-back {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            color: #666;
+            text-decoration: none;
+            transition: color 0.3s;
+            svg { width: 20px; }
+            &:hover { color: #fff; }
+        }
+    }
+}
+
+// Estilos específicos para Flatpickr Dark
+.flatpickr-calendar.dark {
+    background: #1a1a1a;
+    border: 1px solid #333;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    
+    .flatpickr-day.selected {
+        background: color('red-primary');
+        border-color: color('red-primary');
+    }
+}

@@ -1,326 +1,570 @@
 // ============================================
-// DETALLE DE MOTO
+// DETALLE DE MOTO - DISEÑO MEJORADO
 // ============================================
 
 .moto-detail-page {
-  background-color: color('bg-dark');
+  background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
   color: color('white');
   font-family: $font-body;
   min-height: 100vh;
+  position: relative;
+
+  // Patrón de fondo sutil
+  &::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+      repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 100px,
+        rgba(color('red-primary'), 0.01) 100px,
+        rgba(color('red-primary'), 0.01) 200px
+      );
+    pointer-events: none;
+    z-index: 0;
+  }
 }
 
-// Navbar específica del detalle
+// ============ NAVBAR MEJORADA ============
 .navbar {
-  position: sticky;
+  position: fixed; // Cambiado de sticky a fixed
   top: 0;
-  z-index: z('header');
-  background: rgba(color('black'), 0.8);
-  backdrop-filter: blur(10px);
-  border-bottom: 1px solid rgba(color('white'), 0.1);
+  left: 0;
+  right: 0;
+  z-index: 1000; // z-index alto para estar por encima
+  background: rgba(#0a0a0a, 0.95);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(color('red-primary'), 0.2);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
 
   &__container {
-    @include container;
-    @include flex-between;
-    padding: space('lg') 0;
+    @include container(1400px);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: space('lg') space('xl'); // Padding consistente
+    height: 70px; // Altura fija para el navbar
   }
 
   &__menu {
-    @include flex(flex-start, center);
-    gap: space('2xl');
+    display: flex;
+    align-items: center;
+    gap: space('3xl');
   }
 
   &__link {
-    color: color('gray-medium');
-    font-weight: 900;
+    color: rgba(color('white'), 0.7);
+    font-weight: 700;
+    font-size: 0.85rem;
     text-transform: uppercase;
-    font-style: italic;
-    letter-spacing: 1px;
-    transition: color transition('base');
+    letter-spacing: 1.5px;
+    transition: all 0.3s ease;
+    position: relative;
+    padding: space('sm') 0;
 
-    &:hover,
-    &--active {
-      color: color('red-primary');
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: color('red-primary');
+      transition: width 0.3s ease;
+    }
+
+    &:hover {
+      color: color('white');
+
+      &::after {
+        width: 100%;
+      }
     }
 
     &--active {
-      border-bottom: 2px solid color('red-primary');
+      color: color('red-primary');
+
+      &::after {
+        width: 100%;
+      }
     }
   }
 }
 
-// Container del detalle
+// ============ CONTAINER PRINCIPAL ============
 .detail-container {
-  @include container;
-  padding: space('3xl') space('xl');
+  @include container(1400px);
+  padding: 120px space('2xl') space('3xl'); // ✅ PADDING TOP de 120px para el navbar fixed
+  position: relative;
+  z-index: 1;
 }
 
-// Header del detalle
+// ============ HEADER DEL DETALLE ============
 .detail-header {
-  @include flex-between;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   margin-bottom: space('3xl');
+  padding: space('xl') 0;
+  border-bottom: 1px solid rgba(color('red-primary'), 0.1);
 
   &__title {
     font-family: $font-display;
-    font-size: 3rem;
+    font-size: clamp(2rem, 4vw, 3rem);
     font-weight: 900;
     text-transform: uppercase;
     color: color('white');
+    letter-spacing: -1px;
+    position: relative;
+    padding-left: space('lg');
+
+    // Línea decorativa
+    &::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 4px;
+      height: 100%;
+      background: color('red-primary');
+    }
 
     span {
       color: color('red-primary');
+      text-shadow: 0 0 30px rgba(color('red-primary'), 0.5);
     }
   }
 }
 
 .btn-back {
-  @include flex(flex-start, center);
+  display: inline-flex;
+  align-items: center;
   gap: space('sm');
-  color: color('gray-light');
+  color: rgba(color('white'), 0.6);
   font-weight: 700;
+  font-size: 0.85rem;
   text-transform: uppercase;
   letter-spacing: 1px;
-  transition: transition('base');
+  padding: space('sm') space('lg');
+  border: 1px solid rgba(color('white'), 0.2);
+  border-radius: radius('full');
+  transition: all 0.3s ease;
 
   &:hover {
-    color: color('red-primary');
+    color: color('white');
+    border-color: color('red-primary');
+    background: rgba(color('red-primary'), 0.1);
+    transform: translateX(-5px);
   }
 }
 
-// Card principal de la moto
+// ============ CARD PRINCIPAL MEJORADA ============
 .moto-main-card {
-  background: color('gray-darker');
-  border-radius: radius('xl');
+  background: linear-gradient(135deg, #1a1a1a 0%, #0f0f0f 100%);
+  border-radius: 24px;
   overflow: hidden;
-  border: 1px solid #333;
+  border: 1px solid rgba(color('red-primary'), 0.2);
   margin-bottom: space('3xl');
+  box-shadow: 
+    0 30px 60px rgba(0, 0, 0, 0.5),
+    0 0 100px rgba(color('red-primary'), 0.05);
+  position: relative;
+
+  // Efecto de brillo en hover
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.03),
+      transparent
+    );
+    transition: left 0.8s ease;
+  }
+
+  &:hover::before {
+    left: 100%;
+  }
 
   &__grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
+    min-height: 500px;
     
-    @media (max-width: 900px) {
+    @media (max-width: 1024px) {
       grid-template-columns: 1fr;
     }
   }
 
   &__image-container {
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(135deg, #0a0a0a, #1a1a1a);
+
     img {
       width: 100%;
       height: 100%;
-      min-height: 400px;
+      min-height: 500px;
       object-fit: cover;
+      transition: transform 0.6s ease;
+    }
+
+    &:hover img {
+      transform: scale(1.05);
+    }
+
+    // Overlay gradient para mejor legibilidad
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 100px;
+      background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
     }
   }
 
   &__content {
     padding: space('3xl');
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
   }
 
   &__header {
-    @include flex-between;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
     margin-bottom: space('2xl');
     flex-wrap: wrap;
-    gap: space('lg');
+    gap: space('xl');
   }
 }
 
+// ============ TÍTULO Y PRECIO ============
 .moto-title {
-  font-size: 2.5rem;
+  font-family: $font-display;
+  font-size: clamp(2rem, 3vw, 2.5rem);
   font-weight: 900;
   text-transform: uppercase;
   color: color('white');
+  line-height: 1;
   margin: 0;
+  letter-spacing: -1px;
 }
 
 .moto-subtitle {
-  color: color('gray-medium');
-  font-size: 1rem;
+  color: color('red-primary');
+  font-size: 0.9rem;
   margin-top: space('sm');
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  opacity: 0.8;
 }
 
 .moto-price {
   text-align: right;
+  padding: space('lg');
+  background: rgba(color('red-primary'), 0.1);
+  border: 1px solid rgba(color('red-primary'), 0.3);
+  border-radius: radius('lg');
 
   &__label {
     display: block;
-    font-size: 0.8rem;
-    color: color('text-gray');
+    font-size: 0.7rem;
+    color: rgba(color('white'), 0.5);
     margin-bottom: space('xs');
+    text-transform: uppercase;
+    letter-spacing: 1px;
   }
 
   &__value {
-    font-size: 2.5rem;
+    font-family: $font-display;
+    font-size: 2.2rem;
     font-weight: 900;
     color: color('red-primary');
+    text-shadow: 0 0 20px rgba(color('red-primary'), 0.5);
   }
 }
 
 .moto-description {
-  color: color('gray-light');
-  line-height: 1.7;
+  color: rgba(color('white'), 0.7);
+  line-height: 1.8;
   margin-bottom: space('2xl');
+  font-size: 1rem;
 }
 
-// Grid de especificaciones
+// ============ GRID DE ESPECIFICACIONES ============
 .moto-specs-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
   gap: space('lg');
   margin-bottom: space('2xl');
 }
 
 .spec-item {
-  background: #252525;
+  background: rgba(color('white'), 0.03);
   padding: space('lg');
   border-radius: radius('lg');
+  border: 1px solid rgba(color('white'), 0.1);
+  transition: all 0.3s ease;
+  text-align: center;
+
+  &:hover {
+    background: rgba(color('white'), 0.05);
+    border-color: rgba(color('red-primary'), 0.3);
+    transform: translateY(-2px);
+  }
 
   .spec-label {
     display: block;
-    font-size: 0.7rem;
-    color: color('text-gray');
-    margin-bottom: space('xs');
+    font-size: 0.65rem;
+    color: rgba(color('white'), 0.5);
+    margin-bottom: space('sm');
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 600;
   }
 
   .spec-value {
-    font-weight: 700;
-    font-size: 1.2rem;
+    font-family: $font-display;
+    font-weight: 900;
+    font-size: 1.3rem;
     color: color('white');
   }
 }
 
 .text-success {
-  color: color('success');
+  color: #22c55e !important;
 }
 
 .text-danger {
-  color: color('danger');
+  color: #ef4444 !important;
 }
 
-// Acciones
+// ============ ACCIONES ============
 .moto-actions {
-  @include flex(flex-start, center);
+  display: flex;
   gap: space('lg');
   flex-wrap: wrap;
+  padding-top: space('xl');
+  border-top: 1px solid rgba(color('white'), 0.1);
 }
 
 .btn-primary,
 .btn-secondary {
-  @include btn-base;
   padding: space('lg') space('2xl');
+  font-weight: 700;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border-radius: radius('full');
+  transition: all 0.3s ease;
+  cursor: pointer;
+  text-align: center;
+  display: inline-block;
 }
 
 .btn-primary {
-  background: color('red-primary');
+  background: linear-gradient(135deg, color('red-primary'), color('red-dark'));
   color: color('white');
+  border: none;
+  box-shadow: 0 10px 30px rgba(color('red-primary'), 0.3);
 
   &:hover {
-    background: color('red-dark');
+    transform: translateY(-2px);
+    box-shadow: 0 15px 40px rgba(color('red-primary'), 0.4);
   }
 }
 
 .btn-secondary {
   background: transparent;
-  border: 2px solid color('white');
+  border: 2px solid rgba(color('white'), 0.3);
   color: color('white');
 
   &:hover {
-    background: color('white');
-    color: color('black');
+    background: rgba(color('white'), 0.1);
+    border-color: color('white');
   }
 }
 
-// Grid extra (accesorios y reseñas)
+// ============ GRID EXTRA (ACCESORIOS Y RESEÑAS) ============
 .detail-extra-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: space('2xl');
+  margin-top: space('3xl');
 
-  @media (max-width: 900px) {
+  @media (max-width: 1024px) {
     grid-template-columns: 1fr;
   }
 }
 
 .extra-card {
-  background: color('gray-darker');
-  border: 1px solid #333;
-  border-radius: radius('xl');
+  background: linear-gradient(135deg, rgba(#1a1a1a, 0.9), rgba(#0f0f0f, 0.9));
+  border: 1px solid rgba(color('red-primary'), 0.2);
+  border-radius: 20px;
   padding: space('2xl');
+  backdrop-filter: blur(10px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
 
   &__title {
     font-family: $font-display;
-    font-size: 1.5rem;
+    font-size: 1.3rem;
     color: color('red-primary');
     text-transform: uppercase;
     margin-bottom: space('xl');
-    padding-bottom: space('md');
-    border-bottom: 2px solid #333;
+    padding-bottom: space('lg');
+    border-bottom: 2px solid rgba(color('red-primary'), 0.2);
+    letter-spacing: 1px;
+    display: flex;
+    align-items: center;
+    gap: space('md');
+
+    &::before {
+      content: '◆';
+      color: color('red-primary');
+      font-size: 0.8rem;
+    }
   }
 
   &__list {
-    @include flex-column(space('lg'));
+    display: flex;
+    flex-direction: column;
+    gap: space('md');
   }
 }
 
 .extra-item {
-  @include flex-between;
-  background: #252525;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(color('white'), 0.03);
   padding: space('lg') space('xl');
   border-radius: radius('lg');
   border: 1px solid transparent;
-  transition: border-color transition('base');
+  transition: all 0.3s ease;
 
   &:hover {
-    border-color: color('red-primary');
+    background: rgba(color('white'), 0.05);
+    border-color: rgba(color('red-primary'), 0.3);
+    transform: translateX(5px);
   }
 
   &__name {
     font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 1px;
+    letter-spacing: 0.5px;
+    font-size: 0.85rem;
+    color: rgba(color('white'), 0.9);
   }
 
   &__price {
     color: color('red-primary');
     font-weight: 900;
     font-size: 1.1rem;
+    font-family: $font-display;
   }
 }
 
 .review-item {
-  background: #252525;
+  background: rgba(color('white'), 0.03);
   padding: space('xl');
   border-radius: radius('lg');
-  border-left: 4px solid color('red-primary');
+  border-left: 3px solid color('red-primary');
+  transition: all 0.3s ease;
+
+  &:hover {
+    background: rgba(color('white'), 0.05);
+    transform: translateX(5px);
+  }
 
   &__header {
-    @include flex-between;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     margin-bottom: space('md');
 
     strong {
-      font-size: 1.1rem;
+      font-size: 1rem;
       text-transform: uppercase;
+      color: color('white');
+      letter-spacing: 0.5px;
     }
 
     .rating {
-      background: color('red-primary');
-      padding: space('xs') space('sm');
-      border-radius: radius('sm');
-      font-size: 0.8rem;
+      background: linear-gradient(135deg, color('red-primary'), color('red-dark'));
+      padding: space('xs') space('md');
+      border-radius: radius('full');
+      font-size: 0.75rem;
       font-weight: 900;
+      box-shadow: 0 5px 15px rgba(color('red-primary'), 0.3);
     }
   }
 
   p {
-    color: color('text-gray');
+    color: rgba(color('white'), 0.6);
     font-style: italic;
-    line-height: 1.4;
+    line-height: 1.6;
     margin: 0;
+    font-size: 0.95rem;
   }
 }
 
 .empty-text {
-  color: #555;
+  color: rgba(color('white'), 0.3);
   text-align: center;
-  padding: space('xl');
+  padding: space('2xl');
   font-style: italic;
+  font-size: 0.9rem;
+}
+
+// ============ RESPONSIVE ============
+@media (max-width: 768px) {
+  .detail-container {
+    padding-top: 100px; // Menos padding en móvil
+  }
+
+  .detail-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: space('lg');
+
+    &__title {
+      font-size: 1.8rem;
+    }
+  }
+
+  .moto-main-card {
+    &__content {
+      padding: space('xl');
+    }
+  }
+
+  .moto-title {
+    font-size: 1.8rem;
+  }
+
+  .moto-price {
+    &__value {
+      font-size: 1.8rem;
+    }
+  }
+
+  .moto-specs-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
