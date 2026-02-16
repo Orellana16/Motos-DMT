@@ -89,6 +89,14 @@
             </form>
 
             <a href="{{ route('catalogo.index') }}" class="btn-filter">LIMPIAR FILTROS</a>
+
+            @auth
+                @if(Auth::user()?->rol === \App\Enums\UserRol::ADMIN)
+                    <a href="{{ route('motos.create') }}" class="btn-filter" style="background: #fff; color: #cc0000;">
+                        + NUEVA BESTIA
+                    </a>
+                @endif
+            @endauth
         </section>
 
         <div class="sort-box">
