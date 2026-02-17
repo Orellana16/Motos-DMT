@@ -49,38 +49,46 @@ class PaymentController extends Controller
      */
     public function processPayment(Request $request)
     {
-        // Validación obligatoria de los datos del formulario [cite: 78]
         $request->validate([
             'order_id' => 'required',
             'moto_id' => 'required',
-            'amount' => 'required|numeric',
-            'status' => 'required',
+            'mode' => 'required', // reserva o alquiler
         ]);
 
         $moto = Moto::findOrFail($request->moto_id);
-        $precioReserva = $moto->precio * 0.25;
 
-        // Verificación de seguridad del monto
-        if (abs($request->amount - $precioReserva) > 0.01) {
-            return response()->json(['error' => 'Monto incorrecto'], 400);
-        }
-
-        // Registro del resultado de la transacción en la base de datos [cite: 61]
+        // 1. Guardar la transacción normalmente
         $transaction = new Transaction();
         $transaction->user_id = Auth::id();
-        $transaction->moto_id = $request->moto_id;
+        $transaction->moto_id = $moto->id;
         $transaction->paypal_order_id = $request->order_id;
         $transaction->status = $request->status;
         $transaction->amount = $request->amount;
         $transaction->currency = $request->get('currency', 'EUR');
         $transaction->save();
 
-        // Generación automática de correo electrónico de confirmación [cite: 62]
-        Mail::to(Auth::user()->email)->send(new PaymentReceived($transaction));
+        // 2. LÓGICA DE STOCK: Solo si es compra/reserva
+        if ($request->mode === 'reserva') {
+            if ($moto->stock > 0) {
+                $moto->decrement('stock');
+            } else {
+                return response()->json(['error' => 'No hay stock disponible'], 422);
+            }
+        }
 
-        return response()->json([
-            'message' => 'Pago registrado con éxito y correo enviado',
-            'id' => $transaction->id
-        ]);
+        // 3. Envío de correo (Mailtrap)
+        $data = [
+            'moto_modelo' => $moto->modelo,
+            'amount' => $request->amount,
+            'order_id' => $request->order_id
+        ];
+
+        try {
+            Mail::to(Auth::user()->email)->send(new \App\Mail\PaymentReceived($data, $request->mode));
+        } catch (\Exception $e) {
+            \Log::error("Error Mail: " . $e->getMessage());
+        }
+
+        return response()->json(['status' => 'success']);
     }
 }

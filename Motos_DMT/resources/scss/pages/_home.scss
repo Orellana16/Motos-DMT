@@ -17,7 +17,7 @@
 
   &__left {
     @include flex-column(space('lg'));
-    max-width: 640px;
+    max-width: 25vw;
     animation: slide-in-left 0.8s ease-out;
   }
 
@@ -61,7 +61,7 @@
 
   &__image {
     img {
-      width: 380px;
+      max-width: 380px;
       transition: transition('base');
 
       &:hover {

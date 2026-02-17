@@ -8,9 +8,7 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/themes/dark.css">
 </head>
@@ -25,7 +23,6 @@
     {{-- Header --}}
     <header class="header">
         <div class="header__container">
-
             <a href="{{ url('/') }}" class="logo">
                 <div class="logo__icon"><img src="{{ asset('img/logo.png') }}" alt="Logo Motos DMT"></div>
                 <div class="logo__text">
@@ -40,28 +37,19 @@
                 <a href="#" class="nav__link nav__link--active">CHECKOUT</a>
             </nav>
 
-            {{-- Cambio: Redirección a Perfil --}}
             <a href="{{ route('profile.edit') }}" class="user-section" style="text-decoration: none; color: inherit;">
                 <span class="user-section__name">{{ Auth::user()->name }}</span>
                 <div class="user-section__avatar">
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
-                            d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                     </svg>
                 </div>
             </a>
-
         </div>
     </header>
 
     {{-- Contenido principal --}}
-    <main class="checkout" x-data="checkoutHandler(
-        {{ $precio_convertido }}, 
-        '{{ $currency }}', 
-        '{{ request('mode', 'reserva') }}', 
-        '{{ request('fechas', '') }}'
-    )" x-init="init()">
-
+    <main class="checkout" x-data="checkoutHandler({{ $precio_convertido }}, '{{ $currency }}', '{{ request('mode', 'reserva') }}', '{{ request('fechas', '') }}')" x-init="init()">
         <div class="checkout__container">
 
             <div class="checkout__header">
@@ -72,33 +60,27 @@
             </div>
 
             <div class="checkout__toggle">
-                <button @click="setMode('reserva')" type="button" class="toggle-btn"
-                    :class="mode === 'reserva' ? 'toggle-btn--active' : ''">
+                <button @click="setMode('reserva')" type="button" class="toggle-btn" :class="mode === 'reserva' ? 'toggle-btn--active' : ''">
                     <svg class="toggle-btn__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
                     </svg>
                     Comprar (Señal)
                 </button>
-                <button @click="setMode('alquiler')" type="button" class="toggle-btn"
-                    :class="mode === 'alquiler' ? 'toggle-btn--active' : ''">
+                <button @click="setMode('alquiler')" type="button" class="toggle-btn" :class="mode === 'alquiler' ? 'toggle-btn--active' : ''">
                     <svg class="toggle-btn__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                     </svg>
                     Alquiler Diario
                 </button>
             </div>
 
             <div class="checkout__grid">
-
                 {{-- Columna izquierda --}}
                 <div class="checkout__options">
                     <div x-show="mode === 'alquiler'" x-transition class="option-card option-card--rental">
                         <div class="option-card__header">
                             <svg class="option-card__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                             </svg>
                             <h3 class="option-card__title">Configurar Alquiler</h3>
                         </div>
@@ -114,16 +96,14 @@
                     <div x-show="mode === 'reserva'" x-transition class="option-card option-card--purchase">
                         <div class="option-card__header">
                             <svg class="option-card__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                             </svg>
                             <h3 class="option-card__title">Pago de Señal</h3>
                         </div>
                         <p class="option-card__desc">Se requiere el 25% del valor para formalizar la reserva.</p>
                         <div class="option-card__info">
                             <span>Precio total:</span>
-                            <span class="option-card__price">{{ number_format($precio_convertido, 2) }}<span
-                                    x-text="simbolo"></span></span>
+                            <span class="option-card__price">{{ number_format($precio_convertido, 2) }} <span x-text="simbolo"></span></span>
                         </div>
                     </div>
 
@@ -144,8 +124,7 @@
                 {{-- Columna derecha --}}
                 <div class="checkout__summary">
                     <div class="summary-card">
-                        <div class="summary-card__label"
-                            x-text="mode === 'reserva' ? 'SEÑAL A PAGAR' : 'TOTAL ALQUILER'"></div>
+                        <div class="summary-card__label" x-text="mode === 'reserva' ? 'SEÑAL A PAGAR' : 'TOTAL ALQUILER'"></div>
                         <div class="summary-card__price">
                             <span x-text="totalPagar"></span><span x-text="simbolo"></span>
                         </div>
@@ -158,8 +137,7 @@
             <div class="checkout__back">
                 <a href="{{ url()->previous() }}" class="btn-back">
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                     </svg>
                     Volver atrás
                 </a>
@@ -236,7 +214,7 @@
 
                 get totalPagar() {
                     let total = this.mode === 'reserva' ? (this.precioMoto * 0.25) : ((this.precioMoto * 0.01) * this.dias);
-                    return total.toFixed(2);
+                    return parseFloat(total).toFixed(2);
                 },
 
                 initPayPal() {
@@ -254,12 +232,14 @@
                         },
                         onApprove: (data, actions) => {
                             return actions.order.capture().then((details) => {
-                                const targetUrl = this.mode === 'alquiler' ? '/rentals' : '/paypal/process';
+                                // Payload corregido enviando el 'mode'
                                 let payload = {
                                     order_id: details.id,
                                     status: details.status,
                                     amount: details.purchase_units[0].amount.value,
                                     moto_id: "{{ $moto_id }}",
+                                    mode: this.mode, // Vital para el controlador
+                                    currency: "{{ $currency }}"
                                 };
 
                                 if (this.mode === 'alquiler') {
@@ -269,16 +249,21 @@
                                     payload.end_date = parts[1];
                                 }
 
-                                return fetch(targetUrl, {
+                                // Fetch dinámico usando la ruta de Laravel
+                                return fetch("{{ route('paypal.process') }}", {
                                     method: 'POST',
                                     headers: {
                                         'Content-Type': 'application/json',
+                                        'Accept': 'application/json',
                                         'X-CSRF-TOKEN': '{{ csrf_token() }}'
                                     },
                                     body: JSON.stringify(payload)
                                 }).then(res => {
-                                    // Cambio: Redirección al catálogo con mensaje de éxito
+                                    if (!res.ok) return res.json().then(err => { throw err; });
                                     window.location.href = "{{ route('catalogo.index') }}?success=1";
+                                }).catch(err => {
+                                    console.error('Error procesando el pago:', err);
+                                    alert('Error en el servidor al registrar el pago.');
                                 });
                             });
                         }
@@ -288,5 +273,4 @@
         });
     </script>
 </body>
-
 </html>

@@ -48,8 +48,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::put('/{moto}', [MotoController::class , 'update'])->name('update');
             Route::delete('/{moto}', [MotoController::class , 'destroy'])->name('destroy');
 
-            Route::get('/motos/create', [MotoController::class , 'create'])->name('motos.create');
-            Route::post('/motos', [MotoController::class , 'store'])->name('motos.store');
+            Route::get('/motos/create', [MotoController::class , 'create'])->name('create');
+            Route::post('/motos', [MotoController::class , 'store'])->name('store');
         }
         );
 
