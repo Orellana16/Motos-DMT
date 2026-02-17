@@ -13,6 +13,7 @@ El objetivo es digitalizar la experiencia de compra, ofreciendo herramientas de 
 * **Base de Datos:** MySQL / MariaDB.
 * **Servicios Externos:**
     * 📸 **Cloudinary:** Gestión y optimización de imágenes en la nube.
+    * 🪙 **Exchange API:** Cambio de divisas sobre un precio.
     * 💳 **PayPal Sandbox:** Pasarela de pagos segura.
     * 🗺️ **Google Maps:** Localización del concesionario en contacto.
 
@@ -23,7 +24,7 @@ El objetivo es digitalizar la experiencia de compra, ofreciendo herramientas de 
 El sistema consta de **8 entidades** principales, cumpliendo con los requisitos de normalización y campos mínimos (>5 por tabla).
 
 ### Entidades y Tablas
-1.  **`users`**: Gestión unificada de Administradores y Clientes (Campos: nombre, email, password, role, dirección, teléfono...).
+1.  **`users`**: Gestión unificada de Administradores y Clientes (Campos: nombre, email, password, rol, dirección, teléfono...).
 2.  **`motos`** (Entidad Principal):
     * *Campos:* id, modelo, precio, stock, descripción, año, cilindrada, **image_url (Cloudinary)**, brand_id, category_id, soft_deletes.
 3.  **`brands`**: Marcas de fabricantes (Ej: Yamaha, Kawasaki).
@@ -32,6 +33,7 @@ El sistema consta de **8 entidades** principales, cumpliendo con los requisitos 
 6.  **`reviews`**: Opiniones de usuarios sobre las motos.
 7.  **`appointments`**: Citas para Test-Drive presencial.
 8.  **`transactions`**: Registro histórico de pagos y reservas.
+9.  **`rentals`**: Registro de cuando se reservan las motos.
 
 ### Relaciones Clave
 * **Relaciones 1:N (Uno a Muchos):**
@@ -95,7 +97,7 @@ El administrador tendrá control total sobre el catálogo:
 
 ---
 
-## 6. Distribución de Tareas (Ejemplo)
-* **Dev 1:** Setup inicial, Auth (Users), Integración Cloudinary, CRUD Motos.
-* **Dev 2:** Base de datos (Migraciones/Seeders), Relaciones N:M, Filtros y Buscador.
-* **Dev 3:** Pasarela de Pagos (PayPal), Sistema de Emails, Controladores de Transacciones.
+## 6. Distribución de Tareas
+* **Dev 1 (Tomas):** Setup inicial, Auth (Users), CRUD Motos, Vistas, Enum.
+* **Dev 2 (Marcos):** Base de datos (Migraciones/Seeders), Relaciones N:M, Filtros y Buscador, Controllers.
+* **Dev 3 (David):** Pasarela de Pagos (PayPal), Integración Cloudinary, Integración ExvhangeAPI, Sistema de Emails, Controladores de Transacciones.
