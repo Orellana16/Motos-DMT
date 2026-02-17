@@ -98,7 +98,7 @@ class MotoController extends Controller
             'manufacturer_id' => 'required|exists:manufacturers,id',
             'category_id' => 'required|exists:categories,id',
             'modelo' => 'required|string|max:255',
-            'imagen' => 'required|string', // Quitamos 'nullable' para asegurar que siempre haya foto
+            'imagen' => 'required|string',
             'descripcion' => 'nullable|string',
             'año' => 'required|integer',
             'cilindrada' => 'required|integer',

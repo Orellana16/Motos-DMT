@@ -31,7 +31,7 @@ class PaymentReceived extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'emails.payment-received', // Crearemos esta vista ahora
+            view: 'emails.payment-received',
         );
     }
 }

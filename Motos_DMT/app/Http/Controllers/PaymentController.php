@@ -84,7 +84,7 @@ class PaymentController extends Controller
         ];
 
         try {
-            Mail::to(Auth::user()->email)->send(new \App\Mail\PaymentReceived($data, $request->mode));
+            Mail::to(Auth::user()->email)->send(new PaymentReceived($data, $request->mode));
         } catch (\Exception $e) {
             \Log::error("Error Mail: " . $e->getMessage());
         }
