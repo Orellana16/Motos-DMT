@@ -100,4 +100,4 @@ El administrador tendrá control total sobre el catálogo:
 ## 6. Distribución de Tareas
 * **Dev 1 (Tomas):** Setup inicial, Auth (Users), CRUD Motos, Vistas, Enum.
 * **Dev 2 (Marcos):** Base de datos (Migraciones/Seeders), Relaciones N:M, Filtros y Buscador, Controllers.
-* **Dev 3 (David):** Pasarela de Pagos (PayPal), Integración Cloudinary, Integración ExvhangeAPI, Sistema de Emails, Controladores de Transacciones.
+* **Dev 3 (David):** Pasarela de Pagos (PayPal), Integración ExchangeAPI, Sistema de Emails, Apoyo al resto de Devs.
