@@ -65,7 +65,7 @@
 
                 <label for="nombre">Tu nombre</label>
                 <div class="search-box__group">
-                    <input type="text" id="nombre" name="nombre" value="{{ old('nombre') }}" placeholder="Ej: Picha">
+                    <input type="text" id="nombre" name="nombre" value="{{ old('nombre') }}" placeholder="Ej: Pablo">
                 </div>
                 @error('nombre') <p style="color:#b91c1c;font-weight:700;margin-top:6px;">{{ $message }}</p> @enderror
 

@@ -16,10 +16,9 @@ class ProfileUpdateRequest extends FormRequest
         return [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', Rule::unique(User::class)->ignore($this->user()->id)],
-            // Aquí añadimos tus campos de geolocalización
             'latitude' => ['nullable', 'numeric'],
             'longitude' => ['nullable', 'numeric'],
-            'address' => ['nullable', 'string', 'max:255'],
+            'address' => ['nullable', 'string', 'max:500'],
         ];
     }
 }

@@ -26,13 +26,18 @@ class ProfileController extends Controller
      */
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
-        // El método fill usa los datos validados que incluyen lat/lng/address
-        $request->user()->fill($request->validated());
+        // 1. Validar y obtener los datos
+        $data = $request->validated();
 
+        // 2. Llenar el modelo con los datos del formulario
+        $request->user()->fill($data);
+
+        // 3. Si el email cambió, invalidar la verificación (opcional)
         if ($request->user()->isDirty('email')) {
             $request->user()->email_verified_at = null;
         }
 
+        // 4. Guardar en la BD
         $request->user()->save();
 
         return Redirect::route('profile.edit')->with('status', 'profile-updated');
